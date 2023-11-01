@@ -92,7 +92,7 @@ const UpdateProfilePage = () => {
         notification['error']({
           key,
           duration: 5,
-          message: 'Update role failed',
+          message: 'Update profile failed',
           description: (
             <div
               dangerouslySetInnerHTML={{ __html: errorMessages }}
@@ -103,7 +103,7 @@ const UpdateProfilePage = () => {
       } else {
         notification['error']({
           duration: 5,
-          message: 'Update role failed',
+          message: 'Update profile failed',
           description: err.response.data.message,
         })
       }
@@ -230,7 +230,7 @@ const UpdateProfilePage = () => {
           <Form.Item
             name="details"
             className="ml-10 mr-10 "
-            label="Description"
+            label="Mô tả"
             initialValue={res?.details}
           >
             <Input.TextArea rows={3} />
@@ -240,7 +240,7 @@ const UpdateProfilePage = () => {
               <Form.Item
                 name="password"
                 className="ml-10 mr-10 "
-                label="Password"
+                label="Mật khẩu"
                 rules={[editProfileRules as any]}
               >
                 <Input type="password" name="password" />
@@ -250,7 +250,7 @@ const UpdateProfilePage = () => {
               <Form.Item
                 name="password_confirmation"
                 className="ml-10 mr-10 "
-                label="Nhập lại password"
+                label="Nhập lại mật khẩu"
                 rules={[editProfileRules as any]}
               >
                 <Input type="password" name="password_confirmation" />

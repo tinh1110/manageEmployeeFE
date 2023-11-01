@@ -6,7 +6,6 @@ import {
   Button,
   Input,
   List,
-  Popconfirm,
   Select,
   Modal,
   notification,
@@ -14,7 +13,7 @@ import {
 } from 'antd'
 import { deleteEvent, event, getTypeEvent } from '../../services/event'
 import { TypeEvent, TypeParamsEvent } from '../../types/event'
-import { getPermissions, getUser } from '../../libs/helpers/getLocalStorage'
+import { getPermissions } from '../../libs/helpers/getLocalStorage'
 import { Link, useNavigate } from 'react-router-dom'
 import { EVENT_DELETE, EVENT_UPDATE } from '../../libs/constants/Permissions'
 const { Search } = Input
@@ -27,7 +26,6 @@ const EventPage = () => {
     page: 1,
     limit: 5,
   })
-  const user = getUser()
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const navigate = useNavigate()
@@ -207,7 +205,7 @@ const EventPage = () => {
           navigate('/event/add')
         }}
       >
-        Create New Event
+        Thêm event mới
       </Button>
       {isLoading ? (
         <Spin className="flex justify-center" />

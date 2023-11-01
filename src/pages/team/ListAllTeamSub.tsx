@@ -144,7 +144,7 @@ const ListAllTeamSub = () => {
         deleteTeam={deleteTeam}
         updateTeam={updateTeam}
         handleListSubOrListMem={handleListSubOrListMem}
-        blog="List all sub team"
+        blog="Danh sách team con"
         total={totalTeamSub}
         onChange={onChange}
         permissionsUpdate={TEAM_UPDATE}

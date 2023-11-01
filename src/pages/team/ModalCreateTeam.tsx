@@ -117,7 +117,7 @@ const ModalCreateTeam: React.FC<Props> = ({
         onCancel={() => toggleModalCreate()}
         footer={[
           <Button key="back" onClick={() => toggleModalCreate()}>
-            RETURN
+            Hủy
           </Button>,
           <Button
             form="myForm"

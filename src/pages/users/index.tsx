@@ -4,7 +4,9 @@ import {
   Route,
   Link,
   redirect,
+  useNavigate,
 } from 'react-router-dom'
+import { EditOutlined, DeleteOutlined } from '@ant-design/icons'
 import { Table, Space, Modal, Button } from 'antd'
 import type { ColumnsType } from 'antd/es/table'
 import MainLayout from '../../components/layouts/main'
@@ -22,6 +24,7 @@ const ListUsers = () => {
   const [idUser, setIdUser] = useState()
   const [totalUser, setTotalUser] = useState()
   const [roles, setRoles] = useState([])
+  const navigate = useNavigate()
 
   const [users, setUsers] = useState<User[]>([])
   const [filter, setFilter] = useState<FilterType>({
@@ -64,7 +67,7 @@ const ListUsers = () => {
   const columns: ColumnsType<User> = [
     {
       key: 'name',
-      title: 'Name',
+      title: 'Tên',
       dataIndex: 'name',
       align: 'center',
       width: '15%',
@@ -78,21 +81,21 @@ const ListUsers = () => {
     },
     {
       key: 'address',
-      title: 'Address',
+      title: 'Địa chỉ',
       dataIndex: 'address',
       align: 'center',
       width: '15%',
     },
     {
       key: 'phone_number',
-      title: 'Phone Number',
+      title: 'Số điện thoại',
       dataIndex: 'phone_number',
       align: 'center',
       width: '10%',
     },
     {
       key: 'dob',
-      title: 'Birthday',
+      title: 'Ngày sinh',
       dataIndex: 'dob',
       align: 'center',
       width: '10%',
@@ -107,21 +110,21 @@ const ListUsers = () => {
     },
     {
       key: 'gender',
-      title: 'Gender',
+      title: 'Giới tính',
       dataIndex: 'gender',
       align: 'center',
       width: '5%',
       render: (gender) => {
         if (gender == 1) {
-          return <p>Male</p>
-        } else {
-          return <p>Female</p>
-        }
+          return <p>Nam</p>
+        } else if (gender == 2) {
+          return <p>Nữ</p>
+        } else return <p>Khác</p>
       },
     },
     {
       key: 'role',
-      title: 'Role',
+      title: 'Chức vụ',
       dataIndex: 'role_id',
       align: 'center',
       width: '5%',
@@ -137,21 +140,21 @@ const ListUsers = () => {
     },
     {
       key: 'status',
-      title: 'Status',
+      title: 'Trạng thái',
       dataIndex: 'status',
       align: 'center',
       width: '5%',
       render: (status) => {
         if (status == 1) {
-          return <p>Active</p>
+          return <p>Còn hoạt động</p>
         } else {
-          return <p>Block</p>
+          return <p>Không hoạt động</p>
         }
       },
     },
     {
       key: 'id',
-      title: 'Action',
+      title: 'Hoạt động',
       dataIndex: 'id',
       align: 'center',
       width: '15%',
@@ -166,7 +169,7 @@ const ListUsers = () => {
                 className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
                 to={`/users/edit/${record.id}`}
               >
-                Update
+                <EditOutlined />
               </Link>
             )}
           {permissionsInfo &&
@@ -178,7 +181,7 @@ const ListUsers = () => {
                 to=""
                 onClick={() => showDeleteConfirm(record)}
               >
-                Delete
+                <DeleteOutlined />
               </Link>
             )}
         </Space>
@@ -190,9 +193,18 @@ const ListUsers = () => {
     <MainLayout>
       <>
         <div className="mb-12">
-          <h2>List of User</h2>
+          <h2>Danh sách nhân viên</h2>
         </div>
         <Filter setFilter={setFilter} filterValue={filter} />
+        <Button
+          type="primary"
+          className="mb-5 bg-green-500 float-right"
+          onClick={() => {
+            navigate('/users/add')
+          }}
+        >
+          Thêm nhân viên mới
+        </Button>
         <Table
           columns={columns}
           dataSource={users}

@@ -151,7 +151,7 @@ const TeamPage = () => {
         deleteTeam={deleteTeam}
         updateTeam={updateTeam}
         handleListSubOrListMem={handleListSubOrListMem}
-        blog="List main team"
+        blog="Danh sách team"
         total={totalTeam}
         onChange={onChange}
         permissionsUpdate={TEAM_UPDATE}

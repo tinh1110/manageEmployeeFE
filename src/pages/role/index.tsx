@@ -1,15 +1,6 @@
 import MainLayout from '../../components/layouts/main'
 import { useEffect, useState } from 'react'
-import {
-  Button,
-  Modal,
-  Popconfirm,
-  Space,
-  Spin,
-  Table,
-  Tag,
-  notification,
-} from 'antd'
+import { Button, Modal, Space, Spin, Table, Tag, notification } from 'antd'
 import type { ColumnsType } from 'antd/es/table'
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons'
 import { Link, useNavigate } from 'react-router-dom'
@@ -18,8 +9,6 @@ import { deleteRole, role } from '../../services/role'
 import { ROLES_ID } from '../../libs/constants/roles'
 import { getPermissions } from '../../libs/helpers/getLocalStorage'
 import { ROLE_DELETE, ROLE_UPDATE } from '../../libs/constants/Permissions'
-import { key } from 'localforage'
-import { roles } from 'aria-query'
 const RolePage = () => {
   const [roles, setRoles] = useState<Role[]>()
   const [total, setTotal] = useState<number>()
@@ -67,18 +56,18 @@ const RolePage = () => {
 
   const columns: ColumnsType<DataType> = [
     {
-      title: 'Name',
+      title: 'Tên role',
       dataIndex: 'name',
       key: 'name',
       render: (text) => <span className="font-bold">{text}</span>,
     },
     {
-      title: 'Description',
+      title: 'Mô tả',
       dataIndex: 'description',
       key: 'description',
     },
     {
-      title: 'Permissions',
+      title: 'Quyền truy cập',
       key: 'permissions',
       dataIndex: 'permissions',
       render: (_, { permissions }) => (
@@ -94,7 +83,7 @@ const RolePage = () => {
       ),
     },
     {
-      title: 'Action',
+      title: 'Hoạt động',
       dataIndex: 'id',
       key: 'id_d',
       render: (id) => {
@@ -203,7 +192,7 @@ const RolePage = () => {
               navigate('/role/add')
             }}
           >
-            Create New Role
+            Thêm role mới
           </Button>
           <Table
             columns={columns}

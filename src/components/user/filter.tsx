@@ -25,35 +25,36 @@ const Filter = ({
       <div className={'mb-12'}>
         <div className={'mr-6 inline'}>
           <label htmlFor="" className={'font-semibold mr-2'}>
-            Gender
+            Giới tính
           </label>
           <Select
             onChange={(event) => handleSearch('gender', event)}
             value={filterValue?.gender}
             className={'w-28'}
             options={[
-              { value: '2', label: 'Female' },
-              { value: '1', label: 'Male', checked: true },
+              { value: '2', label: 'Nữ' },
+              { value: '1', label: 'Nam', checked: true },
+              { value: '3', label: 'Khác' },
             ]}
           />
         </div>
         <div className={'mr-6 inline'}>
           <label htmlFor="" className={'font-semibold mr-2'}>
-            Status
+            Trạng thái
           </label>
           <Select
             onChange={(event) => handleSearch('status', event)}
             value={filterValue?.status}
             className={'w-28'}
             options={[
-              { value: '1', label: 'Actice' },
-              { value: '0', label: 'Block' },
+              { value: '1', label: 'Còn hoạt động' },
+              { value: '0', label: 'Không hoạt động' },
             ]}
           />
         </div>
         <div className={'mr-6 inline'}>
           <label htmlFor="" className={'font-semibold mr-2'}>
-            Role
+            Chức vụ
           </label>
           <RoleSelect
             className=""
@@ -64,7 +65,7 @@ const Filter = ({
         </div>
         <div className={'mr-6 inline'}>
           <Button type="primary" onClick={handleReset}>
-            Reset
+            Xóa hết
           </Button>
         </div>
         <div className={'mb-4 w-1/3 float-right'}>
@@ -72,7 +73,7 @@ const Filter = ({
             name="searchInput"
             onSearch={(event) => handleSearch('search', event)}
             placeholder="Search for name or email"
-            enterButton="Search"
+            enterButton="Tìm kiếm"
             size="large"
             className={' float-right'}
           />

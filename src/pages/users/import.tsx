@@ -9,12 +9,14 @@ import {
 import { useState, useRef, ChangeEvent } from 'react'
 import { dowloadTemplateUser, importUser } from '../../services/importUser'
 import ImportSearch from '../../components/importUser/ImportSearch'
+import { USER_IMPORT } from '../../libs/constants/Permissions'
+import { getPermissions } from '../../libs/helpers/getLocalStorage'
 const UsersImport = () => {
   const [isDisplayForm, setIsDisplayForm] = useState<boolean>(false)
   const ref = useRef<HTMLInputElement>(null)
   const [fileSelected, setFileSelected] = useState<any>()
   const [isLoadPage, setIsLoadPage] = useState<boolean>(false)
-
+  const permissionsInfo = getPermissions()
   function handleChangeFile(e: ChangeEvent<HTMLInputElement>) {
     if (e.target.files?.length) {
       setFileSelected(e.target.files[0])
@@ -76,57 +78,68 @@ const UsersImport = () => {
   }
   return (
     <MainLayout>
-      <div className="w-full flex justify-end">
-        <Button type="primary" className="mr-5" onClick={handleToggleForm}>
-          <CloudUploadOutlined />
-          Upload File
-        </Button>
-      </div>
-      {isDisplayForm && (
-        <Form className=" h-[250px] items-center flex  flex-col justify-center">
-          <div
-            className="border mt-3 w-[40%] h-[160px]  border-dashed border-[#0000004d] flex justify-center"
-            // onClick={handleFocusInput}
-          >
-            <div className="text-center ml-[30%]">
-              <UploadOutlined
-                className=" text-[25px]  m-1"
-                twoToneColor="green"
-              />
-              <p className="font-bold">Click vào đây để upload file </p>
-              <input
-                ref={ref}
-                type="file"
-                name="file"
-                className="mt-7"
-                onChange={(e) => handleChangeFile(e)}
-              />
+      {permissionsInfo &&
+        USER_IMPORT.every((element: string) =>
+          permissionsInfo.includes(element),
+        ) && (
+          <>
+            <div className="w-full flex justify-end">
+              <Button
+                type="primary"
+                className="mr-5"
+                onClick={handleToggleForm}
+              >
+                <CloudUploadOutlined />
+                Tải file
+              </Button>
             </div>
-            <div className="mt-[130px]">
-              <a href="#" onClick={handleDownload}>
-                <DownloadOutlined />
-                Tải file mẫu
-              </a>
-            </div>
-          </div>
-          <div className="self-end flex ">
-            <Button
-              className="m-3 bg-slate-600 text-white font-bold"
-              onClick={handleToggleForm}
-            >
-              <StopOutlined />
-              Hủy
-            </Button>
-            <Button
-              className="m-3 bg-sky-600 text-white font-bold "
-              onClick={handleSubmit}
-            >
-              <CloudUploadOutlined />
-              Bắt đầu import
-            </Button>
-          </div>
-        </Form>
-      )}
+            {isDisplayForm && (
+              <Form className=" h-[250px] items-center flex  flex-col justify-center">
+                <div
+                  className="border mt-3 w-[40%] h-[160px]  border-dashed border-[#0000004d] flex justify-center"
+                  // onClick={handleFocusInput}
+                >
+                  <div className="text-center ml-[30%]">
+                    <UploadOutlined
+                      className=" text-[25px]  m-1"
+                      twoToneColor="green"
+                    />
+                    <p className="font-bold">Click vào đây để upload file </p>
+                    <input
+                      ref={ref}
+                      type="file"
+                      name="file"
+                      className="mt-7"
+                      onChange={(e) => handleChangeFile(e)}
+                    />
+                  </div>
+                  <div className="mt-[130px]">
+                    <a href="#" onClick={handleDownload}>
+                      <DownloadOutlined />
+                      Tải file mẫu
+                    </a>
+                  </div>
+                </div>
+                <div className="self-end flex ">
+                  <Button
+                    className="m-3 bg-slate-600 text-white font-bold"
+                    onClick={handleToggleForm}
+                  >
+                    <StopOutlined />
+                    Hủy
+                  </Button>
+                  <Button
+                    className="m-3 bg-sky-600 text-white font-bold "
+                    onClick={handleSubmit}
+                  >
+                    <CloudUploadOutlined />
+                    Bắt đầu import
+                  </Button>
+                </div>
+              </Form>
+            )}
+          </>
+        )}
       <ImportSearch isLoadPage={isLoadPage} setIsLoadPage={setIsLoadPage} />
     </MainLayout>
   )

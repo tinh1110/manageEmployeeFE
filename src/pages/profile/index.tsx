@@ -95,7 +95,7 @@ const ProfilePage = () => {
               </p>
             </div>
             <div className="w-1/3 h-full m-[20px] ">
-              <h1 className="flex justify-center">Details</h1>
+              <h1 className="flex justify-center">Chi tiết</h1>
               <h3 className="ml-10">
                 <MailOutlined className="mr-2" />
                 Email:
@@ -119,7 +119,7 @@ const ProfilePage = () => {
             </div>
             <div className="w-1/3 h-full m-[20px] ">
               {' '}
-              <h1 className="flex justify-center">About me</h1>
+              <h1 className="flex justify-center">Mô tả</h1>
               <span className="ml-10 read-only:true ">
                 {' '}
                 {res?.details || ''}

@@ -8,9 +8,7 @@ import { userApiCreate, userApiUpdate } from '../../services/request/user'
 import '../../styles/user/user.css'
 import dayjs from 'dayjs'
 import Spinner from './spin'
-import { RoleSelect } from './roleSelect'
 import { getRole } from '../../services/request/user'
-import { react } from '@babel/types'
 
 const { Option } = Select
 
@@ -176,7 +174,7 @@ const FormPost = (props: any) => {
 
         <Form.Item
           name="name"
-          label="Name"
+          label="Tên"
           rules={[
             {
               required: true,
@@ -208,7 +206,7 @@ const FormPost = (props: any) => {
         <Form.Item
           style={id ? { display: 'none' } : {}}
           name="password"
-          label="Password"
+          label="Mật khẩu"
           rules={
             id
               ? []
@@ -231,7 +229,7 @@ const FormPost = (props: any) => {
         <Form.Item
           style={id ? { display: 'none' } : {}}
           name="password_confirmation"
-          label="Confirm Password"
+          label="Nhập lại mật khẩu"
           dependencies={['password']}
           hasFeedback
           rules={
@@ -262,29 +260,30 @@ const FormPost = (props: any) => {
 
         <Form.Item
           name="gender"
-          label="Gender"
+          label="Giới tính"
           rules={[{ required: true, message: 'Please select gender!' }]}
         >
           <Select placeholder="select your gender">
-            <Option value="1">Male</Option>
-            <Option value="2">Female</Option>
+            <Option value="1">Nam</Option>
+            <Option value="2">Nữ</Option>
+            <Option value="3">Khác</Option>
           </Select>
         </Form.Item>
 
         <Form.Item
           name="status"
-          label="Status"
+          label="Trạng thái"
           rules={[{ required: true, message: 'Please select status!' }]}
         >
           <Select placeholder="select your status">
-            <Option value="1">Active</Option>
-            <Option value="0">Block</Option>
+            <Option value="1">Hoạt động</Option>
+            <Option value="0">Không hoạt động</Option>
           </Select>
         </Form.Item>
 
         <Form.Item
           name="role_id"
-          label="Role"
+          label="Chức vụ"
           rules={[{ required: true, message: 'Please select gender!' }]}
         >
           <Select placeholder="select your role">
@@ -298,13 +297,13 @@ const FormPost = (props: any) => {
           </Select>
         </Form.Item>
 
-        <Form.Item name="address" label="Address">
+        <Form.Item name="address" label="Địa chỉ">
           <Input />
         </Form.Item>
 
         <Form.Item
           name="phone_number"
-          label="Phone Number"
+          label="Số điện thoại"
           rules={[
             {
               required: true,
@@ -321,7 +320,7 @@ const FormPost = (props: any) => {
 
         <Form.Item
           name="birth"
-          label="Date of Birth"
+          label="Ngày sinh"
           validateStatus={error?.dob ? 'error' : ''}
           help={error?.dob ? 'The day field must be a date before today' : ''}
         >
@@ -333,15 +332,19 @@ const FormPost = (props: any) => {
             dateFormat={'dd-MM-yyyy'}
             selected={startDate}
             isClearable
-            placeholderText="Input your birth!"
+            placeholderText=""
           />
         </Form.Item>
-        <Form.Item name="details" label="Details">
+        <Form.Item name="details" label="Mô tả">
           <Input.TextArea showCount maxLength={100} />
         </Form.Item>
         <Form.Item {...summitButtonLayout}>
-          <Button type="primary" htmlType="submit">
-            Save
+          <Button
+            type="dashed"
+            className="w-[110px] text-white m-5 bg-green-500 items-center rounded-full"
+            htmlType="submit"
+          >
+            Lưu
           </Button>
         </Form.Item>
       </Form>

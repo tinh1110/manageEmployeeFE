@@ -45,7 +45,7 @@ const Filter: React.FC<Props> = ({
       <div className={'mb-12'}>
         <div className={'mr-6 inline'}>
           <label htmlFor="" className={'font-semibold mr-2'}>
-            Name
+            Tên
           </label>
           <Input
             name="searchInput"
@@ -62,7 +62,7 @@ const Filter: React.FC<Props> = ({
         </div>
         <div className={'mr-6 inline'}>
           <label htmlFor="" className={'font-semibold mr-2'}>
-            Details
+            Mô tả
           </label>
           <Input
             name="searchInput"
@@ -79,25 +79,21 @@ const Filter: React.FC<Props> = ({
         </div>
         <div className={'mr-6 inline'}>
           <label htmlFor="" className={'font-semibold mr-2'}>
-            Create At
+            Sắp xếp
           </label>
           <Select
             style={{ width: 120 }}
             defaultValue={valueFilter.sortType}
             options={[
-              { value: '0', label: 'Descending' },
-              { value: '1', label: 'Ascending' },
+              { value: '0', label: 'Mới nhất' },
+              { value: '1', label: 'Cũ nhất' },
             ]}
             onChange={onChange}
           />
         </div>
         <div className={'mr-6 inline'}>
-          <Button
-            type="primary"
-            style={{ backgroundColor: 'brown' }}
-            onClick={handleReset}
-          >
-            Reset
+          <Button type="primary" className="ml-10" onClick={handleReset}>
+            Xóa hết
           </Button>
         </div>
       </div>
