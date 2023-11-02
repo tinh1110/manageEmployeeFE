@@ -30,6 +30,7 @@ import {
   USER_ADD,
   USER_IMPORT_VIEW,
   USER_LIST,
+  USER_LIST_DELETED,
 } from '../../../libs/constants/Permissions'
 
 const { Sider } = Layout
@@ -64,6 +65,10 @@ const Sidebar = () => {
           checkChildrenSidebar(USER_IMPORT_VIEW, {
             label: 'Import user',
             key: '/users/import/',
+          }),
+          checkChildrenSidebar(USER_LIST_DELETED, {
+            label: 'User deleted',
+            key: '/users/deleted',
           }),
         ],
       }),

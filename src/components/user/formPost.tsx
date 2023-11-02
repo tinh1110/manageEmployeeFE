@@ -276,8 +276,8 @@ const FormPost = (props: any) => {
           rules={[{ required: true, message: 'Please select status!' }]}
         >
           <Select placeholder="select your status">
-            <Option value="1">Hoạt động</Option>
-            <Option value="0">Không hoạt động</Option>
+            <Option value="0">Hoạt động</Option>
+            <Option value="1">Không hoạt động</Option>
           </Select>
         </Form.Item>
 

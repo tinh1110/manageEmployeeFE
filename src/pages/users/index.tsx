@@ -146,7 +146,7 @@ const ListUsers = () => {
       align: 'center',
       width: '5%',
       render: (status) => {
-        if (status == 1) {
+        if (status == 0) {
           return <p>Còn hoạt động</p>
         } else {
           return <p>Không hoạt động</p>
@@ -199,7 +199,7 @@ const ListUsers = () => {
         <Filter setFilter={setFilter} filterValue={filter} />
         <Button
           type="primary"
-          className="mb-5 bg-green-500 float-right"
+          className="mb-5 mt-5 bg-green-500 float-right"
           onClick={() => {
             navigate('/users/add')
           }}

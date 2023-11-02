@@ -59,20 +59,23 @@ const RolePage = () => {
       title: 'Tên role',
       dataIndex: 'name',
       key: 'name',
-      width: '15%',
+      align: 'center',
+      className: 'w-[5%]',
       render: (text) => <span className="font-bold">{text}</span>,
     },
     {
       title: 'Mô tả',
       dataIndex: 'description',
       key: 'description',
-      width: '15%',
+      align: 'center',
+      // className: 'w-1/10',
     },
     {
       title: 'Quyền truy cập',
       key: 'permissions',
       dataIndex: 'permissions',
-      width: '70%',
+      align: 'center',
+      width: '50%',
       render: (_, { permissions }) => (
         <>
           {permissions.map((permission) => {
@@ -89,6 +92,8 @@ const RolePage = () => {
       title: 'Hoạt động',
       dataIndex: 'id',
       key: 'id_d',
+      align: 'center',
+      width: '15%',
       render: (id) => {
         let cr_id = id
         return (
