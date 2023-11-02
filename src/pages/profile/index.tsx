@@ -77,7 +77,7 @@ const ProfilePage = () => {
             <div className="bg-orange-500 w-1/3 h-550 ">
               <div className="flex justify-center mt-[5%]">
                 <Avatar
-                  src={res?.avatar || './logo512.png'}
+                  src={res?.avatar || './user.png'}
                   className="w-[200px] h-[200px] rounded-full flex justify-center"
                 ></Avatar>
               </div>

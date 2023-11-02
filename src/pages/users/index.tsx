@@ -7,7 +7,7 @@ import {
   useNavigate,
 } from 'react-router-dom'
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons'
-import { Table, Space, Modal, Button } from 'antd'
+import { Table, Space, Modal, Button, Spin } from 'antd'
 import type { ColumnsType } from 'antd/es/table'
 import MainLayout from '../../components/layouts/main'
 import Filter from '../../components/user/filter'
@@ -16,7 +16,6 @@ import { FilterType } from '../../types/user'
 import { userApi, userApiDelete } from '../../services/request/user'
 import { getPermissions } from '../../libs/helpers/getLocalStorage'
 import { USER_DELETE, USER_UPDATE } from '../../libs/constants/Permissions'
-import Spinner from '../../components/user/spin'
 import { getRole } from '../../services/request/user'
 
 const ListUsers = () => {
@@ -31,6 +30,8 @@ const ListUsers = () => {
     gender: '',
     status: '',
     role: '',
+    limit: '10',
+    page: '',
   })
   const [isLoading, setIsLoading] = useState<boolean>()
   const handleDelete = async (key: string) => {
@@ -205,21 +206,29 @@ const ListUsers = () => {
         >
           Thêm nhân viên mới
         </Button>
-        <Table
-          columns={columns}
-          dataSource={users}
-          rowKey="id"
-          bordered
-          pagination={{
-            defaultPageSize: 10,
-            total: totalUser,
-            onChange: (page) => {
-              setFilter((filter: any) => ({ ...filter, page: page }))
-            },
-          }}
-        />
+        {isLoading ? (
+          <Spin className="flex justify-center" />
+        ) : (
+          <Table
+            columns={columns}
+            dataSource={users}
+            rowKey="id"
+            bordered
+            pagination={{
+              defaultPageSize: 10,
+              showSizeChanger: true,
+              total: totalUser,
+              onChange: (page, pageSize) => {
+                setFilter((filter: any) => ({
+                  ...filter,
+                  page: page.toString(),
+                  limit: pageSize.toString(),
+                }))
+              },
+            }}
+          />
+        )}
       </>
-      {isLoading ? <Spinner /> : ''}
     </MainLayout>
   )
 }

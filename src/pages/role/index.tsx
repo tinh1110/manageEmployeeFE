@@ -59,17 +59,20 @@ const RolePage = () => {
       title: 'Tên role',
       dataIndex: 'name',
       key: 'name',
+      width: '15%',
       render: (text) => <span className="font-bold">{text}</span>,
     },
     {
       title: 'Mô tả',
       dataIndex: 'description',
       key: 'description',
+      width: '15%',
     },
     {
       title: 'Quyền truy cập',
       key: 'permissions',
       dataIndex: 'permissions',
+      width: '70%',
       render: (_, { permissions }) => (
         <>
           {permissions.map((permission) => {
@@ -181,41 +184,46 @@ const RolePage = () => {
 
   return (
     <MainLayout>
-      {isloading ? (
-        <Spin className="flex justify-center" />
-      ) : (
-        <>
-          <Button
-            type="primary"
-            className="mb-5 bg-green-500 float-right"
-            onClick={() => {
-              navigate('/role/add')
-            }}
-          >
-            Thêm role mới
-          </Button>
+      <>
+        <Button
+          type="primary"
+          className="mb-5 bg-green-500 float-right"
+          onClick={() => {
+            navigate('/role/add')
+          }}
+        >
+          Thêm role mới
+        </Button>
+        {isloading ? (
+          <Spin className="flex justify-center" />
+        ) : (
           <Table
             columns={columns}
             dataSource={data}
             pagination={{
+              showSizeChanger: true,
               current: params.page,
-              onChange: (page) => {
-                setParams((params) => ({ ...params, page: page }))
+              onChange: (page, pageSize) => {
+                setParams((params) => ({
+                  ...params,
+                  page: page,
+                  limit: pageSize,
+                }))
               },
-              pageSize: 5,
+              pageSize: params.limit,
               total: total,
             }}
           />
-          <Modal
-            title="Delete Role"
-            open={isModalOpen}
-            onOk={() => handleDeleteRole()}
-            onCancel={handleCancel}
-          >
-            <p>"Are you sure to delete this role?"</p>
-          </Modal>
-        </>
-      )}
+        )}
+        <Modal
+          title="Delete Role"
+          open={isModalOpen}
+          onOk={() => handleDeleteRole()}
+          onCancel={handleCancel}
+        >
+          <p>"Are you sure to delete this role?"</p>
+        </Modal>
+      </>
     </MainLayout>
   )
 }

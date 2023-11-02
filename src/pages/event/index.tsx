@@ -10,12 +10,14 @@ import {
   Modal,
   notification,
   Spin,
+  Pagination,
 } from 'antd'
 import { deleteEvent, event, getTypeEvent } from '../../services/event'
 import { TypeEvent, TypeParamsEvent } from '../../types/event'
 import { getPermissions } from '../../libs/helpers/getLocalStorage'
 import { Link, useNavigate } from 'react-router-dom'
 import { EVENT_DELETE, EVENT_UPDATE } from '../../libs/constants/Permissions'
+import console from 'console'
 const { Search } = Input
 
 const EventPage = () => {
@@ -216,11 +218,16 @@ const EventPage = () => {
             itemLayout="vertical"
             size="large"
             pagination={{
+              showSizeChanger: true,
               current: params.page,
-              onChange: (page) => {
-                setParams((params) => ({ ...params, page: page }))
+              onChange: (page, pageSize) => {
+                setParams((params) => ({
+                  ...params,
+                  page: page,
+                  limit: pageSize,
+                }))
               },
-              pageSize: 5,
+              pageSize: params.limit,
               total: total,
             }}
             dataSource={res}

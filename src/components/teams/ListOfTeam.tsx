@@ -254,7 +254,7 @@ const ListOfTeam: React.FC<Props> = ({
         total={total}
         showSizeChanger={true}
         onChange={onChange}
-        style={{ marginLeft: 500, marginTop: 10 }}
+        className="float-right mt-10"
       />
     </>
   )

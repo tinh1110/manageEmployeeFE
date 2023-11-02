@@ -221,7 +221,7 @@ const ImportAttendance = () => {
         // Create an <a> element to trigger the download
         const a = document.createElement('a')
         a.href = url
-        a.download = 'attendance.xlsx'
+        a.download = 'template_import_attendance.xlsx'
 
         // Trigger a click event to download the file
         a.click()
