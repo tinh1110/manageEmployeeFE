@@ -180,7 +180,7 @@ const CreateTeam = () => {
     <MainLayout>
       <>
         <div className="... flex items-center justify-center">
-          <h1>Create new team</h1>
+          <h1>Thêm team mới</h1>
         </div>
         {isLoading ? (
           <Spin className="flex justify-center" />
@@ -194,7 +194,7 @@ const CreateTeam = () => {
               className={'w-3/4'}
               scrollToFirstError
             >
-              <Form.Item name="Name" label="Name">
+              <Form.Item name="Name" label="Tên">
                 <Input
                   size="large"
                   value={formik.values.name}
@@ -217,7 +217,7 @@ const CreateTeam = () => {
                   </p>
                 ) : null}
               </Form.Item>
-              <Form.Item name="Details" label="Details">
+              <Form.Item name="Details" label="Mô tả">
                 <TextArea
                   rows={4}
                   showCount
@@ -265,7 +265,7 @@ const CreateTeam = () => {
               <Form.Item
                 name="parent_team_id"
                 id="parent_team_id"
-                label="Choose Parent Team"
+                label="Team cha"
               >
                 <Select
                   size="large"
@@ -290,18 +290,21 @@ const CreateTeam = () => {
                 <Button
                   form="myForm"
                   key="submit"
+                  type="dashed"
+                  className="w-[110px] text-white m-5 bg-green-500 items-center rounded-full"
                   htmlType="submit"
-                  type="primary"
                 >
-                  Create
+                  Thêm
                 </Button>
                 <Button
                   onClick={() => {
-                    navigate(-1)
+                    navigate('/teams/')
                   }}
+                  type="dashed"
+                  className="w-[110px] text-white bg-red-500 m-5 items-center rounded-full"
                   style={{ marginLeft: 10 }}
                 >
-                  Back
+                  Hủy
                 </Button>
               </Form.Item>
             </Form>

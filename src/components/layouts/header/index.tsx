@@ -79,10 +79,7 @@ const CustomHeader = ({ colorBgContainer }: Props) => {
             style={{ float: 'right', paddingRight: '16px' }}
           >
             <Space>
-              <Avatar
-                src={`${user?.avatar}`}
-                className="h-8 ml-6 mb-6 mt-4"
-              />
+              <Avatar src={`${user?.avatar}`} className="h-8 ml-6 mb-6 mt-4" />
               {user?.name || 'user name'}
               <DownOutlined />
             </Space>

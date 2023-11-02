@@ -15,6 +15,8 @@ import {
   importView,
 } from '../../../services/importUser'
 import { truncate } from '../../../utils/string'
+import Pusher from 'pusher-js'
+import channel from 'pusher-js/types/src/core/channels/channel'
 interface Props {
   isLoadPage: boolean
   setIsLoadPage: (isLoadPage: boolean) => void
@@ -24,15 +26,39 @@ const ImportSearch: React.FC<Props> = ({ isLoadPage, setIsLoadPage }) => {
   const [status, setStatus] = useState<string>('')
   const [data, setData] = useState<ImportUserType[]>()
   const [total, setTotal] = useState<number>()
+  const [importedUsers, setImportedUsers] = useState<any>()
   const [params, setParams] = useState<TypeParamsImport>({
     page: 1,
     limit: 5,
     sort: 'created_at',
   })
   useEffect(() => {
+    // Initialize Pusher with your app key and options
+    const pusher = new Pusher('718f9af2e483f5b858af', {
+      cluster: 'ap1',
+      // Add any additional options or configurations here
+    })
+    // Subscribe to the desired Pusher channel
+    const channel = pusher.subscribe('imported_users')
+    // Bind to the event you want to listen to
+    channel.bind('imported_users', (data: any) => {
+      setImportedUsers(data.imported_users)
+      // Handle the received event data
+      console.log('Received event:', data.imported_users)
+      console.log('123', importedUsers)
+      // Perform any other desired actions with the event data
+    })
+
+    // Clean up the Pusher subscription when the component unmounts
+    // return () => {
+    //   // channel.unbind('imported_users')
+    //   // pusher.unsubscribe('private-imported_users')
+    // }
+  }, [])
+  useEffect(() => {
     handleGetImported()
     setIsLoadPage(false)
-  }, [params, isLoadPage])
+  }, [params, isLoadPage, importedUsers])
 
   const handleGetImported = async () => {
     try {

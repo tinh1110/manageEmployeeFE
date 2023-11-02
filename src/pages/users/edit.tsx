@@ -11,13 +11,13 @@ const UsersEdit = () => {
   const currentUrl = window.location.href
   let id: string = currentUrl.split('/')[5]
   useEffect(() => {
-    userApiGetUser({ setUserData, setStartDate, setIsLoading }, id)   
+    userApiGetUser({ setUserData, setStartDate, setIsLoading }, id)
   }, [])
 
   return (
     <MainLayout>
       <div className="mb-12">
-        <h2>Update a new user</h2>
+        <h1 className="flex justify-center">Chỉnh sửa thông tin nhân viên</h1>
       </div>
 
       <div className={'w-full grid place-items-center'}>

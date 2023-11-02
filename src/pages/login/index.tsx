@@ -102,7 +102,7 @@ const LoginPage = () => {
                 </Form.Item>
 
                 <Form.Item
-                  label="Password"
+                  label="Mật khẩu"
                   name="password"
                   rules={[
                     { required: true, message: 'Please input your password!' },
@@ -118,9 +118,9 @@ const LoginPage = () => {
                 <Form.Item
                   name="remember"
                   valuePropName="checked"
-                  wrapperCol={{ offset: 8, span: 16 }}
+                  wrapperCol={{ offset: 6, span: 16 }}
                 >
-                  <Checkbox>Remember me</Checkbox>
+                  <Checkbox>Ghi nhớ đăng nhập</Checkbox>
                 </Form.Item>
 
                 <Form.Item wrapperCol={{ offset: 8, span: 16 }}>

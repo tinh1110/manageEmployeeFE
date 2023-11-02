@@ -77,7 +77,7 @@ const ProfilePage = () => {
             <div className="bg-orange-500 w-1/3 h-550 ">
               <div className="flex justify-center mt-[5%]">
                 <Avatar
-                  src={res?.avatar || './logo512.png'}
+                  src={res?.avatar || './user.png'}
                   className="w-[200px] h-[200px] rounded-full flex justify-center"
                 ></Avatar>
               </div>
@@ -95,7 +95,7 @@ const ProfilePage = () => {
               </p>
             </div>
             <div className="w-1/3 h-full m-[20px] ">
-              <h1 className="flex justify-center">Details</h1>
+              <h1 className="flex justify-center">Chi tiết</h1>
               <h3 className="ml-10">
                 <MailOutlined className="mr-2" />
                 Email:
@@ -119,7 +119,7 @@ const ProfilePage = () => {
             </div>
             <div className="w-1/3 h-full m-[20px] ">
               {' '}
-              <h1 className="flex justify-center">About me</h1>
+              <h1 className="flex justify-center">Mô tả</h1>
               <span className="ml-10 read-only:true ">
                 {' '}
                 {res?.details || ''}

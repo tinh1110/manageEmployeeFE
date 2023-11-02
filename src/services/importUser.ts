@@ -53,3 +53,10 @@ export const importView = (params: TypeParamsImport) => {
 export const dowloadTemplateUser = () => {
   return axiosInstance.get('/user/export-template', { responseType: 'blob' })
 }
+
+export const dowloadUser = (params: any) => {
+  return axiosInstance.get('/user/exportUser', {
+    params: params,
+    responseType: 'blob',
+  })
+}

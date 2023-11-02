@@ -157,7 +157,7 @@ const UpdateRolePage = () => {
           <Form.Item
             name="description"
             className="ml-10 mr-10 "
-            label="Description"
+            label="Mô tả"
             initialValue={role?.description}
           >
             <Input.TextArea rows={3} key="description" />

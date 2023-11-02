@@ -1,15 +1,6 @@
 import MainLayout from '../../components/layouts/main'
 import { useEffect, useState } from 'react'
-import {
-  Button,
-  Modal,
-  Popconfirm,
-  Space,
-  Spin,
-  Table,
-  Tag,
-  notification,
-} from 'antd'
+import { Button, Modal, Space, Spin, Table, Tag, notification } from 'antd'
 import type { ColumnsType } from 'antd/es/table'
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons'
 import { Link, useNavigate } from 'react-router-dom'
@@ -18,8 +9,6 @@ import { deleteRole, role } from '../../services/role'
 import { ROLES_ID } from '../../libs/constants/roles'
 import { getPermissions } from '../../libs/helpers/getLocalStorage'
 import { ROLE_DELETE, ROLE_UPDATE } from '../../libs/constants/Permissions'
-import { key } from 'localforage'
-import { roles } from 'aria-query'
 const RolePage = () => {
   const [roles, setRoles] = useState<Role[]>()
   const [total, setTotal] = useState<number>()
@@ -67,20 +56,26 @@ const RolePage = () => {
 
   const columns: ColumnsType<DataType> = [
     {
-      title: 'Name',
+      title: 'Tên role',
       dataIndex: 'name',
       key: 'name',
+      align: 'center',
+      className: 'w-[5%]',
       render: (text) => <span className="font-bold">{text}</span>,
     },
     {
-      title: 'Description',
+      title: 'Mô tả',
       dataIndex: 'description',
       key: 'description',
+      align: 'center',
+      // className: 'w-1/10',
     },
     {
-      title: 'Permissions',
+      title: 'Quyền truy cập',
       key: 'permissions',
       dataIndex: 'permissions',
+      align: 'center',
+      width: '50%',
       render: (_, { permissions }) => (
         <>
           {permissions.map((permission) => {
@@ -94,9 +89,11 @@ const RolePage = () => {
       ),
     },
     {
-      title: 'Action',
+      title: 'Hoạt động',
       dataIndex: 'id',
       key: 'id_d',
+      align: 'center',
+      width: '15%',
       render: (id) => {
         let cr_id = id
         return (
@@ -192,41 +189,46 @@ const RolePage = () => {
 
   return (
     <MainLayout>
-      {isloading ? (
-        <Spin className="flex justify-center" />
-      ) : (
-        <>
-          <Button
-            type="primary"
-            className="mb-5 bg-green-500 float-right"
-            onClick={() => {
-              navigate('/role/add')
-            }}
-          >
-            Create New Role
-          </Button>
+      <>
+        <Button
+          type="primary"
+          className="mb-5 bg-green-500 float-right"
+          onClick={() => {
+            navigate('/role/add')
+          }}
+        >
+          Thêm role mới
+        </Button>
+        {isloading ? (
+          <Spin className="flex justify-center" />
+        ) : (
           <Table
             columns={columns}
             dataSource={data}
             pagination={{
+              showSizeChanger: true,
               current: params.page,
-              onChange: (page) => {
-                setParams((params) => ({ ...params, page: page }))
+              onChange: (page, pageSize) => {
+                setParams((params) => ({
+                  ...params,
+                  page: page,
+                  limit: pageSize,
+                }))
               },
-              pageSize: 5,
+              pageSize: params.limit,
               total: total,
             }}
           />
-          <Modal
-            title="Delete Role"
-            open={isModalOpen}
-            onOk={() => handleDeleteRole()}
-            onCancel={handleCancel}
-          >
-            <p>"Are you sure to delete this role?"</p>
-          </Modal>
-        </>
-      )}
+        )}
+        <Modal
+          title="Delete Role"
+          open={isModalOpen}
+          onOk={() => handleDeleteRole()}
+          onCancel={handleCancel}
+        >
+          <p>"Are you sure to delete this role?"</p>
+        </Modal>
+      </>
     </MainLayout>
   )
 }

@@ -17,7 +17,6 @@ import {
   getPermissions,
 } from '../../../libs/helpers/getLocalStorage'
 import {
-  ATTENDANCE_ADD,
   ATTENDANCE_IMPORT,
   ATTENDANCE_LIST,
   EVENT_ADD,
@@ -29,11 +28,10 @@ import {
   TEAM_LIST,
   TEAM_LIST_SUB,
   USER_ADD,
-  USER_DELETE_MULTI,
-  USER_IMPORT,
+  USER_IMPORT_VIEW,
   USER_LIST,
+  USER_LIST_DELETED,
 } from '../../../libs/constants/Permissions'
-import { key } from 'localforage'
 
 const { Sider } = Layout
 
@@ -64,9 +62,13 @@ const Sidebar = () => {
             label: 'Add user',
             key: '/users/add',
           }),
-          checkChildrenSidebar(USER_IMPORT, {
+          checkChildrenSidebar(USER_IMPORT_VIEW, {
             label: 'Import user',
             key: '/users/import/',
+          }),
+          checkChildrenSidebar(USER_LIST_DELETED, {
+            label: 'User deleted',
+            key: '/users/deleted',
           }),
         ],
       }),

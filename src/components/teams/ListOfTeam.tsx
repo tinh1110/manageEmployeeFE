@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React from 'react'
+import { EditOutlined, DeleteOutlined } from '@ant-design/icons'
 import Filter from './Filter'
 import { Button, Pagination, Space, Spin, Table } from 'antd'
 import { Team } from './interface'
@@ -68,7 +69,7 @@ const ListOfTeam: React.FC<Props> = ({
       key: 'id',
     },
     {
-      title: 'Name',
+      title: 'Tên',
       dataIndex: 'name',
       key: 'name',
       render: (_, data) => (
@@ -78,24 +79,24 @@ const ListOfTeam: React.FC<Props> = ({
       ),
     },
     {
-      title: 'Details',
+      title: 'Mô tả',
       key: 'details',
       dataIndex: 'details',
     },
     {
-      title: 'Members',
+      title: 'Thành viên',
       key: 'total_member',
       dataIndex: 'total_member',
       align: 'center',
     },
     {
-      title: 'Created at',
+      title: 'Thời gian tạo',
       key: 'created_at',
       dataIndex: 'created_at',
       width: '12%',
     },
     {
-      title: 'Leader',
+      title: 'Hoạt động',
       dataIndex: 'leader',
       key: 'leader',
       render: (_, data) => (
@@ -112,19 +113,19 @@ const ListOfTeam: React.FC<Props> = ({
       render: (_, data) => (
         <Space size="middle">
           {permissionsInfo &&
-            permissionsUpdate.every((element: string) =>
-              permissionsInfo.includes(element),
-            ) && (
-              <Button danger type="primary" onClick={() => deleteTeam(data.id)}>
-                Delete
-              </Button>
-            )}
-          {permissionsInfo &&
             permissionsDelete.every((element: string) =>
               permissionsInfo.includes(element),
             ) && (
               <Button type="primary" onClick={() => updateTeam(data.id)}>
-                Update
+                <EditOutlined />
+              </Button>
+            )}
+          {permissionsInfo &&
+            permissionsUpdate.every((element: string) =>
+              permissionsInfo.includes(element),
+            ) && (
+              <Button danger type="primary" onClick={() => deleteTeam(data.id)}>
+                <DeleteOutlined />
               </Button>
             )}
         </Space>
@@ -139,7 +140,7 @@ const ListOfTeam: React.FC<Props> = ({
       key: 'id',
     },
     {
-      title: 'Name',
+      title: 'Tên',
       dataIndex: 'name',
       key: 'name',
       render: (_, data) => (
@@ -149,22 +150,22 @@ const ListOfTeam: React.FC<Props> = ({
       ),
     },
     {
-      title: 'Details',
+      title: 'Mô tả',
       key: 'details',
       dataIndex: 'details',
     },
     {
-      title: 'Sub Team',
+      title: 'Team con',
       key: 'total_subteam',
       dataIndex: 'total_subteam',
     },
     {
-      title: 'Members',
+      title: 'Thành viên',
       key: 'total_member',
       dataIndex: 'total_member',
     },
     {
-      title: 'Created at',
+      title: 'Thời gian tạo',
       key: 'created_at',
       dataIndex: 'created_at',
       align: 'center',
@@ -181,26 +182,26 @@ const ListOfTeam: React.FC<Props> = ({
       ),
     },
     {
-      title: 'Action',
+      title: 'Hoạt động',
       key: 'action',
       align: 'center',
       width: '10%',
       render: (_, data) => (
         <Space size="middle">
           {permissionsInfo &&
-            permissionsUpdate.every((element: string) =>
-              permissionsInfo.includes(element),
-            ) && (
-              <Button danger type="primary" onClick={() => deleteTeam(data.id)}>
-                Delete
-              </Button>
-            )}
-          {permissionsInfo &&
             permissionsDelete.every((element: string) =>
               permissionsInfo.includes(element),
             ) && (
               <Button type="primary" onClick={() => updateTeam(data.id)}>
-                Update
+                <EditOutlined />
+              </Button>
+            )}
+          {permissionsInfo &&
+            permissionsUpdate.every((element: string) =>
+              permissionsInfo.includes(element),
+            ) && (
+              <Button danger type="primary" onClick={() => deleteTeam(data.id)}>
+                <DeleteOutlined />
               </Button>
             )}
         </Space>
@@ -219,12 +220,13 @@ const ListOfTeam: React.FC<Props> = ({
 
       <Button
         type="primary"
+        className="mb-5 bg-green-500 float-right"
         onClick={() => {
           navigate('/teams/create', { state: { teamId } })
         }}
         style={{ marginBottom: 10 }}
       >
-        Create New Team
+        Thêm team mới
       </Button>
       {isLoading ? (
         <Spin className="flex justify-center" />
@@ -252,7 +254,7 @@ const ListOfTeam: React.FC<Props> = ({
         total={total}
         showSizeChanger={true}
         onChange={onChange}
-        style={{ marginLeft: 500, marginTop: 10 }}
+        className="float-right mt-10"
       />
     </>
   )

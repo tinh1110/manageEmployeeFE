@@ -152,7 +152,7 @@ const ListSub = () => {
               navigate(-1)
             }}
           >
-            Back
+            Quay lại
           </Button>
           <ListOfTeam
             listTeam={listSubTeam}

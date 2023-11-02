@@ -48,7 +48,7 @@ const AddRolePage = () => {
 
   return (
     <MainLayout>
-      <h1 className="text-sky-500 flex justify-center">Thêm role </h1>
+      <h1 className="text-sky-500 flex justify-center">Thêm role mới</h1>
       <Form name="update-profile" layout="vertical" form={antForm}>
         <Row>
           <Col span={12}>
@@ -61,11 +61,7 @@ const AddRolePage = () => {
             </Form.Item>
           </Col>
         </Row>
-        <Form.Item
-          name="description"
-          className="ml-10 mr-10 "
-          label="Description"
-        >
+        <Form.Item name="description" className="ml-10 mr-10 " label="Mô tả">
           <Input.TextArea rows={3} />
         </Form.Item>
         <Form.Item className="flex justify-center">

@@ -1,4 +1,4 @@
-import React from 'react'
+import { DeleteOutlined } from '@ant-design/icons'
 import { useEffect, useState } from 'react'
 import { ColumnsType } from 'antd/es/table'
 import { Space, Button, Modal, Table, message, Spin } from 'antd'
@@ -56,7 +56,7 @@ const ListMemberOfTeam = () => {
 
   const getInfoTeam = async () => {
     const res = await axiosInstance.get(`/team/get-detail-team/${id}`)
-    setTitle(`${res.data.data.name}'s Members`)
+    setTitle(`${res.data.data.name}`)
   }
 
   const handleSearch = (data: string) => {
@@ -91,40 +91,40 @@ const ListMemberOfTeam = () => {
       key: 'id',
     },
     {
-      title: 'Name',
+      title: 'Tên',
       dataIndex: 'name',
       key: 'name',
     },
     {
-      title: 'Details',
-      key: 'details',
-      dataIndex: 'details',
+      title: 'Ngày sinh',
+      key: 'dob',
+      dataIndex: 'dob',
     },
     {
-      title: 'Phone Number',
+      title: 'Số điện thoại',
       dataIndex: 'phone_number',
       key: 'leader',
       align: 'center',
       width: '12%',
     },
     {
-      title: 'Gender',
+      title: 'Giới tính',
       dataIndex: 'gender',
       key: 'gender',
       align: 'center',
       width: '10%',
       render: (gender: number) => {
         if (gender === 1) {
-          return <span>Male</span>
+          return <span>Nam</span>
         } else if (gender === 2) {
-          return <span>Female</span>
+          return <span>Nữ</span>
         } else {
-          return <span>Other</span>
+          return <span>Khác</span>
         }
       },
     },
     {
-      title: 'Action',
+      title: 'Hoạt động',
       key: 'action',
       align: 'center',
       width: '10%',
@@ -135,7 +135,7 @@ const ListMemberOfTeam = () => {
               permissionsInfo.includes(element),
             ) && (
               <Button danger type="primary" onClick={() => deleteUser(data.id)}>
-                Delete
+                <DeleteOutlined />
               </Button>
             )}
         </Space>
@@ -189,7 +189,7 @@ const ListMemberOfTeam = () => {
             navigate(-1)
           }}
         >
-          Back
+          Quay lại
         </Button>
         <Button
           type="primary"
@@ -198,7 +198,7 @@ const ListMemberOfTeam = () => {
             setShowModalAddMem(true)
           }}
         >
-          Add member
+          Thêm thành viên
         </Button>
 
         {isLoading ? (
@@ -214,21 +214,24 @@ const ListMemberOfTeam = () => {
           onCancel={() => {
             setShowModalAddMem(false)
           }}
-          title={'ADD USERS'}
+          title={'Thêm thành viên'}
           footer={[
             <Button
-              style={{ backgroundColor: 'green' }}
+              type="dashed"
+              className="w-[110px] text-white m-5 bg-green-500 items-center rounded-full"
+              htmlType="submit"
               onClick={() => AddUser()}
             >
-              Add
+              Thêm
             </Button>,
             <Button
-              color="secondary"
+              type="dashed"
+              className="w-[110px] text-white bg-red-500 m-5 items-center rounded-full"
               onClick={() => {
                 setShowModalAddMem(false)
               }}
             >
-              Cancel
+              Hủy
             </Button>,
           ]}
         >
