@@ -217,10 +217,11 @@ const ImportSearch: React.FC<Props> = ({ isLoadPage, setIsLoadPage }) => {
         size="large"
         pagination={{
           current: params.page,
-          onChange: (page: number) => {
-            setParams((params) => ({ ...params, page: page }))
+          showSizeChanger: true,
+          onChange: (page: number, pageSize) => {
+            setParams((params) => ({ ...params, page: page, limit: pageSize }))
           },
-          pageSize: 5,
+          pageSize: params.limit,
           total: total,
         }}
         dataSource={data}

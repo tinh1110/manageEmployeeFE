@@ -59,7 +59,7 @@ const DeletedUsers = () => {
       title: 'Store Record',
       content: `Are you sure you want to store ${record.name}?`,
       okText: 'Yes',
-      okType: 'dashed',
+      okType: 'primary',
       cancelText: 'No',
       onOk() {
         handleRestore(record.id)

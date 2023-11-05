@@ -17,6 +17,7 @@ import { userApi, userApiDelete } from '../../services/request/user'
 import { getPermissions } from '../../libs/helpers/getLocalStorage'
 import { USER_DELETE, USER_UPDATE } from '../../libs/constants/Permissions'
 import { getRole } from '../../services/request/user'
+import filter from '../../components/user/filter'
 
 const ListUsers = () => {
   const permissionsInfo = getPermissions()
@@ -204,7 +205,16 @@ const ListUsers = () => {
             navigate('/users/add')
           }}
         >
-          Thêm nhân viên mới
+          Thêm nhân viên
+        </Button>
+        <Button
+          type="primary"
+          className="m-5 bg-slate-600 float-right"
+          onClick={() => {
+            navigate('/users/deleted')
+          }}
+        >
+          Nhân viên đã xóa
         </Button>
         {isLoading ? (
           <Spin className="flex justify-center" />
@@ -215,8 +225,9 @@ const ListUsers = () => {
             rowKey="id"
             bordered
             pagination={{
-              defaultPageSize: 10,
+              pageSize: parseInt(filter?.limit || '10'),
               showSizeChanger: true,
+              current: parseInt(filter.page),
               total: totalUser,
               onChange: (page, pageSize) => {
                 setFilter((filter: any) => ({
