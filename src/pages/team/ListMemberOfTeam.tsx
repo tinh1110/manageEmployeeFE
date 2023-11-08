@@ -94,6 +94,11 @@ const ListMemberOfTeam = () => {
       title: 'Tên',
       dataIndex: 'name',
       key: 'name',
+      render: (_, data) => (
+        <Space size="middle">
+          <a onClick={() => navigate(`/profile/${data.id}`)}>{data.name}</a>
+        </Space>
+      ),
     },
     {
       title: 'Ngày sinh',
@@ -144,7 +149,7 @@ const ListMemberOfTeam = () => {
   ]
 
   const getAllUserVer2 = async () => {
-    const res = await axiosInstance.get(`/user/get-all`)
+    const res = await axiosInstance.get(`/get-all`)
     setListAllUser(res.data.data)
   }
 

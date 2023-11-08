@@ -37,7 +37,7 @@ export interface TypeParamsImport {
   limit?: number
 }
 export const getAdmin = () => {
-  return axiosInstance.get('/user/admin')
+  return axiosInstance.get('/admin')
 }
 export type ImportUser = {
   file: File

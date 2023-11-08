@@ -1,29 +1,29 @@
-import Sidebar from '../sidebar';
-import { Layout, theme } from "antd";
-import { Content } from 'antd/es/layout/layout';
-import React from 'react';
-import CustomHeader from '../header';
-import { CollapsedProvider } from '../../../libs/contexts/CollapsedContext';
+import Sidebar from '../sidebar'
+import { Layout, theme } from 'antd'
+import { Content } from 'antd/es/layout/layout'
+import React from 'react'
+import CustomHeader from '../header'
+import { CollapsedProvider } from '../../../libs/contexts/CollapsedContext'
 
 interface Props {
-  children?: React.ReactNode,
+  children?: React.ReactNode
 }
 
 const MainLayout = ({ children }: Props) => {
   const {
-    token: { colorBgContainer }
-  } = theme.useToken();
+    token: { colorBgContainer },
+  } = theme.useToken()
 
   return (
     <CollapsedProvider>
       <div id="main-layout">
-        <Layout>
-          <Sidebar/>
-          <Layout>
+        <Layout hasSider>
+          <Sidebar />
+          <Layout style={{ position: 'relative' }}>
             <CustomHeader colorBgContainer={colorBgContainer}></CustomHeader>
             <Content
               style={{
-                margin: "24px 16px",
+                margin: '24px 16px',
                 padding: 24,
                 minHeight: 280,
                 background: colorBgContainer,

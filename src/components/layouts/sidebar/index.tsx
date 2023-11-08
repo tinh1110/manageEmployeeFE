@@ -152,6 +152,14 @@ const Sidebar = () => {
         trigger={null}
         collapsible
         collapsed={context.collapsed}
+        style={{
+          overflow: 'auto',
+          height: '100vh',
+          position: 'sticky',
+          left: 0,
+          top: 0,
+          bottom: 0,
+        }}
       >
         <SideBarLogo />
         <Menu

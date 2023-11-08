@@ -7,19 +7,19 @@ export const USER_DELETE = ['user.delete']
 export const USER_FORCE_DELETE = ['user.force_delete']
 export const USER_DELETE_MULTI = ['user.force_delete_multi']
 export const USER_RESTORE = ['user.restore']
-export const USER_UPDATE = ['user.show', 'user.update']
+export const USER_UPDATE = ['user.update']
 export const USER_IMPORT = ['user.import_user', 'user.export_template']
-export const USER_IMPORT_VIEW = ['user.import_view', 'user.getListAdmin']
+export const USER_IMPORT_VIEW = ['user.import_view']
 
-export const EVENT_LIST = ['event.getType', 'event.list']
-export const EVENT_ADD = ['event.getType', 'event.store']
+export const EVENT_LIST = ['event.list']
+export const EVENT_ADD = ['event.store']
 export const EVENT_DELETE = ['event.delete']
-export const EVENT_UPDATE = ['event.edit', 'event.update']
+export const EVENT_UPDATE = ['event.update']
 
 export const ROLE_LIST = ['role.list']
 export const ROLE_ADD = ['role.create']
 export const ROLE_DELETE = ['role.delete']
-export const ROLE_UPDATE = ['role.detail', 'role.update']
+export const ROLE_UPDATE = ['role.update']
 
 export const TEAM_LIST = ['team.list']
 export const TEAM_ADD = ['team.create', 'team.getAllMainTeam']
@@ -37,7 +37,7 @@ export const ATTENDANCE_UPDATE = ['attendance.update', 'attendance.show']
 export const ATTENDANCE_REVIEW = ['attendance.accept', 'attendance.reject']
 export const ATTENDANCE_EXPORT = ['attendance.export']
 export const ATTENDANCE_IMPORT = [
-  'attendance.importAttendance',
+  'attendance.import',
   'attendance.exportTemplate',
 ]
-export const ATTENDANCE_EXPORT_TEMPLATE = ['attendance.exportTemplate']
+export const ATTENDANCE_EXPORT_VIEW = ['attendance.importedList']

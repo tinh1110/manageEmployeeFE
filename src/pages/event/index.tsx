@@ -1,23 +1,11 @@
 import MainLayout from '../../components/layouts/main'
-import { EditOutlined, DeleteOutlined } from '@ant-design/icons'
 import { useEffect, useState } from 'react'
-import {
-  Avatar,
-  Button,
-  Input,
-  List,
-  Select,
-  Modal,
-  notification,
-  Spin,
-  Pagination,
-} from 'antd'
+import { Button, Input, List, Select, notification, Spin } from 'antd'
 import { deleteEvent, event, getTypeEvent } from '../../services/event'
 import { TypeEvent, TypeParamsEvent } from '../../types/event'
 import { getPermissions } from '../../libs/helpers/getLocalStorage'
-import { Link, useNavigate } from 'react-router-dom'
-import { EVENT_DELETE, EVENT_UPDATE } from '../../libs/constants/Permissions'
-import console from 'console'
+import { useNavigate } from 'react-router-dom'
+import EventItem from './eventItem'
 const { Search } = Input
 
 const EventPage = () => {
@@ -233,94 +221,15 @@ const EventPage = () => {
             dataSource={res}
             renderItem={(item) => {
               return (
-                <List.Item>
-                  <div className=" w-full h-full mt-10">
-                    <div className="flex">
-                      <div className="w-[20%] h-[10%] ">
-                        <div className="flex">
-                          {
-                            <Avatar
-                              src={item?.created_by?.avatar}
-                              className="w-[40px] h-[40px]"
-                            />
-                          }
-                          <div className="">
-                            <p className="text-[15px] font-bold m-1">
-                              {item?.created_by?.name}
-                            </p>
-                            <span className="text-[10px] m-1">
-                              {item?.created_at}
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="w-[60%] h-[10%] flex justify-center">
-                        <h3>
-                          <p>{item?.name}</p>
-                        </h3>
-                      </div>
-                      <div className="w-[15%] h-[10%] flex justify-center">
-                        {permissionsInfo &&
-                          EVENT_UPDATE.every((element: string) =>
-                            permissionsInfo.includes(element),
-                          ) && (
-                            <Link to={`/event/update/${item?.id}`}>
-                              <Button
-                                type="primary"
-                                className=" text-white  bg-sky-500 m-1 rounded-full"
-                                htmlType="submit"
-                              >
-                                <EditOutlined />
-                              </Button>
-                            </Link>
-                          )}
-                        {permissionsInfo &&
-                          EVENT_DELETE.every((element: string) =>
-                            permissionsInfo.includes(element),
-                          ) && (
-                            <>
-                              <Button
-                                type="primary"
-                                onClick={() => {
-                                  showModal()
-                                  setIdDelete(item?.id)
-                                }}
-                                className=" text-white bg-red-500 m-1 rounded-full"
-                              >
-                                <DeleteOutlined />
-                              </Button>
-                              <Modal
-                                title="Delete Event"
-                                open={isModalOpen}
-                                onOk={() => handleDeleteEvent()}
-                                onCancel={handleCancel}
-                              >
-                                <p>"Are you sure to delete this event?"</p>
-                              </Modal>
-                            </>
-                          )}
-                      </div>
-                    </div>
-                    <div className="w-[100%] h-[90%] ">
-                      <p>{item?.description}</p>
-                      <p>Địa điểm: {item?.location}</p>
-                      <p>
-                        Thời gian: {item?.start_time} - {item?.end_time}
-                      </p>
-                      {item?.link && <a href={item?.link}>link chi tiết</a>}
-                      <br />
-                      {item?.image &&
-                        item?.image.map((item1, index) => (
-                          <img
-                            key={index}
-                            src={item1}
-                            className="w-[20%] h-[200px] m-5"
-                            alt="a của tỉnh"
-                          />
-                        ))}
-                    </div>
-                  </div>
-                </List.Item>
+                <EventItem
+                  item={item}
+                  permissionsInfo={permissionsInfo}
+                  showModal={showModal}
+                  setIdDelete={setIdDelete}
+                  handleDeleteEvent={handleDeleteEvent}
+                  isModalOpen={isModalOpen}
+                  handleCancel={handleCancel}
+                />
               )
             }}
           />

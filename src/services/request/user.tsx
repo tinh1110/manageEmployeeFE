@@ -370,7 +370,7 @@ export const GetImportInfor = async (
       .then((response) => {
         return response.data.data
       })
-    const importStatus = (await importData[0].status) == 1
+    const importStatus = (await importData[0].status) === 1
     if (importStatus) {
       setLoopTime(false)
       setLoadings(false)
@@ -384,26 +384,5 @@ export const GetImportInfor = async (
   } catch (errors: any) {
     // setLoopTime(1000)
     console.log('Error: ', errors)
-  }
-}
-
-export const ImportInfor = async (
-  data: any,
-  { setLoopTime, setLoadings }: { setLoopTime: any; setLoadings: any },
-) => {
-  try {
-    const importData = await axiosInstance
-      .post(`/user/importUser`, data)
-      .then((response) => {
-        // console.log(response)
-      })
-  } catch (errors: any) {
-    console.log('Error: ', errors?.response?.data?.errors)
-    const bugs = errors?.response?.data?.errors
-    for (const key in bugs) {
-      message.error(bugs[key])
-    }
-    setLoopTime(false)
-    setLoadings(false)
   }
 }

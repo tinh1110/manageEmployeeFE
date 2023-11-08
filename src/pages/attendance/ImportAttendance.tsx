@@ -19,7 +19,7 @@ import axiosInstance from '../../services/request/base'
 import TextArea from 'antd/es/input/TextArea'
 import { Dayjs } from 'dayjs'
 import { getPermissions } from '../../libs/helpers/getLocalStorage'
-import { ATTENDANCE_EXPORT_TEMPLATE } from '../../libs/constants/Permissions'
+import { ATTENDANCE_EXPORT_VIEW } from '../../libs/constants/Permissions'
 
 export interface ImportAttendances {
   id: number
@@ -296,7 +296,7 @@ const ImportAttendance = () => {
         </div>
         <div className={'mr-6 inline'}>
           {permissionsInfo &&
-            ATTENDANCE_EXPORT_TEMPLATE.every((element: string) =>
+            ATTENDANCE_EXPORT_VIEW.every((element: string) =>
               permissionsInfo.includes(element),
             ) && (
               <button

@@ -1,11 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import {
-  BrowserRouter as Router,
-  Route,
-  Link,
-  redirect,
-  useNavigate,
-} from 'react-router-dom'
+import { BrowserRouter as Router, Link, useNavigate } from 'react-router-dom'
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons'
 import { Table, Space, Modal, Button, Spin } from 'antd'
 import type { ColumnsType } from 'antd/es/table'
@@ -17,7 +11,6 @@ import { userApi, userApiDelete } from '../../services/request/user'
 import { getPermissions } from '../../libs/helpers/getLocalStorage'
 import { USER_DELETE, USER_UPDATE } from '../../libs/constants/Permissions'
 import { getRole } from '../../services/request/user'
-import filter from '../../components/user/filter'
 
 const ListUsers = () => {
   const permissionsInfo = getPermissions()
