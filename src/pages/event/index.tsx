@@ -159,7 +159,7 @@ const EventPage = () => {
   }
   const permissionsInfo = getPermissions()
   return (
-    <MainLayout>
+    <>
       <div className="flex">
         <Search
           placeholder="event name"
@@ -235,7 +235,7 @@ const EventPage = () => {
           />
         </div>
       )}
-    </MainLayout>
+    </>
   )
 }
 export default EventPage

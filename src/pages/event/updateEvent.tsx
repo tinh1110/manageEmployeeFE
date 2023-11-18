@@ -250,7 +250,7 @@ const UpdateEventPage = () => {
     setFileDelete([...fileDelete, name])
   }
   return (
-    <MainLayout>
+    <>
       <h1 className="text-sky-500 flex justify-center">Sửa event </h1>
       {isLoading ? (
         <Spin className="flex justify-center" />
@@ -381,7 +381,7 @@ const UpdateEventPage = () => {
           </Form.Item>
         </Form>
       )}
-    </MainLayout>
+    </>
   )
 }
 export default UpdateEventPage

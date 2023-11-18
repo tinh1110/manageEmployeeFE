@@ -5,17 +5,17 @@ import { ROLE_ADD, ROLE_LIST, ROLE_UPDATE } from '../Permissions'
 
 const roleRouter = [
   {
-    path: '/role/',
+    path: '/roles/',
     element: <RolePage />,
     permissions: ROLE_LIST,
   },
   {
-    path: '/role/add',
+    path: '/roles/add',
     element: <AddRolePage />,
     permissions: ROLE_ADD,
   },
   {
-    path: '/role/update/:id',
+    path: '/roles/update/:id',
     element: <UpdateRolePage />,
     permissions: ROLE_UPDATE,
   },

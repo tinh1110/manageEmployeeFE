@@ -184,7 +184,7 @@ const ListMemberOfTeam = () => {
   }
 
   return (
-    <MainLayout>
+    <>
       <div>
         <div className="... flex items-center justify-center">
           <h1>{title}</h1>
@@ -258,7 +258,7 @@ const ListMemberOfTeam = () => {
           onDelete={() => onRemove(newMem)}
         />
       )}
-    </MainLayout>
+    </>
   )
 }
 

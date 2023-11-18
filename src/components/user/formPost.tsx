@@ -110,7 +110,6 @@ const FormPost = (props: any) => {
         id,
       )
 
-      console.log(resultUpdate)
       if (resultUpdate !== undefined) {
         navigate('/users/')
       } else {

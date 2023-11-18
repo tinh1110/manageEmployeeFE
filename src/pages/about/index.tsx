@@ -42,9 +42,7 @@ class ClassComponent extends PureComponent {
       },
     ],
   }
-  onSubmitAction = (data: any) => {
-    console.log('this comment was posted!,data', data)
-  }
+  onSubmitAction = (data: any) => {}
 
   render() {
     return (

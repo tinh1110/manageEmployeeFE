@@ -185,7 +185,7 @@ const AddEventPage = () => {
     setFile(updatedFile)
   }
   return (
-    <MainLayout>
+    <>
       <h1 className="text-sky-500 flex justify-center">Thêm event </h1>
       {isLoading ? (
         <Spin className="flex justify-center" />
@@ -306,7 +306,7 @@ const AddEventPage = () => {
           </Form>
         </>
       )}
-    </MainLayout>
+    </>
   )
 }
 export default AddEventPage

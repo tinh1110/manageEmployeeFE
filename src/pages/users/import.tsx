@@ -73,12 +73,10 @@ const UsersImport = () => {
         link.click()
         document.body.removeChild(link)
       })
-    } catch (err: any) {
-      console.log(err)
-    }
+    } catch (err: any) {}
   }
   return (
-    <MainLayout>
+    <>
       {permissionsInfo &&
         USER_IMPORT.every((element: string) =>
           permissionsInfo.includes(element),
@@ -142,7 +140,7 @@ const UsersImport = () => {
           </>
         )}
       <ImportSearch isLoadPage={isLoadPage} setIsLoadPage={setIsLoadPage} />
-    </MainLayout>
+    </>
   )
 }
 

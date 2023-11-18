@@ -5,8 +5,6 @@ import { useEffect, useState } from 'react'
 import { Spin, notification } from 'antd'
 import {
   addComment,
-  comment,
-  commentChildren,
   commentEvent,
   deleteComment,
   updateComment,
@@ -24,27 +22,13 @@ const EventComment: React.FC<IProps> = ({ event_id }) => {
     handleGetEventComment()
   }, [comment])
   useEffect(() => {
-    // Initialize Pusher with your app key and options
     const pusher = new Pusher('718f9af2e483f5b858af', {
       cluster: 'ap1',
-      // Add any additional options or configurations here
     })
-    // Subscribe to the desired Pusher channel
     const channel = pusher.subscribe('comment')
-    // Bind to the event you want to listen to
     channel.bind('comment', (data: any) => {
       setComment(data.comment)
-      // Handle the received event data
-      console.log('Received event:', data.comment)
-      console.log('123', comment)
-      // Perform any other desired actions with the event data
     })
-
-    // Clean up the Pusher subscription when the component unmounts
-    // return () => {
-    //   // channel.unbind('imported_users')
-    //   // pusher.unsubscribe('private-imported_users')
-    // }
   }, [])
 
   const handleGetEventComment = async () => {
@@ -122,7 +106,7 @@ const EventComment: React.FC<IProps> = ({ event_id }) => {
       const comment = {
         body: data.text,
         user_id: data.userId,
-        parent_id: data?.parentOfRepliedCommentId,
+        parent_id: data?.repliedToCommentId,
         event_id: event_id,
       }
       const response = await addComment(comment)
@@ -231,7 +215,7 @@ const EventComment: React.FC<IProps> = ({ event_id }) => {
           currentUser={{
             currentUserId: user.id,
             currentUserImg: user?.avatar || './user.png',
-            currentUserProfile: '',
+            currentUserProfile: `http://localhost:3000/profile/${user.id}`,
             currentUserFullName: user.name,
           }}
           logIn={{
@@ -241,6 +225,7 @@ const EventComment: React.FC<IProps> = ({ event_id }) => {
           commentData={res}
           inputStyle={{ border: '1px solid rgb(208 208 208)' }}
           removeEmoji={true}
+          // replyInputStyle={{ display: 'none' }}
           titleStyle={{ fontSize: '14px' }}
           onSubmitAction={(data: {
             userId: number

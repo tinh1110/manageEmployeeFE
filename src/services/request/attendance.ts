@@ -65,3 +65,26 @@ export const exportAttendanceAPI = (searchParams: URLSearchParams) => {
       window.URL.revokeObjectURL(url)
     })
 }
+
+export const exportAllAttendanceAPI = (searchParams: URLSearchParams) => {
+  return axiosInstance
+    .get(`/attendance/exportAll`, {
+      params: searchParams,
+      responseType: 'blob',
+    })
+    .then((value: any) => {
+      // Create a URL for the blob
+      const url = window.URL.createObjectURL(value.data)
+
+      // Create an <a> element to trigger the download
+      const a = document.createElement('a')
+      a.href = url
+      a.download = 'attendance.xlsx'
+
+      // Trigger a click event to download the file
+      a.click()
+
+      // Cleanup
+      window.URL.revokeObjectURL(url)
+    })
+}

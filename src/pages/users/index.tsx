@@ -185,7 +185,7 @@ const ListUsers = () => {
   ]
 
   return (
-    <MainLayout>
+    <>
       <>
         <div className="mb-12">
           <h2>Danh sách nhân viên</h2>
@@ -233,7 +233,7 @@ const ListUsers = () => {
           />
         )}
       </>
-    </MainLayout>
+    </>
   )
 }
 

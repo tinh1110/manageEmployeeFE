@@ -188,7 +188,7 @@ const RolePage = () => {
     })) ?? []
 
   return (
-    <MainLayout>
+    <>
       <>
         <Button
           type="primary"
@@ -229,7 +229,7 @@ const RolePage = () => {
           <p>"Are you sure to delete this role?"</p>
         </Modal>
       </>
-    </MainLayout>
+    </>
   )
 }
 

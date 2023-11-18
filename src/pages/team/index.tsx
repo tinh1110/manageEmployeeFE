@@ -142,7 +142,7 @@ const TeamPage = () => {
   }
 
   return (
-    <MainLayout>
+    <>
       <ListOfTeam
         listTeam={listTeam}
         filter={filter}
@@ -185,7 +185,7 @@ const TeamPage = () => {
           onDelete={() => onRemove(teamId)}
         />
       )}
-    </MainLayout>
+    </>
   )
 }
 

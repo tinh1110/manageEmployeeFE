@@ -40,9 +40,9 @@ export interface Attendance {
   created_by?: string
   reason?: string
   img?: any
+  total_hours?: any
   result?: string
   managers?: Array<User>
   status?: any
-  total_hours?: number
   approver?: string
 }

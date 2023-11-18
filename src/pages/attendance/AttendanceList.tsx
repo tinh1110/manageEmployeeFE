@@ -1,31 +1,33 @@
-import MainLayout from '../../components/layouts/main'
 import { DownloadOutlined } from '@ant-design/icons'
 import {
-  Switch,
   Form,
   Select,
   Button,
-  notification,
   Spin,
   DatePicker,
   Segmented,
-  Space,
-  Input,
   Pagination,
-  Table,
+  notification,
 } from 'antd'
 import AttendanceTableManager from '../../components/attendance/AttendanceTableManager'
 import { Attendance } from '../../types/attendance'
 import { useEffect, useState } from 'react'
 import { UserSelect } from '../../components/ui/UserSelect'
-// import { getAllUserAPI } from '../../services/request/user'
-import { User } from '../../types/user'
 import { PERIOD } from '../../libs/constants/Attendance'
-// import { attendanceListPaginateAPI } from '../../services/request/attendance'
 import { useSearchParams } from 'react-router-dom'
-import attendance from '.'
-import Spinner from '../../components/user/spin'
-import { LIST_BO_CONFIRM, LIST_STATUS } from '../../libs/constants/Options'
+
+import { LIST_ATTENDANCE_STATUS } from '../../libs/constants/Options'
+import {
+  allUser,
+  attendanceList,
+  attendanceType,
+} from '../../services/request/attemdanceList'
+import {
+  exportAllAttendanceAPI,
+  exportAttendanceAPI,
+} from '../../services/request/attendance'
+import { type } from '@testing-library/user-event/dist/type'
+import { number } from 'yup'
 
 const { RangePicker } = DatePicker
 
@@ -33,33 +35,60 @@ export const AttendanceList = () => {
   const [form] = Form.useForm()
   const [selectedNumber, setSelectedNumber] = useState<number>(0)
   const [users, setUsers] = useState<any>([])
-  const [searchParams, setSearchParams] = useSearchParams()
+  const [types, setTypes] = useState<any>([])
+  const [total, setTotal] = useState<any>(0)
+  const [searchParams, setSearchParams] = useState<any>({
+    time: PERIOD.TODAY,
+    type_id: null,
+    ids: [],
+    status: null,
+    start: null,
+    end: null,
+  })
   const [attendance, setAttendance] = useState<Attendance[]>([])
-  const [totalRecords, setTotalRecords] = useState<number>()
   const [pageLimit, setPageLimit] = useState<number>(10)
   const [currentPage, setCurrentPage] = useState<number>(1)
   const [loading, setLoading] = useState<boolean>(false)
-  const [period, setPeriod] = useState<number>(PERIOD.THIS_WEEK)
+  const [period, setPeriod] = useState<string>(PERIOD.TODAY)
 
-  const getAttendancePaginate = async (searchParams: URLSearchParams) => {
-    // const res = await attendanceListPaginateAPI(searchParams)
-    // setAttendance(res.data.data.records.data)
-    // setTotalRecords(res.data.data.total)
-    // setCurrentPage(res.data.data.page)
-    // setPageLimit(res.data.data.limit)
-    // setLoading(false)
+  const getAttendancePaginate = async (params: any) => {
+    setLoading(true)
+    try {
+      const response = await attendanceList(params)
+      setLoading(false)
+      setAttendance(response.data.data.records)
+      setTotal(response.data.data.total)
+    } catch (err: any) {
+      if (err.response.data.errors) {
+        const errorMessages = Object.values(err.response.data.errors)
+          .map((message) => `- ${message}<br>`)
+          .join('')
+        const key = 'updatable'
+        notification['error']({
+          key,
+          duration: 5,
+          message: 'Get attendace failed',
+          description: (
+            <div
+              dangerouslySetInnerHTML={{ __html: errorMessages }}
+              className="text-red-500"
+            />
+          ),
+        })
+      } else {
+        notification['error']({
+          message: 'Get Attendance failed',
+          duration: 5,
+          description: err.response.data.message,
+        })
+      }
+      setLoading(false)
+    }
   }
 
   useEffect(() => {
-    // setLoading(true)
-    // getAttendancePaginate(searchParams)
+    getAttendancePaginate(searchParams)
   }, [searchParams])
-
-  useEffect(() => {
-    const params = new URLSearchParams()
-    params.append('period', period.toString())
-    setSearchParams(params)
-  }, [])
 
   const paginationChangeHandler = (pageNumber: number, sizeNumber: number) => {
     const params = new URLSearchParams()
@@ -68,6 +97,7 @@ export const AttendanceList = () => {
       setCurrentPage(pageNumber)
     }
     if (sizeNumber) {
+      setPageLimit(sizeNumber)
       params.set('limit', sizeNumber.toString())
     }
     setSearchParams(params)
@@ -92,108 +122,89 @@ export const AttendanceList = () => {
     },
   ]
 
-  const segmentChange = (value: any) => {}
-
-  const fakeData: Array<Attendance> = [
-    {
-      id: 1,
-      created_by: 'ABC',
-      type_name: 'Xin nghỉ',
-      start: '2023-11-02',
-      end: '2023-11-05',
-      total_hours: 10.5,
-      status: 0,
-      approver: 'BCA',
-    },
-    {
-      id: 2,
-      created_by: 'ABC',
-      type_name: 'Xin nghỉ',
-      start: '2023-11-02',
-      end: '2023-11-05',
-      total_hours: 10.5,
-      status: 0,
-      approver: 'BCA',
-    },
-    {
-      id: 3,
-      created_by: 'ZZZ',
-      type_name: 'Xin nghỉ',
-      start: '2023-11-06',
-      end: '2023-11-09',
-      total_hours: 10.5,
-      status: 0,
-      approver: 'AAA',
-    },
-  ]
+  const segmentChange = (value: any) => {
+    setPeriod(value)
+    setSearchParams((prevUser: any) => ({
+      ...prevUser,
+      time: value,
+    }))
+  }
 
   useEffect(() => {
-    // getAllUsers()
+    getAllUsers()
+    getType()
   }, [])
-
   const getAllUsers = async () => {
-    // const res = await getAllUserAPI()
-    // setUsers(res.data.data)
+    const res = await allUser()
+    setUsers(res.data.data)
+  }
+  const getType = async () => {
+    const res = await attendanceType()
+    setTypes(res.data.data)
   }
 
   const submitFormHandler = (value: any) => {
-    console.log(value)
-    const params = new URLSearchParams(searchParams)
-
-    if (value.period !== null && value.period !== period) {
-      params.delete('period')
-      setPeriod(value.period)
-      params.append('period', value.period)
-    }
-
-    if (value.created_at !== null && value.created_at !== undefined) {
-      params.append('created_at', value.created_at.format('YYYY-MM-DD'))
-    } else {
-      params.delete('created_at')
-    }
-
+    const ids: number[] = []
+    value.create_by_id.forEach((id: number) => {
+      ids.push(id)
+    })
+    let start: any = null
+    let end: any = null
     if (value.start_time !== null && value.start_time !== undefined) {
-      params.append('start_time', value.start_time.format('YYYY-MM-DD'))
-    } else {
-      params.delete('start_time')
+      start = value.start_time[0].format('YYYY-MM-DD')
+      end = value.start_time[1].format('YYYY-MM-DD')
     }
+    setSearchParams((prevUser: any) => ({
+      ...prevUser,
+      start: start,
+      end: end,
+      status: value.status,
+      type_id: value.type,
+      ids: ids,
+    }))
 
-    if (
-      value.status !== null &&
-      value.status !== undefined &&
-      value.status !== ''
-    ) {
-      params.append('status', value.status)
-    } else {
-      params.delete('status')
-    }
+    // const params = []
 
-    if (
-      value.bo_confirm !== null &&
-      value.bo_confirm !== undefined &&
-      value.bo_confirm !== ''
-    ) {
-      params.append('bo_confirm', value.bo_confirm)
-    } else {
-      params.delete('bo_confirm')
-    }
+    // if (value.start_time !== null && value.start_time !== undefined) {
+    //   params.append('start', value.start_time.format('YYYY-MM-DD'))
+    // } else {
+    //   params.delete('start')
+    // }
 
-    if (
-      value.create_by_id !== null &&
-      value.create_by_id !== undefined &&
-      value.create_by_id !== ''
-    ) {
-      params.delete('created_by_id[]')
-      value.create_by_id.forEach((id: string) => {
-        params.append('created_by_id[]', id)
-      })
-    } else {
-      params.delete('created_by_id[]')
-    }
+    // if (
+    //   value.status !== null &&
+    //   value.status !== undefined &&
+    //   value.status !== ''
+    // ) {
+    //   params.append('status', value.status)
+    // } else {
+    //   params.delete('status')
+    // }
+    // if (value.type !== null && value.type !== undefined && value.type !== '') {
+    //   params.append('type_id', value.type)
+    // } else {
+    //   params.delete('type_id')
+    // }
 
-    setSearchParams(params)
+    // if (
+    //   value.create_by_id !== null &&
+    //   value.create_by_id !== undefined &&
+    //   value.create_by_id !== ''
+    // ) {
+    //   params.delete('ids[]')
+    //   value.create_by_id.forEach((id: string) => {
+    //     params.append('ids[]', id)
+    //   })
+    // } else {
+    //   params.delete('ids[]')
+    // }
+    // params.append('time', period)
+
+    // setSearchParams((curr) => ({
+    //   ...curr,
+    //   params,
+    // }))
   }
-
   const handleTotal = (total: number, range: [number, number]): JSX.Element => {
     return (
       <div className="flex h-full items-center">
@@ -205,36 +216,61 @@ export const AttendanceList = () => {
       </div>
     )
   }
+  const exportAttendanceHandler = async () => {
+    return await exportAllAttendanceAPI(searchParams)
+  }
 
   return (
-    <MainLayout>
+    <>
+      <div className="flex">
+        <Form.Item name="period" initialValue={period}>
+          <Segmented
+            options={segmentValue}
+            onChange={(value) => segmentChange(value)}
+          />
+        </Form.Item>
+      </div>
       <Form form={form} onFinish={submitFormHandler}>
-        <div className="flex">
-          <Form.Item name="period" initialValue={period}>
-            <Segmented options={segmentValue} onChange={segmentChange} />
-          </Form.Item>
-        </div>
         <div className="flex justify-start">
           <Form.Item>
-            <Input placeholder="Mã nhân sự" className="w-52"></Input>
+            {/* <Select placeholder="Trạng thái" className="w-full" options={} /> */}
           </Form.Item>
           <UserSelect
-            placeHolder="Nhân sự đề xuất"
+            placeHolder="Tên nhân viên"
             name="create_by_id"
-            className="w-52 ml-3"
+            className="w-52"
             users={users}
             maxTagCount={1}
             maxTagTextLength={8}
           />
-          <Form.Item className="w-52 ml-3">
-            <Select placeholder="Loại đề xuất" className="w-full" />
+
+          <Form.Item className="w-52 ml-5" name="type">
+            <Select
+              placeholder="Loại nghỉ"
+              allowClear
+              options={types.map((option: any) => ({
+                value: option.id,
+                label: option.name,
+              }))}
+              className="w-full"
+            />
           </Form.Item>
-          <Form.Item className="w-52 ml-3">
-            <Select placeholder="Tiêu đề" className="w-full" />
+          <Form.Item className="ml-5 " name="start_time">
+            <RangePicker className="w-70" />
           </Form.Item>
+
+          <Form.Item className="w-52 ml-5" name="status">
+            <Select
+              placeholder="Trạng thái"
+              className="w-full"
+              options={LIST_ATTENDANCE_STATUS}
+              allowClear
+            />
+          </Form.Item>
+
           <Form.Item>
             <Button
-              className="ml-3"
+              className="ml-10"
               type="primary"
               onClick={() => form.submit()}
             >
@@ -242,57 +278,30 @@ export const AttendanceList = () => {
             </Button>
           </Form.Item>
         </div>
-        <div className="flex">
-          <Form.Item name="created_at">
-            <RangePicker className="w-52" />
-          </Form.Item>
-          <Form.Item className="ml-3" name="start_time">
-            <RangePicker className="w-52" />
-          </Form.Item>
-          <Form.Item className="w-52 ml-3" name="status">
-            <Select
-              placeholder="Trạng thái"
-              className="w-full"
-              options={LIST_STATUS}
-            />
-          </Form.Item>
-          <Form.Item className="w-52 ml-3" name="bo_confirm">
-            <Select
-              placeholder="BO confirm"
-              className="w-full"
-              options={LIST_BO_CONFIRM}
-            />
-          </Form.Item>
-        </div>
       </Form>
       <div className="flex mb-2">
-        <Button type="primary">Mới</Button>
-        <Button className="ml-2">
+        <Button className="" onClick={exportAttendanceHandler}>
+          Export
           <DownloadOutlined />
         </Button>
-        <div className="m-auto">
-          {selectedNumber > 0 && (
-            <>
-              <span className="mr-1">{selectedNumber} Selected</span>
-              <Select placeholder="Action"></Select>
-            </>
-          )}
-        </div>
         <Pagination
           className="ml-auto"
           showSizeChanger
           onChange={paginationChangeHandler}
           current={currentPage}
-          total={totalRecords}
+          total={total}
           pageSize={pageLimit}
           showTotal={handleTotal}
         />
       </div>
-      <AttendanceTableManager
-        data={fakeData}
-        setSelectedNumber={setSelectedNumber}
-      />
-      {loading && <Spinner />}
-    </MainLayout>
+      {loading ? (
+        <Spin className="flex justify-center" />
+      ) : (
+        <AttendanceTableManager
+          data={attendance}
+          setSelectedNumber={setSelectedNumber}
+        />
+      )}
+    </>
   )
 }

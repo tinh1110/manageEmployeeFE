@@ -16,34 +16,28 @@ interface Props {
 }
 
 const columns: ColumnsType<Attendance> = [
-  {
-    title: 'ID',
-    dataIndex: 'id',
-    key: 'id',
-    sorter: (a: any, b: any) => a.id - b.id,
-    render: (id) => <p className="text-lime-600">{id}</p>,
-  },
+  // {
+  //   title: 'ID',
+  //   dataIndex: 'id',
+  //   key: 'id',
+  //   sorter: (a: any, b: any) => a.id - b.id,
+  //   render: (id) => <p className="text-lime-600">{id}</p>,
+  // },
   {
     title: 'Ngày tạo',
-    sorter: (a: any, b: any) =>
-      new Date(a.start).getTime() - new Date(b.start).getTime(),
+    dataIndex: 'created_at',
   },
   {
-    title: 'Mã nhân sự',
+    title: 'Người tạo',
+    dataIndex: 'created_by_name',
   },
   {
-    title: 'Level',
+    title: 'Lí do',
+    dataIndex: 'reason',
   },
   {
-    title: 'Nhân sự đề xuất',
-    dataIndex: 'created_by',
-    key: 'created_by',
-    sorter: (a: any, b: any) => a.created_by.localeCompare(b.createdby),
-    render: (created_by) => <p className="text-rose-600">{created_by}</p>,
-  },
-  {
-    title: 'Loại đề xuất',
-    sorter: (a: any, b: any) => a.type.localeCompare(b.type),
+    title: 'Chức vụ',
+    dataIndex: 'created_role',
   },
   {
     title: 'Tiêu đề',
@@ -61,8 +55,6 @@ const columns: ColumnsType<Attendance> = [
     title: 'Ngày bắt đầu',
     key: 'start',
     dataIndex: 'start',
-    sorter: (a: any, b: any) =>
-      new Date(a.start).getTime() - new Date(b.start).getTime(),
   },
   {
     title: 'Ngày kết thúc',
@@ -79,10 +71,13 @@ const columns: ColumnsType<Attendance> = [
     key: 'status',
     dataIndex: 'status',
     fixed: 'right',
-    sorter: (a: any, b: any) => a.status - b.status,
     render: (status) => (
       <>
-        {status === 0 && <p>Đang chờ</p>}
+        {status === 0 && (
+          <Tag color="yellow" className="text-xs">
+            Đang chờ
+          </Tag>
+        )}
         {status === 1 && (
           <Tag color="green" className="text-xs">
             Chấp nhận
@@ -99,7 +94,7 @@ const columns: ColumnsType<Attendance> = [
   {
     title: 'Người duyệt',
     key: 'approver',
-    dataIndex: 'approver',
+    dataIndex: 'approver_name',
     fixed: 'right',
   },
   {
@@ -148,7 +143,6 @@ const AttendanceTableManager = ({ data, setSelectedNumber }: Props) => {
   return (
     <>
       <Table
-        rowSelection={rowSelection}
         rowKey={'id'}
         columns={tablecolumns}
         dataSource={data}

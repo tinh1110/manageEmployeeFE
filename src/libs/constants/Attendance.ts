@@ -1,18 +1,18 @@
 export const ATTENDANCE_STATUS = Object.freeze({
-  DRAFT: 0,
-  NOT_REVIEWED: 1,
-  ATTENDANCE_ACCEPT: 2,
-  ATTENDANCE_REJECT: 3,
+  // DRAFT: 0,
+  NOT_REVIEWED: 0,
+  ATTENDANCE_ACCEPT: 1,
+  ATTENDANCE_REJECT: 2,
 })
 export const MANAGE_TYPE = Object.freeze({
   CAN_REVIEW: 1,
   ONLY_VIEW: 2,
 })
 export const PERIOD = Object.freeze({
-  TODAY: 1,
-  THIS_WEEK: 2,
-  THIS_MONTH: 3,
-  ALL: 4,
+  TODAY: 'today',
+  THIS_WEEK: 'week',
+  THIS_MONTH: 'month',
+  ALL: 'all',
 })
 export const BO_CONFIRM = Object.freeze({
   ACCEPT: 0,

@@ -232,7 +232,7 @@ const ImportAttendance = () => {
   }
 
   return (
-    <MainLayout>
+    <>
       <div className="... flex items-center justify-center">
         <h1>Import Attendance</h1>
       </div>
@@ -335,7 +335,7 @@ const ImportAttendance = () => {
         onChange={onChange}
         style={{ marginLeft: 500, marginTop: 10 }}
       />
-    </MainLayout>
+    </>
   )
 }
 

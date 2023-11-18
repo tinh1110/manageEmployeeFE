@@ -282,7 +282,6 @@ export const userApiCreate = async (
 
     return [userData, undefined]
   } catch (errors: any) {
-    console.log('Error: ', errors)
     setError(errors.response.data.errors)
     return [undefined, errors.response.data.errors]
   }
@@ -303,10 +302,8 @@ export const userApiUpdate = async (
         }, 0)
         return response
       })
-    console.log(userData)
     return [userData, undefined]
   } catch (errors: any) {
-    console.log('Error: ', errors)
     setError(errors.response.data.errors)
     return [undefined, errors.response.data.errors]
   }
@@ -383,6 +380,5 @@ export const GetImportInfor = async (
     setDataImport(importData)
   } catch (errors: any) {
     // setLoopTime(1000)
-    console.log('Error: ', errors)
   }
 }

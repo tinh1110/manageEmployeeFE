@@ -194,7 +194,7 @@ const DeletedUsers = () => {
   ]
 
   return (
-    <MainLayout>
+    <>
       <>
         <div className="mb-12">
           <h2>Danh sách nhân viên đã xóa</h2>
@@ -232,7 +232,7 @@ const DeletedUsers = () => {
           />
         )}
       </>
-    </MainLayout>
+    </>
   )
 }
 

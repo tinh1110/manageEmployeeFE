@@ -5,19 +5,19 @@ import { ATTENDANCE_LIST, ATTENDANCE_EXPORT_VIEW } from '../Permissions'
 
 const attendanceRouter = [
   {
-    path: '/attendance',
+    path: '/attendances',
     element: <AtendanceListPage />,
     permissions: ATTENDANCE_LIST,
   },
   {
-    path: '/attendance/import',
+    path: '/attendances/import',
     element: <ImportAttendance />,
     permissions: ATTENDANCE_EXPORT_VIEW,
   },
   {
-    path: '/attendance/list',
+    path: '/attendances/list',
     element: <AttendanceList />,
-    permissions: ATTENDANCE_EXPORT_VIEW,
+    permissions: ATTENDANCE_LIST,
   },
 ]
 export default attendanceRouter

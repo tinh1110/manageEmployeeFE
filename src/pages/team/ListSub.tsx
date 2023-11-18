@@ -144,7 +144,7 @@ const ListSub = () => {
   }
 
   return (
-    <MainLayout>
+    <>
       {!showMember ? (
         <>
           <Button
@@ -194,7 +194,7 @@ const ListSub = () => {
           <ListMemberOfTeam />
         </div>
       )}
-    </MainLayout>
+    </>
   )
 }
 

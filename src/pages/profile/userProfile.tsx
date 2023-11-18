@@ -17,7 +17,6 @@ const UserProfilePage = () => {
   const [res, setRes] = useState<any>(null)
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const { id } = useParams<{ id: string }>()
-  console.log(id)
   useEffect(() => {
     setIsLoading(true)
     const handleGetProfile = async () => {
@@ -71,7 +70,7 @@ const UserProfilePage = () => {
   }
 
   return (
-    <MainLayout>
+    <>
       <h1 className="text-orange-500 flex justify-center">Thông tin cá nhân</h1>
       {isLoading ? (
         <Spin className="flex justify-center" />
@@ -132,7 +131,7 @@ const UserProfilePage = () => {
           </div>
         </>
       )}
-    </MainLayout>
+    </>
   )
 }
 export default UserProfilePage

@@ -17,61 +17,18 @@ import roleRouter from './libs/constants/router/role'
 import PermissionsRoute from './components/PermissionsRoute'
 import attendanceRouter from './libs/constants/router/attendance'
 import teamRouter from './libs/constants/router/team'
+import MainLayout from './components/layouts/main'
 
 const queryClient = new QueryClient()
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
-      <Route path="/" element={<ProtectedRoute />}>
-        <Route path="/" element={<HomePage />} key="home" />
-        <Route path="/about" element={<AboutPage />} key="about" />
-        {profileRouter.map((router: any) => (
-          <Route
-            key={router.path}
-            path={router.path}
-            element={
-              <PermissionsRoute permissions={router.permissions}>
-                {router.element}
-              </PermissionsRoute>
-            }
-          />
-        ))}
-        {eventRouter.map((router: any) => (
-          <Route
-            key={router.path}
-            path={router.path}
-            element={
-              <PermissionsRoute permissions={router.permissions}>
-                {router.element}
-              </PermissionsRoute>
-            }
-          />
-        ))}
-        {teamRouter.map((router: any) => (
-          <Route
-            key={router.path}
-            path={router.path}
-            element={
-              <PermissionsRoute permissions={router.permissions}>
-                {router.element}
-              </PermissionsRoute>
-            }
-          />
-        ))}
-        {roleRouter.map((router: any) => (
-          <Route
-            key={router.path}
-            path={router.path}
-            element={
-              <PermissionsRoute permissions={router.permissions}>
-                {router.element}
-              </PermissionsRoute>
-            }
-          />
-        ))}
-        {user_routes.map((router) => {
-          return (
+      <Route element={<MainLayout />}>
+        <Route path="/" element={<ProtectedRoute />}>
+          <Route path="/" element={<HomePage />} key="home" />
+          <Route path="/about" element={<AboutPage />} key="about" />
+          {profileRouter.map((router: any) => (
             <Route
               key={router.path}
               path={router.path}
@@ -81,10 +38,8 @@ const router = createBrowserRouter(
                 </PermissionsRoute>
               }
             />
-          )
-        })}
-        {attendanceRouter.map((router) => {
-          return (
+          ))}
+          {eventRouter.map((router: any) => (
             <Route
               key={router.path}
               path={router.path}
@@ -94,8 +49,56 @@ const router = createBrowserRouter(
                 </PermissionsRoute>
               }
             />
-          )
-        })}
+          ))}
+          {teamRouter.map((router: any) => (
+            <Route
+              key={router.path}
+              path={router.path}
+              element={
+                <PermissionsRoute permissions={router.permissions}>
+                  {router.element}
+                </PermissionsRoute>
+              }
+            />
+          ))}
+          {roleRouter.map((router: any) => (
+            <Route
+              key={router.path}
+              path={router.path}
+              element={
+                <PermissionsRoute permissions={router.permissions}>
+                  {router.element}
+                </PermissionsRoute>
+              }
+            />
+          ))}
+          {user_routes.map((router) => {
+            return (
+              <Route
+                key={router.path}
+                path={router.path}
+                element={
+                  <PermissionsRoute permissions={router.permissions}>
+                    {router.element}
+                  </PermissionsRoute>
+                }
+              />
+            )
+          })}
+          {attendanceRouter.map((router) => {
+            return (
+              <Route
+                key={router.path}
+                path={router.path}
+                element={
+                  <PermissionsRoute permissions={router.permissions}>
+                    {router.element}
+                  </PermissionsRoute>
+                }
+              />
+            )
+          })}
+        </Route>
       </Route>
       <Route path="/login" element={<LoginPage />} key="login" />
     </>,

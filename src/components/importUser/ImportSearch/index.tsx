@@ -33,27 +33,13 @@ const ImportSearch: React.FC<Props> = ({ isLoadPage, setIsLoadPage }) => {
     sort: 'created_at',
   })
   useEffect(() => {
-    // Initialize Pusher with your app key and options
     const pusher = new Pusher('718f9af2e483f5b858af', {
       cluster: 'ap1',
-      // Add any additional options or configurations here
     })
-    // Subscribe to the desired Pusher channel
     const channel = pusher.subscribe('imported_users')
-    // Bind to the event you want to listen to
     channel.bind('imported_users', (data: any) => {
       setImportedUsers(data.imported_users)
-      // Handle the received event data
-      console.log('Received event:', data.imported_users)
-      console.log('123', importedUsers)
-      // Perform any other desired actions with the event data
     })
-
-    // Clean up the Pusher subscription when the component unmounts
-    // return () => {
-    //   // channel.unbind('imported_users')
-    //   // pusher.unsubscribe('private-imported_users')
-    // }
   }, [])
   useEffect(() => {
     handleGetImported()

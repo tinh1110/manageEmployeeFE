@@ -39,10 +39,15 @@ const Sidebar = () => {
   const navigate = useNavigate()
   const location = useLocation()
   const [selectedKeys, setSelectedKeys] = useState('/')
+  const [selected, setSelected] = useState<string[]>([])
   const context = useCollapsedProvider()
   useEffect(() => {
     const pathName = location.pathname
-    setSelectedKeys(pathName)
+    if (pathName) {
+      setSelectedKeys(pathName)
+      if (selected[0] !== pathName.split('/')[1])
+        setSelected([pathName.split('/')[1]])
+    }
   }, [location.pathname])
 
   const permissionsInfor = getPermissions()
@@ -80,11 +85,11 @@ const Sidebar = () => {
         children: [
           checkChildrenSidebar(ROLE_LIST, {
             label: 'Roles list',
-            key: '/role/',
+            key: '/roles/',
           }),
           checkChildrenSidebar(ROLE_ADD, {
             label: 'Add role',
-            key: '/role/add',
+            key: '/roles/add',
           }),
         ],
       }),
@@ -113,12 +118,12 @@ const Sidebar = () => {
         label: 'Attendances',
         children: [
           checkChildrenSidebar(ATTENDANCE_LIST, {
-            label: 'Attendances list',
-            key: '/attendance',
+            label: 'Attendances ',
+            key: '/attendances',
           }),
-          checkChildrenSidebar(ATTENDANCE_IMPORT, {
-            label: 'Import attendance',
-            key: '/attendance/import',
+          checkChildrenSidebar(ATTENDANCE_LIST, {
+            label: 'Attendance list',
+            key: '/attendances/list',
           }),
         ],
       }),
@@ -129,11 +134,11 @@ const Sidebar = () => {
         children: [
           checkChildrenSidebar(EVENT_LIST, {
             label: 'Events list',
-            key: '/event',
+            key: '/events',
           }),
           checkChildrenSidebar(EVENT_ADD, {
             label: 'Add event',
-            key: '/event/add',
+            key: '/events/add',
           }),
         ],
       }),
@@ -165,8 +170,13 @@ const Sidebar = () => {
         <Menu
           mode="inline"
           selectedKeys={[selectedKeys]}
+          openKeys={selected}
+          defaultOpenKeys={selected}
           onClick={({ key }) => {
             navigate(key)
+          }}
+          onOpenChange={(keys) => {
+            setSelected([keys[1]])
           }}
           items={item}
         />

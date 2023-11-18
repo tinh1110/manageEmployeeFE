@@ -136,7 +136,7 @@ const UpdateRolePage = () => {
     }
   }
   return (
-    <MainLayout>
+    <>
       <h1 className="text-sky-500 flex justify-center">Sửa role </h1>
       {isloading ? (
         <Spin className="flex justify-center" key="spin" />
@@ -233,7 +233,7 @@ const UpdateRolePage = () => {
           </Form.Item>
         </Form>
       )}
-    </MainLayout>
+    </>
   )
 }
 

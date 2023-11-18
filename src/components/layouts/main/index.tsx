@@ -4,12 +4,13 @@ import { Content } from 'antd/es/layout/layout'
 import React from 'react'
 import CustomHeader from '../header'
 import { CollapsedProvider } from '../../../libs/contexts/CollapsedContext'
+import { Outlet } from 'react-router-dom'
 
 interface Props {
   children?: React.ReactNode
 }
 
-const MainLayout = ({ children }: Props) => {
+const MainLayout = ({}: Props) => {
   const {
     token: { colorBgContainer },
   } = theme.useToken()
@@ -29,7 +30,7 @@ const MainLayout = ({ children }: Props) => {
                 background: colorBgContainer,
               }}
             >
-              {children}
+              <Outlet />
             </Content>
           </Layout>
         </Layout>

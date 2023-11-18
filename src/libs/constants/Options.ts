@@ -38,17 +38,17 @@ export const LIST_SORT = [
   },
 ]
 
-export const LIST_BO_CONFIRM = [
+export const LIST_ATTENDANCE_STATUS = [
   {
-    label: '',
-    value: '',
+    label: 'Chưa duyệt',
+    value: 0,
   },
   {
-    label: 'Chấp nhận',
-    value: BO_CONFIRM.ACCEPT,
+    label: 'Đồng ý',
+    value: 1,
   },
   {
     label: 'Từ chối',
-    value: BO_CONFIRM.REJECT,
+    value: 2,
   },
 ]
