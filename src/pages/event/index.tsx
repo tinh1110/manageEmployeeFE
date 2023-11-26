@@ -192,7 +192,7 @@ const EventPage = () => {
         type="primary"
         className="m-5 bg-green-500 float-right"
         onClick={() => {
-          navigate('/event/add')
+          navigate('/events/add')
         }}
       >
         Thêm event mới

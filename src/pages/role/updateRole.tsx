@@ -60,7 +60,7 @@ const UpdateRolePage = () => {
           message: 'Update role successful',
           description: res.data.message,
         })
-        navigate('/role/')
+        navigate('/roles/')
       }
     } catch (err: any) {
       if (err.response.data.errors) {
@@ -85,12 +85,12 @@ const UpdateRolePage = () => {
           message: 'Update Role failed',
           description: err.response.data.message,
         })
-        navigate('/role/')
+        navigate('/roles/')
       }
     }
   }
   const handleCancel = () => {
-    navigate('/role/')
+    navigate('/roles/')
   }
   useEffect(() => {
     handleGetPermissions()
@@ -102,7 +102,7 @@ const UpdateRolePage = () => {
       if (id) {
         const response = await getRole(parseInt(id))
         if (response.data.data.role_name === ROLES.ADMIN) {
-          navigate('/role/')
+          navigate('/roles/')
         }
         setRole(response.data.data)
         setCheckedItems(response.data.data.role_permissions)

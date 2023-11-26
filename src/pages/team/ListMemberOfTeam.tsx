@@ -28,7 +28,6 @@ const ListMemberOfTeam = () => {
   const navigate = useNavigate()
   const [title, setTitle] = useState<string>('')
   const [isLoading, setIsLoading] = useState<boolean>(true)
-
   useEffect(() => {
     getInfoTeam()
     getListMember()
@@ -127,6 +126,13 @@ const ListMemberOfTeam = () => {
           return <span>Khác</span>
         }
       },
+    },
+    {
+      title: 'Chức vụ',
+      dataIndex: 'role',
+      key: 'role',
+      align: 'center',
+      width: '12%',
     },
     {
       title: 'Hoạt động',

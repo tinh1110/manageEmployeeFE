@@ -90,7 +90,7 @@ const AddEventPage = () => {
     }
   }
   const handleCancel = () => {
-    navigate('/event')
+    navigate('/events')
   }
   const handleUpdate = async (data: any) => {
     try {
@@ -123,7 +123,7 @@ const AddEventPage = () => {
         message: 'Add event successful',
         description: res.data.message,
       })
-      navigate('/event')
+      navigate('/events')
     } catch (err: any) {
       if (err.response.data.errors) {
         const errorMessages = Object.values(err.response.data.errors)
