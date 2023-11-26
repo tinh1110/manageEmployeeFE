@@ -56,7 +56,7 @@ const EventItem: React.FC<IProps> = ({
               EVENT_UPDATE.every((element: string) =>
                 permissionsInfo.includes(element),
               ) && (
-                <Link to={`/event/update/${item?.id}`}>
+                <Link to={`/events/update/${item?.id}`}>
                   <Button
                     type="primary"
                     className=" text-white  bg-sky-500 m-1 rounded-full"

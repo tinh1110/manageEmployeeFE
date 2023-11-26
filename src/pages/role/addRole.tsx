@@ -40,10 +40,10 @@ const AddRolePage = () => {
         })
       }
     }
-    navigate('/role/')
+    navigate('/roles/')
   }
   const handleCancel = () => {
-    navigate('/role/')
+    navigate('/roles/')
   }
 
   return (

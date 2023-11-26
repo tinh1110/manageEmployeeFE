@@ -1,10 +1,4 @@
-import {
-  Button,
-  FormInstance,
-  Modal,
-  Popconfirm,
-  notification,
-} from 'antd'
+import { Button, FormInstance, Modal, Popconfirm, notification } from 'antd'
 import EditAttendanceForm from './EditAttendanceForm'
 import { User } from '../../types/user'
 import { AttendanceFormData, AttendanceType } from '../../types/attendance'
@@ -42,7 +36,7 @@ const EditAttendanceModal = ({
   form,
   getNewAttendanceList,
   searchParams,
-  setLoading
+  setLoading,
 }: Props) => {
   const notReviewed =
     data?.extendedProps?.status === ATTENDANCE_STATUS.NOT_REVIEWED
@@ -97,7 +91,7 @@ const EditAttendanceModal = ({
           destroyOnClose={true}
           footer={[
             <Button key="cancel" onClick={onCancel}>
-              Cancel
+              Hủy
             </Button>,
             permissionsInfo &&
               ATTENDANCE_DELETE.every((element: string) =>
@@ -112,7 +106,7 @@ const EditAttendanceModal = ({
                   key="pop_confirm"
                 >
                   <Button key="delete" type="primary" danger>
-                    Delete
+                    Xóa
                   </Button>
                 </Popconfirm>
               ),
@@ -121,7 +115,7 @@ const EditAttendanceModal = ({
                 permissionsInfo.includes(element),
               ) && (
                 <Button key="update" type="primary" onClick={editAttendance}>
-                  Update
+                  Thay đổi
                 </Button>
               ),
           ]}
@@ -147,7 +141,7 @@ const EditAttendanceModal = ({
           destroyOnClose={true}
           footer={[
             <Button key="cancel" onClick={onCancel}>
-              Close
+              Đóng
             </Button>,
           ]}
         >

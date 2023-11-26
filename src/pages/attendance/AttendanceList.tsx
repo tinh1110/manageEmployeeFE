@@ -42,8 +42,8 @@ export const AttendanceList = () => {
     type_id: null,
     ids: [],
     status: null,
-    start: null,
-    end: null,
+    start_date: null,
+    end_date: null,
   })
   const [attendance, setAttendance] = useState<Attendance[]>([])
   const [pageLimit, setPageLimit] = useState<number>(10)
@@ -145,7 +145,7 @@ export const AttendanceList = () => {
 
   const submitFormHandler = (value: any) => {
     const ids: number[] = []
-    value.create_by_id.forEach((id: number) => {
+    value?.create_by_id.forEach((id: number) => {
       ids.push(id)
     })
     let start: any = null
@@ -156,54 +156,12 @@ export const AttendanceList = () => {
     }
     setSearchParams((prevUser: any) => ({
       ...prevUser,
-      start: start,
-      end: end,
+      start_date: start,
+      end_date: end,
       status: value.status,
       type_id: value.type,
       ids: ids,
     }))
-
-    // const params = []
-
-    // if (value.start_time !== null && value.start_time !== undefined) {
-    //   params.append('start', value.start_time.format('YYYY-MM-DD'))
-    // } else {
-    //   params.delete('start')
-    // }
-
-    // if (
-    //   value.status !== null &&
-    //   value.status !== undefined &&
-    //   value.status !== ''
-    // ) {
-    //   params.append('status', value.status)
-    // } else {
-    //   params.delete('status')
-    // }
-    // if (value.type !== null && value.type !== undefined && value.type !== '') {
-    //   params.append('type_id', value.type)
-    // } else {
-    //   params.delete('type_id')
-    // }
-
-    // if (
-    //   value.create_by_id !== null &&
-    //   value.create_by_id !== undefined &&
-    //   value.create_by_id !== ''
-    // ) {
-    //   params.delete('ids[]')
-    //   value.create_by_id.forEach((id: string) => {
-    //     params.append('ids[]', id)
-    //   })
-    // } else {
-    //   params.delete('ids[]')
-    // }
-    // params.append('time', period)
-
-    // setSearchParams((curr) => ({
-    //   ...curr,
-    //   params,
-    // }))
   }
   const handleTotal = (total: number, range: [number, number]): JSX.Element => {
     return (
@@ -300,6 +258,9 @@ export const AttendanceList = () => {
         <AttendanceTableManager
           data={attendance}
           setSelectedNumber={setSelectedNumber}
+          setLoading={setLoading}
+          getAttendancePaginate={getAttendancePaginate}
+          searchParams={searchParams}
         />
       )}
     </>

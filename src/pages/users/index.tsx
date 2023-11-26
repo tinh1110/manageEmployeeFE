@@ -25,7 +25,7 @@ const ListUsers = () => {
     status: '',
     role: '',
     limit: '10',
-    page: '',
+    page: '1',
   })
   const [isLoading, setIsLoading] = useState<boolean>()
   const handleDelete = async (key: string) => {
@@ -223,6 +223,7 @@ const ListUsers = () => {
               current: parseInt(filter.page),
               total: totalUser,
               onChange: (page, pageSize) => {
+                console.log(page)
                 setFilter((filter: any) => ({
                   ...filter,
                   page: page.toString(),

@@ -111,7 +111,7 @@ const UpdateEventPage = () => {
     }
   }
   const handleCancel = () => {
-    navigate('/event')
+    navigate('/events')
   }
   const handleUpdate = async (data: any) => {
     try {
@@ -152,7 +152,7 @@ const UpdateEventPage = () => {
         })
       }
 
-      navigate('/event')
+      navigate('/events')
     } catch (err: any) {
       if (err.response.data.errors) {
         const errorMessages = Object.values(err.response.data.errors)
