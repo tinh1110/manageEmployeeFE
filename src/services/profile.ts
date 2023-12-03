@@ -3,6 +3,10 @@ import axiosInstance from './request/base'
 export const profile = () => {
   return axiosInstance.get('/profile')
 }
+
+export const userProfile = (id: string) => {
+  return axiosInstance.get(`/user/profile/${id}`)
+}
 export type UpdateProfileRequest = {
   name: string
   email: string

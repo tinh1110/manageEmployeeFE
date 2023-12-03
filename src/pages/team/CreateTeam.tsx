@@ -64,7 +64,7 @@ const CreateTeam = () => {
   }
 
   const getAllUserVer2 = async () => {
-    const res = await axiosInstance.get(`/user/get-all`)
+    const res = await axiosInstance.get(`/get-all`)
     setListAllUser(res.data.data)
   }
 
@@ -138,7 +138,6 @@ const CreateTeam = () => {
       })
       .catch(function (error) {
         if (error.response) {
-          console.log(error.response)
           if (Number(error.response.status) === 422) {
             setTimeout(() => {
               message.error(error.response.data.errors.name)
@@ -177,7 +176,7 @@ const CreateTeam = () => {
   })
 
   return (
-    <MainLayout>
+    <>
       <>
         <div className="... flex items-center justify-center">
           <h1>Thêm team mới</h1>
@@ -262,11 +261,7 @@ const CreateTeam = () => {
                   })}
                 </Select>
               </Form.Item>{' '}
-              <Form.Item
-                name="parent_team_id"
-                id="parent_team_id"
-                label="Team cha"
-              >
+              <Form.Item name="status" id="status" label="Trạng thái">
                 <Select
                   size="large"
                   allowClear
@@ -311,7 +306,7 @@ const CreateTeam = () => {
           </div>
         )}
       </>
-    </MainLayout>
+    </>
   )
 }
 

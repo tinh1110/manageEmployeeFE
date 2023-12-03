@@ -27,7 +27,7 @@ const LoginPage = () => {
       navigate('/')
     } catch (err: any) {
       // xử lý khi đăng nhập thất bại
-      if (err.response.data.errors) {
+      if (err?.response?.data?.errors) {
         const errorMessages = Object.values(err.response.data.errors)
           .map((message) => `- ${message}<br>`)
           .join('')
@@ -47,7 +47,7 @@ const LoginPage = () => {
         notification['error']({
           duration: 5,
           message: 'Login failed',
-          description: err.response.data.message,
+          description: err?.response?.data?.message,
         })
       }
     }

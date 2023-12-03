@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import DatePicker from 'react-datepicker'
 import { useNavigate } from 'react-router-dom'
-import { Button, Form, Input, Select, Spin } from 'antd'
+import { Button, Form, Input, Select } from 'antd'
 import { UploadPicture } from './upload'
 import 'react-datepicker/dist/react-datepicker.css'
 import { userApiCreate, userApiUpdate } from '../../services/request/user'
@@ -53,7 +53,6 @@ const FormPost = (props: any) => {
     setRole(response)
   }
   const [roles, setRole] = useState([])
-  const [user, setUser] = useState()
   const [selectedFile, setSelectedFile] = useState()
   const [isDeleteAvt, setIsDeleteAvt] = useState(undefined)
   // const [isLoading, setIsLoading] = useState(false)
@@ -111,7 +110,6 @@ const FormPost = (props: any) => {
         id,
       )
 
-      console.log(resultUpdate)
       if (resultUpdate !== undefined) {
         navigate('/users/')
       } else {
@@ -151,6 +149,9 @@ const FormPost = (props: any) => {
   const handleDatePickerChange = async (date: any) => {
     await setStartDate(date)
     await setError((preError: any) => ({ ...preError, dob: undefined }))
+  }
+  const handleCancel = () => {
+    navigate('/users/')
   }
 
   return (
@@ -336,16 +337,29 @@ const FormPost = (props: any) => {
           />
         </Form.Item>
         <Form.Item name="details" label="Mô tả">
-          <Input.TextArea showCount maxLength={100} />
+          <Input.TextArea rows={3} />
         </Form.Item>
-        <Form.Item {...summitButtonLayout}>
-          <Button
-            type="dashed"
-            className="w-[110px] text-white m-5 bg-green-500 items-center rounded-full"
-            htmlType="submit"
-          >
-            Lưu
-          </Button>
+        <Form.Item className="flex justify-center " {...summitButtonLayout}>
+          <div className="flex justify-center ">
+            <div style={{ flex: '0 5px 110px' }} className="mr-10">
+              <Button
+                type="dashed"
+                className="w-full text-white m-5 bg-green-500 items-center rounded-full"
+                htmlType="submit"
+              >
+                Lưu
+              </Button>
+            </div>
+            <div style={{ flex: '0 5px 110px' }}>
+              <Button
+                type="dashed"
+                className="w-full text-white bg-red-500 m-5 items-center rounded-full"
+                onClick={handleCancel}
+              >
+                Hủy
+              </Button>
+            </div>
+          </div>
         </Form.Item>
       </Form>
       {isLoading ? <Spinner /> : ''}

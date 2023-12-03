@@ -1,7 +1,7 @@
 import MainLayout from '../../components/layouts/main'
 import axiosInstance from '../../services/request/base'
 import { useEffect, useState } from 'react'
-import { Alert, Spin, message } from 'antd'
+import { Alert, message } from 'antd'
 import { useNavigate } from 'react-router-dom'
 import { Team } from '../../components/teams/interface'
 import ModalRemove from '../team/ModalRemove'
@@ -142,7 +142,7 @@ const TeamPage = () => {
   }
 
   return (
-    <MainLayout>
+    <>
       <ListOfTeam
         listTeam={listTeam}
         filter={filter}
@@ -185,7 +185,7 @@ const TeamPage = () => {
           onDelete={() => onRemove(teamId)}
         />
       )}
-    </MainLayout>
+    </>
   )
 }
 

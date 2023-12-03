@@ -58,8 +58,8 @@ const AtendanceListPage = () => {
       const start = new Date(startDateRender).getTime()
       const end = new Date(endDateRender).getTime()
       const mid = new Date((start + end) / 2)
-      if(mid) setMidDate(mid)
-    } 
+      if (mid) setMidDate(mid)
+    }
     setSearchParams(params)
   }, [startDateRender, endDateRender])
 
@@ -82,8 +82,7 @@ const AtendanceListPage = () => {
 
     if (event.status !== null && event.status !== undefined) {
       params.set('status', event.status)
-    }
-    else {
+    } else {
       params.delete('status')
     }
 
@@ -95,7 +94,7 @@ const AtendanceListPage = () => {
   }
   const permissionsInfo = getPermissions()
   return (
-    <MainLayout>
+    <>
       <Form
         form={form}
         onFinish={handleFormSubmit}
@@ -123,36 +122,35 @@ const AtendanceListPage = () => {
               <DownloadOutlined />
             </Button>
           )}
-        {(user_info?.role === ROLES.ADMIN ||
-          user_info?.role === ROLES.MANAGER) && (
-          <Form.Item name={'manageMode'} className="ml-auto">
-            <Switch
-              checkedChildren="Manage mode"
-              unCheckedChildren="Personal mode"
-              onClick={handleManageMode}
-              checked={manageMode}
-            />
-          </Form.Item>
-        )}
-      </Form>
-      {loading ? 
-        (<Spin className='flex justify-center'/>)
-        : (
-          <AttendanceCalendar
-            attendanceList={attendance}
-            manageMode={manageMode}
-            getNewAttendanceList={setAttendance}
-            searchParams={searchParams}
-            setStart={setStartDateRender}
-            setEnd={setEndDateRender}
-            setLoading={setLoading}
-            initDate={middate}
-            initView={initView}
-            setInitview={setInitView}
+        {/* {(user_info?.role === ROLES.ADMIN ||
+          user_info?.role === ROLES.MANAGER) && ( */}
+        <Form.Item name={'manageMode'} className="ml-auto">
+          <Switch
+            checkedChildren="Manage mode"
+            unCheckedChildren="Personal mode"
+            onClick={handleManageMode}
+            checked={manageMode}
           />
-        )
-      } 
-    </MainLayout>
+        </Form.Item>
+        {/* )} */}
+      </Form>
+      {loading ? (
+        <Spin className="flex justify-center" />
+      ) : (
+        <AttendanceCalendar
+          attendanceList={attendance}
+          manageMode={manageMode}
+          getNewAttendanceList={setAttendance}
+          searchParams={searchParams}
+          setStart={setStartDateRender}
+          setEnd={setEndDateRender}
+          setLoading={setLoading}
+          initDate={middate}
+          initView={initView}
+          setInitview={setInitView}
+        />
+      )}
+    </>
   )
 }
 

@@ -39,10 +39,15 @@ const Sidebar = () => {
   const navigate = useNavigate()
   const location = useLocation()
   const [selectedKeys, setSelectedKeys] = useState('/')
+  const [selected, setSelected] = useState<string[]>([])
   const context = useCollapsedProvider()
   useEffect(() => {
     const pathName = location.pathname
-    setSelectedKeys(pathName)
+    if (pathName) {
+      setSelectedKeys(pathName)
+      if (selected[0] !== pathName.split('/')[1])
+        setSelected([pathName.split('/')[1]])
+    }
   }, [location.pathname])
 
   const permissionsInfor = getPermissions()
@@ -52,22 +57,22 @@ const Sidebar = () => {
       checkParentSidebar([], {
         key: 'users',
         icon: <UserOutlined />,
-        label: 'Users',
+        label: 'Người dùng',
         children: [
           checkChildrenSidebar(USER_LIST, {
-            label: 'User list',
+            label: 'Danh sách',
             key: '/users/',
           }),
           checkChildrenSidebar(USER_ADD, {
-            label: 'Add user',
+            label: 'Thêm nhân viên',
             key: '/users/add',
           }),
           checkChildrenSidebar(USER_IMPORT_VIEW, {
-            label: 'Import user',
+            label: 'Import file',
             key: '/users/import/',
           }),
           checkChildrenSidebar(USER_LIST_DELETED, {
-            label: 'User deleted',
+            label: 'Người dùng đã xóa',
             key: '/users/deleted',
           }),
         ],
@@ -76,71 +81,67 @@ const Sidebar = () => {
       checkParentSidebar([], {
         key: 'roles',
         icon: <AuditOutlined />,
-        label: 'Roles',
+        label: 'Chức vụ',
         children: [
           checkChildrenSidebar(ROLE_LIST, {
-            label: 'Roles list',
-            key: '/role/',
+            label: 'Danh sách',
+            key: '/roles/',
           }),
           checkChildrenSidebar(ROLE_ADD, {
-            label: 'Add role',
-            key: '/role/add',
+            label: 'Thêm chức vụ',
+            key: '/roles/add',
           }),
         ],
       }),
       checkParentSidebar([], {
         key: 'teams',
         icon: <TeamOutlined />,
-        label: 'Teams',
+        label: 'Dự án',
         children: [
           checkChildrenSidebar(TEAM_ADD, {
-            label: 'Create New Team',
+            label: 'Thêm dự án',
             key: '/teams/create',
           }),
           checkChildrenSidebar(TEAM_LIST, {
-            label: 'Main Teams',
+            label: 'Danh sách dự án',
             key: '/teams/',
-          }),
-          checkChildrenSidebar(TEAM_LIST_SUB, {
-            label: 'Sub Teams',
-            key: '/teams/sub-teams',
           }),
         ],
       }),
       checkParentSidebar([], {
         key: 'attendances',
         icon: <CalendarOutlined />,
-        label: 'Attendances',
+        label: 'Xin nghỉ',
         children: [
           checkChildrenSidebar(ATTENDANCE_LIST, {
-            label: 'Attendances list',
-            key: '/attendance',
+            label: 'Tạo đơn xin nghỉ ',
+            key: '/attendances',
           }),
-          checkChildrenSidebar(ATTENDANCE_IMPORT, {
-            label: 'Import attendance',
-            key: '/attendance/import',
+          checkChildrenSidebar(ATTENDANCE_LIST, {
+            label: 'Danh sách đơn nghỉ',
+            key: '/attendances/list',
           }),
         ],
       }),
       checkParentSidebar([], {
         key: 'events',
         icon: <CarryOutOutlined />,
-        label: 'Events',
+        label: 'Sự kiện',
         children: [
           checkChildrenSidebar(EVENT_LIST, {
-            label: 'Events list',
-            key: '/event',
+            label: 'Danh sách sự kiện',
+            key: '/events',
           }),
           checkChildrenSidebar(EVENT_ADD, {
-            label: 'Add event',
-            key: '/event/add',
+            label: 'Thêm sự kiện',
+            key: '/events/add',
           }),
         ],
       }),
       checkParentSidebar(PROFILE, {
         key: '/profile',
         icon: <ProfileOutlined />,
-        label: 'Profile',
+        label: 'Trang cá nhân',
         children: null,
       }),
     ]
@@ -152,13 +153,26 @@ const Sidebar = () => {
         trigger={null}
         collapsible
         collapsed={context.collapsed}
+        style={{
+          overflow: 'auto',
+          height: '100vh',
+          position: 'sticky',
+          left: 0,
+          top: 0,
+          bottom: 0,
+        }}
       >
         <SideBarLogo />
         <Menu
           mode="inline"
           selectedKeys={[selectedKeys]}
+          openKeys={selected}
+          defaultOpenKeys={selected}
           onClick={({ key }) => {
             navigate(key)
+          }}
+          onOpenChange={(keys) => {
+            setSelected([keys[1]])
           }}
           items={item}
         />

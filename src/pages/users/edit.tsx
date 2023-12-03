@@ -15,7 +15,7 @@ const UsersEdit = () => {
   }, [])
 
   return (
-    <MainLayout>
+    <>
       <div className="mb-12">
         <h1 className="flex justify-center">Chỉnh sửa thông tin nhân viên</h1>
       </div>
@@ -31,7 +31,7 @@ const UsersEdit = () => {
         />
       </div>
       {isLoading ? <Spinner /> : ''}
-    </MainLayout>
+    </>
   )
 }
 

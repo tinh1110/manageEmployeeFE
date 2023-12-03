@@ -40,14 +40,14 @@ const AddRolePage = () => {
         })
       }
     }
-    navigate('/role/')
+    navigate('/roles/')
   }
   const handleCancel = () => {
-    navigate('/role/')
+    navigate('/roles/')
   }
 
   return (
-    <MainLayout>
+    <>
       <h1 className="text-sky-500 flex justify-center">Thêm role mới</h1>
       <Form name="update-profile" layout="vertical" form={antForm}>
         <Row>
@@ -82,7 +82,7 @@ const AddRolePage = () => {
           </Button>
         </Form.Item>
       </Form>
-    </MainLayout>
+    </>
   )
 }
 

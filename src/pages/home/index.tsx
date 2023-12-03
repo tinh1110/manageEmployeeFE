@@ -2,7 +2,7 @@ import MainLayout from '../../components/layouts/main'
 
 const HomePage = () => {
   return (
-    <MainLayout>
+    <>
       <h4 className="m-1">Giới thiệu</h4>
       <hr />
       <h2 className="text-orange-500 text-center text-size-20 ">GIỚI THIỆU</h2>
@@ -84,7 +84,7 @@ const HomePage = () => {
         các công trình, dự án thuộc lĩnh vực bưu chính viễn thông và công nghệ
         thông tin..
       </div>
-    </MainLayout>
+    </>
   )
 }
 

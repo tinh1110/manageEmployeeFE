@@ -1,3 +1,4 @@
+import { ATTENDANCE_STATUS, BO_CONFIRM } from './Attendance'
 export const LIST_GENDER = [
   {
     label: 'Nam',
@@ -34,5 +35,20 @@ export const LIST_SORT = [
   {
     label: 'Cũ nhất',
     value: 1,
+  },
+]
+
+export const LIST_ATTENDANCE_STATUS = [
+  {
+    label: 'Chưa duyệt',
+    value: 0,
+  },
+  {
+    label: 'Đồng ý',
+    value: 1,
+  },
+  {
+    label: 'Từ chối',
+    value: 2,
   },
 ]

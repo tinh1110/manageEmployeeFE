@@ -59,7 +59,7 @@ const DeletedUsers = () => {
       title: 'Store Record',
       content: `Are you sure you want to store ${record.name}?`,
       okText: 'Yes',
-      okType: 'dashed',
+      okType: 'primary',
       cancelText: 'No',
       onOk() {
         handleRestore(record.id)
@@ -194,7 +194,7 @@ const DeletedUsers = () => {
   ]
 
   return (
-    <MainLayout>
+    <>
       <>
         <div className="mb-12">
           <h2>Danh sách nhân viên đã xóa</h2>
@@ -232,7 +232,7 @@ const DeletedUsers = () => {
           />
         )}
       </>
-    </MainLayout>
+    </>
   )
 }
 

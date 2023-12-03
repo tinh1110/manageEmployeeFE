@@ -104,7 +104,7 @@ const RolePage = () => {
                 permissionsInfo.includes(element),
               ) && (
                 <Space size="middle">
-                  <Link to={`/role/update/${cr_id}`}>
+                  <Link to={`/roles/update/${cr_id}`}>
                     <Button
                       type="primary"
                       className=" text-white  bg-sky-500 m-1 rounded-full"
@@ -188,13 +188,13 @@ const RolePage = () => {
     })) ?? []
 
   return (
-    <MainLayout>
+    <>
       <>
         <Button
           type="primary"
           className="mb-5 bg-green-500 float-right"
           onClick={() => {
-            navigate('/role/add')
+            navigate('/roles/add')
           }}
         >
           Thêm role mới
@@ -229,7 +229,7 @@ const RolePage = () => {
           <p>"Are you sure to delete this role?"</p>
         </Modal>
       </>
-    </MainLayout>
+    </>
   )
 }
 

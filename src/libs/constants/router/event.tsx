@@ -5,17 +5,17 @@ import { EVENT_ADD, EVENT_LIST, EVENT_UPDATE } from '../Permissions'
 
 const eventRouter = [
   {
-    path: '/event',
+    path: '/events',
     element: <EventPage />,
     permissions: EVENT_LIST,
   },
   {
-    path: '/event/add',
+    path: '/events/add',
     element: <AddEventPage />,
     permissions: EVENT_ADD,
   },
   {
-    path: '/event/update/:id',
+    path: '/events/update/:id',
     element: <UpdateEventPage />,
     permissions: EVENT_UPDATE,
   },

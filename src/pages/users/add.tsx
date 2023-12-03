@@ -7,7 +7,7 @@ const UsersAdd = () => {
   const [isLoading, setIsLoading] = useState(false)
 
   return (
-    <MainLayout>
+    <>
       <div className="mb-12">
         <h1 className="flex justify-center">Thêm nhân viên</h1>
       </div>
@@ -19,7 +19,7 @@ const UsersAdd = () => {
           setIsLoading={setIsLoading}
         />
       </div>
-    </MainLayout>
+    </>
   )
 }
 

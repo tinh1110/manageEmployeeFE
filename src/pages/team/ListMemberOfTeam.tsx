@@ -28,7 +28,6 @@ const ListMemberOfTeam = () => {
   const navigate = useNavigate()
   const [title, setTitle] = useState<string>('')
   const [isLoading, setIsLoading] = useState<boolean>(true)
-
   useEffect(() => {
     getInfoTeam()
     getListMember()
@@ -94,6 +93,11 @@ const ListMemberOfTeam = () => {
       title: 'Tên',
       dataIndex: 'name',
       key: 'name',
+      render: (_, data) => (
+        <Space size="middle">
+          <a onClick={() => navigate(`/profile/${data.id}`)}>{data.name}</a>
+        </Space>
+      ),
     },
     {
       title: 'Ngày sinh',
@@ -124,6 +128,13 @@ const ListMemberOfTeam = () => {
       },
     },
     {
+      title: 'Chức vụ',
+      dataIndex: 'role',
+      key: 'role',
+      align: 'center',
+      width: '12%',
+    },
+    {
       title: 'Hoạt động',
       key: 'action',
       align: 'center',
@@ -144,7 +155,7 @@ const ListMemberOfTeam = () => {
   ]
 
   const getAllUserVer2 = async () => {
-    const res = await axiosInstance.get(`/user/get-all`)
+    const res = await axiosInstance.get(`/get-all`)
     setListAllUser(res.data.data)
   }
 
@@ -179,7 +190,7 @@ const ListMemberOfTeam = () => {
   }
 
   return (
-    <MainLayout>
+    <>
       <div>
         <div className="... flex items-center justify-center">
           <h1>{title}</h1>
@@ -253,7 +264,7 @@ const ListMemberOfTeam = () => {
           onDelete={() => onRemove(newMem)}
         />
       )}
-    </MainLayout>
+    </>
   )
 }
 

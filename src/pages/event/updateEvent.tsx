@@ -111,7 +111,7 @@ const UpdateEventPage = () => {
     }
   }
   const handleCancel = () => {
-    navigate('/event')
+    navigate('/events')
   }
   const handleUpdate = async (data: any) => {
     try {
@@ -152,7 +152,7 @@ const UpdateEventPage = () => {
         })
       }
 
-      navigate('/event')
+      navigate('/events')
     } catch (err: any) {
       if (err.response.data.errors) {
         const errorMessages = Object.values(err.response.data.errors)
@@ -250,7 +250,7 @@ const UpdateEventPage = () => {
     setFileDelete([...fileDelete, name])
   }
   return (
-    <MainLayout>
+    <>
       <h1 className="text-sky-500 flex justify-center">Sửa event </h1>
       {isLoading ? (
         <Spin className="flex justify-center" />
@@ -381,7 +381,7 @@ const UpdateEventPage = () => {
           </Form.Item>
         </Form>
       )}
-    </MainLayout>
+    </>
   )
 }
 export default UpdateEventPage

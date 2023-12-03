@@ -33,27 +33,13 @@ const ImportSearch: React.FC<Props> = ({ isLoadPage, setIsLoadPage }) => {
     sort: 'created_at',
   })
   useEffect(() => {
-    // Initialize Pusher with your app key and options
     const pusher = new Pusher('718f9af2e483f5b858af', {
       cluster: 'ap1',
-      // Add any additional options or configurations here
     })
-    // Subscribe to the desired Pusher channel
     const channel = pusher.subscribe('imported_users')
-    // Bind to the event you want to listen to
     channel.bind('imported_users', (data: any) => {
       setImportedUsers(data.imported_users)
-      // Handle the received event data
-      console.log('Received event:', data.imported_users)
-      console.log('123', importedUsers)
-      // Perform any other desired actions with the event data
     })
-
-    // Clean up the Pusher subscription when the component unmounts
-    // return () => {
-    //   // channel.unbind('imported_users')
-    //   // pusher.unsubscribe('private-imported_users')
-    // }
   }, [])
   useEffect(() => {
     handleGetImported()
@@ -66,11 +52,29 @@ const ImportSearch: React.FC<Props> = ({ isLoadPage, setIsLoadPage }) => {
       setData(response.data.data.records)
       setTotal(response.data.data.total)
     } catch (err: any) {
-      notification['error']({
-        duration: 5,
-        message: 'Get failed',
-        description: err.message,
-      })
+      if (err?.response?.data?.errors) {
+        const errorMessages = Object.values(err.response.data.errors)
+          .map((message) => `- ${message}<br>`)
+          .join('')
+        const key = 'updatable'
+        notification['error']({
+          key,
+          duration: 5,
+          message: 'Request failed',
+          description: (
+            <div
+              dangerouslySetInnerHTML={{ __html: errorMessages }}
+              className="text-red-500"
+            />
+          ),
+        })
+      } else {
+        notification['error']({
+          duration: 5,
+          message: 'Request failed',
+          description: err?.response?.data?.message,
+        })
+      }
     }
   }
 
@@ -95,11 +99,29 @@ const ImportSearch: React.FC<Props> = ({ isLoadPage, setIsLoadPage }) => {
       }))
       setOptions(options)
     } catch (err: any) {
-      notification['error']({
-        duration: 5,
-        message: 'get list admin failed',
-        description: err.message,
-      })
+      if (err?.response?.data?.errors) {
+        const errorMessages = Object.values(err.response.data.errors)
+          .map((message) => `- ${message}<br>`)
+          .join('')
+        const key = 'updatable'
+        notification['error']({
+          key,
+          duration: 5,
+          message: 'Request failed',
+          description: (
+            <div
+              dangerouslySetInnerHTML={{ __html: errorMessages }}
+              className="text-red-500"
+            />
+          ),
+        })
+      } else {
+        notification['error']({
+          duration: 5,
+          message: 'Request failed',
+          description: err?.response?.data?.message,
+        })
+      }
     }
   }
   const onSearch = (search: string) => {
@@ -217,10 +239,11 @@ const ImportSearch: React.FC<Props> = ({ isLoadPage, setIsLoadPage }) => {
         size="large"
         pagination={{
           current: params.page,
-          onChange: (page: number) => {
-            setParams((params) => ({ ...params, page: page }))
+          showSizeChanger: true,
+          onChange: (page: number, pageSize) => {
+            setParams((params) => ({ ...params, page: page, limit: pageSize }))
           },
-          pageSize: 5,
+          pageSize: params.limit,
           total: total,
         }}
         dataSource={data}

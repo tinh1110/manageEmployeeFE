@@ -67,7 +67,7 @@ const ProfilePage = () => {
   }
 
   return (
-    <MainLayout>
+    <>
       <h1 className="text-orange-500 flex justify-center">Thông tin cá nhân</h1>
       {isLoading ? (
         <Spin className="flex justify-center" />
@@ -140,7 +140,7 @@ const ProfilePage = () => {
             )}
         </>
       )}
-    </MainLayout>
+    </>
   )
 }
 export default ProfilePage

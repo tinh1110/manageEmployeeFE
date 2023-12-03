@@ -135,7 +135,7 @@ const ListAllTeamSub = () => {
   }
 
   return (
-    <MainLayout>
+    <>
       <ListOfTeam
         listTeam={listTeam}
         filter={filter}
@@ -170,7 +170,7 @@ const ListAllTeamSub = () => {
           onDelete={() => onRemove(teamId)}
         />
       )}
-    </MainLayout>
+    </>
   )
 }
 

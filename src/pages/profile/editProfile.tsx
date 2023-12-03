@@ -127,7 +127,7 @@ const UpdateProfilePage = () => {
     inputRef.current.value = ''
   }
   return (
-    <MainLayout>
+    <>
       <h1 className="text-orange-500 flex justify-center">
         Chỉnh sửa trang cá nhân
       </h1>
@@ -276,7 +276,7 @@ const UpdateProfilePage = () => {
           </Form.Item>
         </Form>
       )}
-    </MainLayout>
+    </>
   )
 }
 

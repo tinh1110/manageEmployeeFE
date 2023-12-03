@@ -55,7 +55,7 @@ const ModalCreateTeam: React.FC<Props> = ({
   }
 
   const getAllUserVer2 = async () => {
-    const res = await axiosInstance.get(`/user/get-all`)
+    const res = await axiosInstance.get(`/get-all`)
     setListAllUser(res.data.data)
   }
   const getAllTeam2 = async () => {

@@ -1,11 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import {
-  BrowserRouter as Router,
-  Route,
-  Link,
-  redirect,
-  useNavigate,
-} from 'react-router-dom'
+import { BrowserRouter as Router, Link, useNavigate } from 'react-router-dom'
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons'
 import { Table, Space, Modal, Button, Spin } from 'antd'
 import type { ColumnsType } from 'antd/es/table'
@@ -31,7 +25,7 @@ const ListUsers = () => {
     status: '',
     role: '',
     limit: '10',
-    page: '',
+    page: '1',
   })
   const [isLoading, setIsLoading] = useState<boolean>()
   const handleDelete = async (key: string) => {
@@ -191,7 +185,7 @@ const ListUsers = () => {
   ]
 
   return (
-    <MainLayout>
+    <>
       <>
         <div className="mb-12">
           <h2>Danh sách nhân viên</h2>
@@ -204,7 +198,16 @@ const ListUsers = () => {
             navigate('/users/add')
           }}
         >
-          Thêm nhân viên mới
+          Thêm nhân viên
+        </Button>
+        <Button
+          type="primary"
+          className="m-5 bg-slate-600 float-right"
+          onClick={() => {
+            navigate('/users/deleted')
+          }}
+        >
+          Nhân viên đã xóa
         </Button>
         {isLoading ? (
           <Spin className="flex justify-center" />
@@ -215,10 +218,12 @@ const ListUsers = () => {
             rowKey="id"
             bordered
             pagination={{
-              defaultPageSize: 10,
+              pageSize: parseInt(filter?.limit || '10'),
               showSizeChanger: true,
+              current: parseInt(filter.page),
               total: totalUser,
               onChange: (page, pageSize) => {
+                console.log(page)
                 setFilter((filter: any) => ({
                   ...filter,
                   page: page.toString(),
@@ -229,7 +234,7 @@ const ListUsers = () => {
           />
         )}
       </>
-    </MainLayout>
+    </>
   )
 }
 
