@@ -52,3 +52,29 @@ export const LIST_ATTENDANCE_STATUS = [
     value: 2,
   },
 ]
+export const LIST_STATUS_PROJECT = [
+  {
+    label: 'Chưa bắt đầu',
+    value: 1,
+  },
+  {
+    label: 'Đang làm',
+    value: 2,
+  },
+  {
+    label: 'Bị hủy',
+    value: 3,
+  },
+  {
+    label: 'Tạm dừng',
+    value: 4,
+  },
+  {
+    label: 'Hoàn thành',
+    value: 5,
+  },
+  {
+    label: 'Khác',
+    value: 6,
+  },
+]

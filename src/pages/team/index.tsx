@@ -32,7 +32,7 @@ const TeamPage = () => {
     getListTeam()
   }, [filter])
 
-  const confirmDelete: string = 'Are you sure to delete this team ?'
+  const confirmDelete: string = 'Are you sure to delete this project ?'
   const [teamCheck, setTeamCheck] = useState({
     parent_team_id: '',
     name: '',
@@ -71,7 +71,7 @@ const TeamPage = () => {
     if (res.data.data.total === 0) {
       navigate(`/member-of-team/${id}`)
     } else {
-      navigate(`/teams/${id}`)
+      navigate(`/projects/${id}`)
     }
   }
 
@@ -151,7 +151,7 @@ const TeamPage = () => {
         deleteTeam={deleteTeam}
         updateTeam={updateTeam}
         handleListSubOrListMem={handleListSubOrListMem}
-        blog="Danh sách team"
+        blog="Danh sách dự án"
         total={totalTeam}
         onChange={onChange}
         permissionsUpdate={TEAM_UPDATE}

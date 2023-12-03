@@ -100,11 +100,11 @@ const Sidebar = () => {
         children: [
           checkChildrenSidebar(TEAM_ADD, {
             label: 'Thêm dự án',
-            key: '/teams/create',
+            key: '/projects/create',
           }),
           checkChildrenSidebar(TEAM_LIST, {
             label: 'Danh sách dự án',
-            key: '/teams/',
+            key: '/projects/',
           }),
         ],
       }),
