@@ -52,11 +52,29 @@ const ImportSearch: React.FC<Props> = ({ isLoadPage, setIsLoadPage }) => {
       setData(response.data.data.records)
       setTotal(response.data.data.total)
     } catch (err: any) {
-      notification['error']({
-        duration: 5,
-        message: 'Get failed',
-        description: err.message,
-      })
+      if (err?.response?.data?.errors) {
+        const errorMessages = Object.values(err.response.data.errors)
+          .map((message) => `- ${message}<br>`)
+          .join('')
+        const key = 'updatable'
+        notification['error']({
+          key,
+          duration: 5,
+          message: 'Request failed',
+          description: (
+            <div
+              dangerouslySetInnerHTML={{ __html: errorMessages }}
+              className="text-red-500"
+            />
+          ),
+        })
+      } else {
+        notification['error']({
+          duration: 5,
+          message: 'Request failed',
+          description: err?.response?.data?.message,
+        })
+      }
     }
   }
 
@@ -81,11 +99,29 @@ const ImportSearch: React.FC<Props> = ({ isLoadPage, setIsLoadPage }) => {
       }))
       setOptions(options)
     } catch (err: any) {
-      notification['error']({
-        duration: 5,
-        message: 'get list admin failed',
-        description: err.message,
-      })
+      if (err?.response?.data?.errors) {
+        const errorMessages = Object.values(err.response.data.errors)
+          .map((message) => `- ${message}<br>`)
+          .join('')
+        const key = 'updatable'
+        notification['error']({
+          key,
+          duration: 5,
+          message: 'Request failed',
+          description: (
+            <div
+              dangerouslySetInnerHTML={{ __html: errorMessages }}
+              className="text-red-500"
+            />
+          ),
+        })
+      } else {
+        notification['error']({
+          duration: 5,
+          message: 'Request failed',
+          description: err?.response?.data?.message,
+        })
+      }
     }
   }
   const onSearch = (search: string) => {

@@ -261,11 +261,7 @@ const CreateTeam = () => {
                   })}
                 </Select>
               </Form.Item>{' '}
-              <Form.Item
-                name="parent_team_id"
-                id="parent_team_id"
-                label="Team cha"
-              >
+              <Form.Item name="status" id="status" label="Trạng thái">
                 <Select
                   size="large"
                   allowClear

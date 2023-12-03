@@ -45,21 +45,29 @@ const UsersImport = () => {
       setIsDisplayForm(!isDisplayForm)
       setIsLoadPage(true)
     } catch (err: any) {
-      const errorMessages = Object.values(err.response.data.errors)
-        .map((message) => `- ${message}<br>`)
-        .join('')
-      const key = 'updatable'
-      notification['error']({
-        key,
-        duration: 5,
-        message: 'Update failed',
-        description: (
-          <div
-            dangerouslySetInnerHTML={{ __html: errorMessages }}
-            className="text-red-500"
-          />
-        ),
-      })
+      if (err?.response?.data?.errors) {
+        const errorMessages = Object.values(err.response.data.errors)
+          .map((message) => `- ${message}<br>`)
+          .join('')
+        const key = 'updatable'
+        notification['error']({
+          key,
+          duration: 5,
+          message: 'Request failed',
+          description: (
+            <div
+              dangerouslySetInnerHTML={{ __html: errorMessages }}
+              className="text-red-500"
+            />
+          ),
+        })
+      } else {
+        notification['error']({
+          duration: 5,
+          message: 'Request failed',
+          description: err?.response?.data?.message,
+        })
+      }
     }
   }
   const handleDownload = async () => {

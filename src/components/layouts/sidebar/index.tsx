@@ -57,22 +57,22 @@ const Sidebar = () => {
       checkParentSidebar([], {
         key: 'users',
         icon: <UserOutlined />,
-        label: 'Users',
+        label: 'Người dùng',
         children: [
           checkChildrenSidebar(USER_LIST, {
-            label: 'User list',
+            label: 'Danh sách',
             key: '/users/',
           }),
           checkChildrenSidebar(USER_ADD, {
-            label: 'Add user',
+            label: 'Thêm nhân viên',
             key: '/users/add',
           }),
           checkChildrenSidebar(USER_IMPORT_VIEW, {
-            label: 'Import user',
+            label: 'Import file',
             key: '/users/import/',
           }),
           checkChildrenSidebar(USER_LIST_DELETED, {
-            label: 'User deleted',
+            label: 'Người dùng đã xóa',
             key: '/users/deleted',
           }),
         ],
@@ -81,14 +81,14 @@ const Sidebar = () => {
       checkParentSidebar([], {
         key: 'roles',
         icon: <AuditOutlined />,
-        label: 'Roles',
+        label: 'Chức vụ',
         children: [
           checkChildrenSidebar(ROLE_LIST, {
-            label: 'Roles list',
+            label: 'Danh sách',
             key: '/roles/',
           }),
           checkChildrenSidebar(ROLE_ADD, {
-            label: 'Add role',
+            label: 'Thêm chức vụ',
             key: '/roles/add',
           }),
         ],
@@ -96,33 +96,29 @@ const Sidebar = () => {
       checkParentSidebar([], {
         key: 'teams',
         icon: <TeamOutlined />,
-        label: 'Teams',
+        label: 'Dự án',
         children: [
           checkChildrenSidebar(TEAM_ADD, {
-            label: 'Create New Team',
+            label: 'Thêm dự án',
             key: '/teams/create',
           }),
           checkChildrenSidebar(TEAM_LIST, {
-            label: 'Main Teams',
+            label: 'Danh sách dự án',
             key: '/teams/',
-          }),
-          checkChildrenSidebar(TEAM_LIST_SUB, {
-            label: 'Sub Teams',
-            key: '/teams/sub-teams',
           }),
         ],
       }),
       checkParentSidebar([], {
         key: 'attendances',
         icon: <CalendarOutlined />,
-        label: 'Attendances',
+        label: 'Xin nghỉ',
         children: [
           checkChildrenSidebar(ATTENDANCE_LIST, {
-            label: 'Attendances ',
+            label: 'Tạo đơn xin nghỉ ',
             key: '/attendances',
           }),
           checkChildrenSidebar(ATTENDANCE_LIST, {
-            label: 'Attendance list',
+            label: 'Danh sách đơn nghỉ',
             key: '/attendances/list',
           }),
         ],
@@ -130,14 +126,14 @@ const Sidebar = () => {
       checkParentSidebar([], {
         key: 'events',
         icon: <CarryOutOutlined />,
-        label: 'Events',
+        label: 'Sự kiện',
         children: [
           checkChildrenSidebar(EVENT_LIST, {
-            label: 'Events list',
+            label: 'Danh sách sự kiện',
             key: '/events',
           }),
           checkChildrenSidebar(EVENT_ADD, {
-            label: 'Add event',
+            label: 'Thêm sự kiện',
             key: '/events/add',
           }),
         ],
@@ -145,7 +141,7 @@ const Sidebar = () => {
       checkParentSidebar(PROFILE, {
         key: '/profile',
         icon: <ProfileOutlined />,
-        label: 'Profile',
+        label: 'Trang cá nhân',
         children: null,
       }),
     ]
