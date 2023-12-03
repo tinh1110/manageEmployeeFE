@@ -18,6 +18,7 @@ import PermissionsRoute from './components/PermissionsRoute'
 import attendanceRouter from './libs/constants/router/attendance'
 import teamRouter from './libs/constants/router/team'
 import MainLayout from './components/layouts/main'
+import timekeepingRouter from './libs/constants/router/timekeeping'
 
 const queryClient = new QueryClient()
 
@@ -86,6 +87,19 @@ const router = createBrowserRouter(
             )
           })}
           {attendanceRouter.map((router) => {
+            return (
+              <Route
+                key={router.path}
+                path={router.path}
+                element={
+                  <PermissionsRoute permissions={router.permissions}>
+                    {router.element}
+                  </PermissionsRoute>
+                }
+              />
+            )
+          })}
+          {timekeepingRouter.map((router) => {
             return (
               <Route
                 key={router.path}

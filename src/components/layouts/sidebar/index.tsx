@@ -139,6 +139,12 @@ const Sidebar = () => {
         ],
       }),
       checkParentSidebar(PROFILE, {
+        key: '/timekeeping',
+        icon: <ProfileOutlined />,
+        label: 'Chấm công',
+        children: null,
+      }),
+      checkParentSidebar(PROFILE, {
         key: '/profile',
         icon: <ProfileOutlined />,
         label: 'Trang cá nhân',
