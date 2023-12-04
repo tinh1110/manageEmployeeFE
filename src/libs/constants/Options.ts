@@ -78,3 +78,21 @@ export const LIST_STATUS_PROJECT = [
     value: 6,
   },
 ]
+export const LIST_POSITION_PROJECT = [
+  {
+    label: 'Developer',
+    value: 2,
+  },
+  {
+    label: 'Tester',
+    value: 3,
+  },
+  {
+    label: 'Comtor',
+    value: 4,
+  },
+  {
+    label: 'Khác',
+    value: 5,
+  },
+]

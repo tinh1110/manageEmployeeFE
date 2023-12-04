@@ -9,6 +9,8 @@ import {
 import { calculateDayByMonth, convertDataSourceTimekeeping } from './helper'
 import { InboxOutlined } from '@ant-design/icons'
 import type { UploadProps } from 'antd'
+import { TEAM_DELETE_MEMBER, TIME } from '../../libs/constants/Permissions'
+import { getPermissions } from '../../libs/helpers/getLocalStorage'
 
 const { Dragger } = Upload
 const { Column, ColumnGroup } = Table
@@ -24,6 +26,7 @@ const propsDragger: UploadProps = {
 const TimekeepingPage = () => {
   const [data, setData] = useState([])
   const [month, setMonth] = useState<number>(30)
+  const [monthFull, setMonthFull] = useState<number>()
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [isOpenModalImport, setIsOpenModalImport] = useState<boolean>(false)
   const [file, setFile] = useState<any>(null)
@@ -40,6 +43,7 @@ const TimekeepingPage = () => {
       setData(res.data.data.data)
       const month = res.data.data.month.split('-')[0]
       setMonth(calculateDayByMonth(Number(month)))
+      setMonthFull(res.data.data.month)
       setIsLoading(false)
     } catch (error) {
       setIsLoading(false)
@@ -82,21 +86,31 @@ const TimekeepingPage = () => {
   }, [])
   const dataSource = convertDataSourceTimekeeping(data)
   const numberDay = Array.from({ length: month }, (_, index) => index + 1)
+  const permissionsInfo = getPermissions()
   return (
     <div>
+      <h1 className="flex items-center justify-center">
+        Bảng chấm công tháng {monthFull}
+      </h1>
+
       <div className="flex justify-end">
-        <div className="flex gap-2">
-          <Button
-            type="primary"
-            className="mb-2"
-            onClick={handleOpenModalImport}
-          >
-            Import
-          </Button>
-          <Button type="primary" className="mb-2" onClick={handleExport}>
-            Export
-          </Button>
-        </div>
+        {permissionsInfo &&
+          TIME.every((element: string) =>
+            permissionsInfo.includes(element),
+          ) && (
+            <div className="flex gap-2">
+              <Button
+                type="primary"
+                className="mb-2"
+                onClick={handleOpenModalImport}
+              >
+                Import
+              </Button>
+              <Button type="primary" className="mb-2" onClick={handleExport}>
+                Export
+              </Button>
+            </div>
+          )}
       </div>
       <Table
         dataSource={dataSource}
@@ -130,6 +144,43 @@ const TimekeepingPage = () => {
             </ColumnGroup>
           )
         })}
+        <Column
+          title="Số lần đi muộn"
+          dataIndex="late"
+          key="late"
+          width={100}
+        />
+        <Column
+          title="Số lần quên chấm công"
+          dataIndex="forget"
+          key="forget"
+          width={100}
+        />
+
+        <Column
+          title="Số ngày nghỉ có phép"
+          dataIndex="paid_leave"
+          key="paid_leave"
+          width={100}
+        />
+        <Column
+          title="Số ngày nghỉ không phép"
+          dataIndex="unpaid_leave"
+          key="unpaid_leave"
+          width={100}
+        />
+        <Column
+          title="Số ngày công"
+          dataIndex="day_work"
+          key="day_work"
+          width={100}
+        />
+        <Column
+          title="Số ngày nghỉ còn lại"
+          dataIndex="day_off"
+          key="day_off"
+          width={100}
+        />
       </Table>
 
       {isOpenModalImport && (
@@ -143,9 +194,7 @@ const TimekeepingPage = () => {
             <p className="ant-upload-drag-icon">
               <InboxOutlined />
             </p>
-            <p className="ant-upload-text">
-              Click or drag file to this area to upload
-            </p>
+            <p className="ant-upload-text">Ấn vào đây để upload</p>
           </Dragger>
         </Modal>
       )}

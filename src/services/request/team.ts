@@ -10,3 +10,13 @@ export const updateTeam = (data: any, id: string) => {
 export const editTeam = (id: string) => {
   return axiosInstance.get(`/team/get-detail-team/${id}`)
 }
+
+export const addMember = (data: any, id: string) => {
+  return axiosInstance.post(`/team/add-member/${id}`, data)
+}
+
+export const removeMember = (data: any, id: string) => {
+  return axiosInstance.delete(
+    `/team/remove-member/${id}?user_id=${data.user_id}&position_id=${data.position_id}`,
+  )
+}

@@ -7,6 +7,7 @@ import {
   CalendarOutlined,
   AuditOutlined,
   CarryOutOutlined,
+  CheckSquareOutlined,
 } from '@ant-design/icons'
 import { Layout, Menu } from 'antd'
 import SideBarLogo from './SideBarLogo'
@@ -94,17 +95,17 @@ const Sidebar = () => {
         ],
       }),
       checkParentSidebar([], {
-        key: 'teams',
+        key: 'projects',
         icon: <TeamOutlined />,
         label: 'Dự án',
         children: [
-          checkChildrenSidebar(TEAM_ADD, {
-            label: 'Thêm dự án',
-            key: '/projects/create',
-          }),
           checkChildrenSidebar(TEAM_LIST, {
             label: 'Danh sách dự án',
             key: '/projects/',
+          }),
+          checkChildrenSidebar(TEAM_ADD, {
+            label: 'Thêm dự án',
+            key: '/projects/create',
           }),
         ],
       }),
@@ -140,8 +141,8 @@ const Sidebar = () => {
       }),
       checkParentSidebar(PROFILE, {
         key: '/timekeeping',
-        icon: <ProfileOutlined />,
-        label: 'Chấm công',
+        icon: <CheckSquareOutlined />,
+        label: 'Bảng công',
         children: null,
       }),
       checkParentSidebar(PROFILE, {

@@ -35,7 +35,7 @@ export const teamRouter = [
     permissions: TEAM_LIST_MEMBER,
   },
   {
-    path: '/member-of-team/:id',
+    path: '/projects/member-of-team/:id',
     element: <ListMemberOfTeam />,
     permissions: TEAM_LIST_MEMBER,
   },

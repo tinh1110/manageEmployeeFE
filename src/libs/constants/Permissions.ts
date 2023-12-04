@@ -41,3 +41,4 @@ export const ATTENDANCE_IMPORT = [
   'attendance.exportTemplate',
 ]
 export const ATTENDANCE_EXPORT_VIEW = ['attendance.importedList']
+export const TIME = ['time']

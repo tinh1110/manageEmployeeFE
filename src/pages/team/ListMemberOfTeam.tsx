@@ -1,7 +1,17 @@
 import { DeleteOutlined } from '@ant-design/icons'
 import { useEffect, useState } from 'react'
 import { ColumnsType } from 'antd/es/table'
-import { Space, Button, Modal, Table, message, Spin } from 'antd'
+import {
+  Space,
+  Button,
+  Modal,
+  Table,
+  message,
+  Spin,
+  Form,
+  Select,
+  notification,
+} from 'antd'
 import ModalRemove from './ModalRemove'
 import axiosInstance from '../../services/request/base'
 import SelectOption from '../../components/teams/SelectOption'
@@ -10,6 +20,9 @@ import { useNavigate, useParams } from 'react-router-dom'
 import MainLayout from '../../components/layouts/main'
 import { getPermissions } from '../../libs/helpers/getLocalStorage'
 import { TEAM_DELETE_MEMBER } from '../../libs/constants/Permissions'
+import { LIST_POSITION_PROJECT } from '../../libs/constants/Options'
+import { type } from '@testing-library/user-event/dist/type'
+import { addMember, removeMember } from '../../services/request/team'
 const permissionsInfo = getPermissions()
 
 const ListMemberOfTeam = () => {
@@ -21,7 +34,7 @@ const ListMemberOfTeam = () => {
   const [filter, setFilter] = useState({
     search: '',
   })
-  const [newMem, setNewMem] = useState<number>(1)
+  const [newMem, setNewMem] = useState<any>()
   const [chooseUserToAt, setChooseUserToAt] = useState<number[]>([])
   const { id } = useParams()
   const teamId = id
@@ -36,12 +49,22 @@ const ListMemberOfTeam = () => {
   useEffect(() => {
     getAllUserVer2()
   }, [])
+  const handleChangeValue = (name: string, value: string) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }))
+  }
 
   const getListMember = async () => {
     const res = await axiosInstance.get(`/team/get-list-user-of-team/${teamId}`)
     setListUser(res.data.data.records)
     setIsLoading(false)
   }
+  const [formData, setFormData] = useState({
+    user_id: '',
+    position_id: '',
+  })
 
   const getAllUser = async () => {
     const url = new URLSearchParams(filter)
@@ -57,7 +80,20 @@ const ListMemberOfTeam = () => {
     const res = await axiosInstance.get(`/team/get-detail-team/${id}`)
     setTitle(`${res.data.data.name}`)
   }
-
+  const getPosition = (gender: number): string => {
+    switch (gender) {
+      case 1:
+        return 'Project manager'
+      case 2:
+        return 'Developer'
+      case 3:
+        return 'Tester'
+      case 4:
+        return 'Comtor'
+      default:
+        return 'Khác'
+    }
+  }
   const handleSearch = (data: string) => {
     setFilter({ search: data })
     if (data === '') {
@@ -66,24 +102,24 @@ const ListMemberOfTeam = () => {
     }
   }
 
-  const onRemove = async (id: number) => {
-    const res = await axiosInstance.delete(
-      `/team/remove-member/${teamId}?ids[]=${id}`,
-    )
-    if (res.data.status) {
-      setShowModalDeleteMem(false)
-      await getListMember()
-      setTimeout(() => {
-        message.success('Delete Successful')
-      }, 250)
-    } else {
-      setTimeout(() => {
-        message.error('Delete Fail')
-      }, 250)
+  const onRemove = async (data: any) => {
+    if (teamId) {
+      const res = await removeMember(data, teamId)
+      if (res.data.status) {
+        setShowModalDeleteMem(false)
+        await getListMember()
+        setTimeout(() => {
+          message.success('Delete Successful')
+        }, 250)
+      } else {
+        setTimeout(() => {
+          message.error('Delete Fail')
+        }, 250)
+      }
     }
   }
 
-  const lists: ColumnsType<User> = [
+  const lists: ColumnsType<any> = [
     {
       title: 'ID',
       dataIndex: 'id',
@@ -98,6 +134,17 @@ const ListMemberOfTeam = () => {
           <a onClick={() => navigate(`/profile/${data.id}`)}>{data.name}</a>
         </Space>
       ),
+    },
+    {
+      title: 'Email',
+      key: 'email',
+      dataIndex: 'email',
+    },
+    {
+      title: 'Vị trí',
+      key: 'position_id',
+      dataIndex: 'position_id',
+      render: (_, data) => getPosition(data?.position_id),
     },
     {
       title: 'Ngày sinh',
@@ -145,7 +192,16 @@ const ListMemberOfTeam = () => {
             TEAM_DELETE_MEMBER.every((element: string) =>
               permissionsInfo.includes(element),
             ) && (
-              <Button danger type="primary" onClick={() => deleteUser(data.id)}>
+              <Button
+                danger
+                type="primary"
+                onClick={() =>
+                  deleteUser({
+                    user_id: parseInt(data?.id),
+                    position_id: parseInt(data?.position_id),
+                  })
+                }
+              >
                 <DeleteOutlined />
               </Button>
             )}
@@ -159,34 +215,50 @@ const ListMemberOfTeam = () => {
     setListAllUser(res.data.data)
   }
 
-  const deleteUser = (id: number) => {
+  const deleteUser = (data: any) => {
     setShowModalDeleteMem(true)
-    setNewMem(id)
+    setNewMem(data)
   }
 
   const AddUser = async () => {
-    const data = {
-      ids: chooseUserToAt,
-    }
+    const data = { formData }
 
     try {
-      const res = await axiosInstance.post(`/team/add-member/${teamId}`, data)
-      if (res.data.status) {
-        setShowModalAddMem(false)
-        await getListMember()
-        setTimeout(() => {
-          message.success('Add member successful')
-        }, 50)
+      if (teamId) {
+        const res = await addMember(data.formData, teamId)
+        if (res.data.status) {
+          setShowModalAddMem(false)
+          await getListMember()
+          setTimeout(() => {
+            message.success('Add member successful')
+          }, 50)
+        }
       }
-    } catch (error) {
-      setTimeout(() => {
-        message.error('The user is already in the team')
-      }, 50)
+    } catch (err: any) {
+      if (err?.response?.data?.errors) {
+        const errorMessages = Object.values(err.response.data.errors)
+          .map((message) => `- ${message}<br>`)
+          .join('')
+        const key = 'updatable'
+        notification['error']({
+          key,
+          duration: 5,
+          message: 'Add failed',
+          description: (
+            <div
+              dangerouslySetInnerHTML={{ __html: errorMessages }}
+              className="text-red-500"
+            />
+          ),
+        })
+      } else {
+        notification['error']({
+          message: 'Add failed',
+          duration: 5,
+          description: err.response.data.message,
+        })
+      }
     }
-  }
-
-  const handleChange = (value: number[]) => {
-    setChooseUserToAt(value)
   }
 
   return (
@@ -204,7 +276,7 @@ const ListMemberOfTeam = () => {
         </Button>
         <Button
           type="primary"
-          className="bg-orange-500 float-right"
+          className="bg-green-500 float-right"
           onClick={() => {
             setShowModalAddMem(true)
           }}
@@ -246,15 +318,23 @@ const ListMemberOfTeam = () => {
             </Button>,
           ]}
         >
-          <>
-            <SelectOption
-              blog="Please choose user"
-              handleChange={handleChange}
-              handleSearch={handleSearch}
-              data={listAllUser}
-              mode="multiple"
+          <Form>
+            <Select
+              className="mt-5 w-full"
+              placeholder="Thêm thành viên"
+              onChange={(value: string) => handleChangeValue('user_id', value)}
+              options={listAllUser?.map((user: User) => ({
+                value: user.id,
+                label: user.name,
+              }))}
+            ></Select>
+            <Select
+              className="mt-5 w-full"
+              placeholder="Chức vụ"
+              options={LIST_POSITION_PROJECT}
+              onChange={(value) => handleChangeValue('position_id', value)}
             />
-          </>
+          </Form>
         </Modal>
       }
       {showModalDeleteMem && (

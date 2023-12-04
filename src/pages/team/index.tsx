@@ -66,13 +66,7 @@ const TeamPage = () => {
   }
 
   const handleListSubOrListMem = async (id: number) => {
-    setCheckListSub(!checkListSub)
-    const res = await axiosInstance.get(`/team/get-list-sub/${id}`)
-    if (res.data.data.total === 0) {
-      navigate(`/member-of-team/${id}`)
-    } else {
-      navigate(`/projects/${id}`)
-    }
+    navigate(`/projects/member-of-team/${id}`)
   }
 
   const onRemove = async (id: number) => {

@@ -124,9 +124,9 @@ const ListOfTeam: React.FC<Props> = ({
       dataIndex: 'total_member',
     },
     {
-      title: 'Thời gian tạo',
-      key: 'created_at',
-      dataIndex: 'created_at',
+      title: 'Khách hàng',
+      key: 'customer',
+      dataIndex: 'customer',
       align: 'center',
       width: '12%',
     },
