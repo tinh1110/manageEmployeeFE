@@ -4,7 +4,7 @@ import Filter from './Filter'
 import { Button, Pagination, Space, Spin, Table } from 'antd'
 import { Team } from './interface'
 import type { ColumnsType } from 'antd/es/table'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { getPermissions } from '../../libs/helpers/getLocalStorage'
 
 interface Props {
@@ -61,8 +61,27 @@ const ListOfTeam: React.FC<Props> = ({
   const navigate = useNavigate()
   const teamId = teamSubId
   // const [isLoading, setIsLoading] = useState<boolean>(false)
+  const statusLabel = (status: number): string => {
+    switch (status) {
+      case 1:
+        return 'Chưa bắt đầu'
+      case 2:
+        return 'Đang làm'
 
-  const lists: ColumnsType<Team> = [
+      case 3:
+        return 'Bị hủy'
+      case 4:
+        return 'Tạm dừng'
+
+      case 5:
+        return 'Hoàn thành'
+
+      default:
+        return 'Khác'
+    }
+  }
+
+  const listsMain: ColumnsType<any> = [
     {
       title: 'ID',
       dataIndex: 'id',
@@ -84,80 +103,20 @@ const ListOfTeam: React.FC<Props> = ({
       dataIndex: 'details',
     },
     {
-      title: 'Thành viên',
-      key: 'total_member',
-      dataIndex: 'total_member',
-      align: 'center',
+      title: 'Trạng thái',
+      key: 'status',
+      dataIndex: 'status',
+      render: (_, data) => statusLabel(data?.status),
     },
     {
-      title: 'Thời gian tạo',
-      key: 'created_at',
-      dataIndex: 'created_at',
-      width: '12%',
+      title: 'Thời gian bắt đầu',
+      key: 'start_time',
+      dataIndex: 'start_time',
     },
     {
-      title: 'Hoạt động',
-      dataIndex: 'leader',
-      key: 'leader',
-      render: (_, data) => (
-        <Space size="middle">
-          <strong> {data.leader?.name}</strong>
-        </Space>
-      ),
-    },
-    {
-      title: 'Action',
-      key: 'action',
-      align: 'center',
-      width: '10%',
-      render: (_, data) => (
-        <Space size="middle">
-          {permissionsInfo &&
-            permissionsDelete.every((element: string) =>
-              permissionsInfo.includes(element),
-            ) && (
-              <Button type="primary" onClick={() => updateTeam(data.id)}>
-                <EditOutlined />
-              </Button>
-            )}
-          {permissionsInfo &&
-            permissionsUpdate.every((element: string) =>
-              permissionsInfo.includes(element),
-            ) && (
-              <Button danger type="primary" onClick={() => deleteTeam(data.id)}>
-                <DeleteOutlined />
-              </Button>
-            )}
-        </Space>
-      ),
-    },
-  ]
-
-  const listsMain: ColumnsType<Team> = [
-    {
-      title: 'ID',
-      dataIndex: 'id',
-      key: 'id',
-    },
-    {
-      title: 'Tên',
-      dataIndex: 'name',
-      key: 'name',
-      render: (_, data) => (
-        <Space size="middle">
-          <a onClick={() => handleListSubOrListMem(data.id)}>{data.name}</a>
-        </Space>
-      ),
-    },
-    {
-      title: 'Mô tả',
-      key: 'details',
-      dataIndex: 'details',
-    },
-    {
-      title: 'Team con',
-      key: 'total_subteam',
-      dataIndex: 'total_subteam',
+      title: 'Thời gian kết thúc',
+      key: 'end_time',
+      dataIndex: 'end_time',
     },
     {
       title: 'Thành viên',
@@ -165,9 +124,9 @@ const ListOfTeam: React.FC<Props> = ({
       dataIndex: 'total_member',
     },
     {
-      title: 'Thời gian tạo',
-      key: 'created_at',
-      dataIndex: 'created_at',
+      title: 'Khách hàng',
+      key: 'customer',
+      dataIndex: 'customer',
       align: 'center',
       width: '12%',
     },
@@ -192,9 +151,18 @@ const ListOfTeam: React.FC<Props> = ({
             permissionsDelete.every((element: string) =>
               permissionsInfo.includes(element),
             ) && (
-              <Button type="primary" onClick={() => updateTeam(data.id)}>
-                <EditOutlined />
-              </Button>
+              // <Button type="primary" onClick={() => updateTeam(data.id)}>
+              //   <EditOutlined />
+              // </Button>
+              <Link to={`/projects/update/${data.id}}`}>
+                <Button
+                  type="primary"
+                  className=" text-white  bg-sky-500 m-1 rounded-full"
+                  htmlType="submit"
+                >
+                  <EditOutlined />
+                </Button>
+              </Link>
             )}
           {permissionsInfo &&
             permissionsUpdate.every((element: string) =>
@@ -222,22 +190,14 @@ const ListOfTeam: React.FC<Props> = ({
         type="primary"
         className="mb-5 bg-green-500 float-right"
         onClick={() => {
-          navigate('/teams/create', { state: { teamId } })
+          navigate('/projects/create', { state: { teamId } })
         }}
         style={{ marginBottom: 10 }}
       >
-        Thêm team mới
+        Thêm dự án mới
       </Button>
       {isLoading ? (
         <Spin className="flex justify-center" />
-      ) : isSubteam ? (
-        <Table
-          columns={lists}
-          dataSource={listTeam}
-          bordered={true}
-          pagination={false}
-          rowKey="id"
-        />
       ) : (
         <Table
           columns={listsMain}

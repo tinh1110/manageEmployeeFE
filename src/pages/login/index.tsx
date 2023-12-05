@@ -1,4 +1,4 @@
-import { Button, Checkbox, Form, Input, notification } from 'antd'
+import { Button, Checkbox, Form, Input, Spin, notification } from 'antd'
 import { useMutation } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
 import { LoginRequest, login } from '../../services/authentication'
@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom'
 const LoginPage = () => {
   const navigate = useNavigate()
   const user = localStorage.getItem('user_info')
+  const [isLoading, setIsLoading] = useState<boolean>(false)
   const [data, setData] = useState<LoginRequest>({
     email: '',
     password: '',
@@ -16,6 +17,7 @@ const LoginPage = () => {
   const [antForm] = Form.useForm()
   const handleLogin = async (data: any) => {
     try {
+      setIsLoading(true)
       const res = await login(data)
       //  xử lý khi đăng nhập thành công
       localStorage.setItem('accessToken', res.data.data.access_token)
@@ -51,6 +53,7 @@ const LoginPage = () => {
         })
       }
     }
+    setIsLoading(false)
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -72,6 +75,8 @@ const LoginPage = () => {
   }, [user])
   return (
     <HomeLayout>
+      {' '}
+      {isLoading ? <Spin className="flex justify-center" /> : <> </>}
       <div className="bg-sky-500  min-h-screen min-w-screen flex justify-center items-center">
         <div className="bg-white p-6 w-3/5 h-1/2 rounded-30px overflow-hidden flex">
           <div className="w-1/2 hg_login bg-cover bg-no-repeat border-radius-30px block bg-login bg-center"></div>
@@ -105,7 +110,10 @@ const LoginPage = () => {
                   label="Mật khẩu"
                   name="password"
                   rules={[
-                    { required: true, message: 'Please input your password!' },
+                    {
+                      required: true,
+                      message: 'Please input your password!',
+                    },
                     {
                       min: 6,
                       message: 'Password must be at least 6 characters',

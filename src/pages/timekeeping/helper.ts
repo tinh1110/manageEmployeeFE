@@ -8,6 +8,12 @@ export const convertDataSourceTimekeeping = (data: any) => {
     return {
       name: item.user_name,
       ...times,
+      late: item.late,
+      forget: item.forget,
+      paid_leave: item.paid_leave,
+      unpaid_leave: item.unpaid_leave,
+      day_work: item.day_work,
+      day_off: item.day_off,
     }
   })
 }
