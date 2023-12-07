@@ -71,10 +71,10 @@ const UpdateProfilePage = () => {
       formData.append('details', data.details || '')
       formData.append('phone_number', data.phone_number)
       formData.append('gender', data.gender)
-      if (data?.password) {
-        formData.append('password', data.password)
-        formData.append('password_confirmation', data.password_confirmation)
-      }
+      // if (data?.password) {
+      //   formData.append('password', data.password)
+      //   formData.append('password_confirmation', data.password_confirmation)
+      // }
       formData.append('dob', data.dob)
       const res = await updateProfile(formData)
       localStorage.setItem('user_info', JSON.stringify(res.data.data))
@@ -235,28 +235,6 @@ const UpdateProfilePage = () => {
           >
             <Input.TextArea rows={3} />
           </Form.Item>
-          <Row>
-            <Col span={12}>
-              <Form.Item
-                name="password"
-                className="ml-10 mr-10 "
-                label="Mật khẩu"
-                rules={[editProfileRules as any]}
-              >
-                <Input type="password" name="password" />
-              </Form.Item>
-            </Col>
-            <Col span={12}>
-              <Form.Item
-                name="password_confirmation"
-                className="ml-10 mr-10 "
-                label="Nhập lại mật khẩu"
-                rules={[editProfileRules as any]}
-              >
-                <Input type="password" name="password_confirmation" />
-              </Form.Item>
-            </Col>
-          </Row>
           <Form.Item className="flex justify-center">
             <Button
               type="dashed"
