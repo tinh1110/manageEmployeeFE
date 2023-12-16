@@ -1,199 +1,202 @@
-import React, { useEffect, useState } from 'react'
-import { Button, message } from 'antd'
-import ListMemberOfTeam from './ListMemberOfTeam'
-import ModalRemove from './ModalRemove'
-import ModalCreateTeam from './ModalCreateTeam'
-import axiosInstance from '../../services/request/base'
-import { Team } from '../../components/teams/interface'
+import React, { useEffect, useMemo, useState } from 'react'
+import { Avatar, Button, Input, Select, Table, Tag, message } from 'antd'
 import { useNavigate, useParams } from 'react-router-dom'
-import ListOfTeam from '../../components/teams/ListOfTeam'
-import { TEAM_DELETE, TEAM_UPDATE } from '../../libs/constants/Permissions'
-import MainLayout from '../../components/layouts/main'
-
+import useSWR from 'swr'
+import {
+  getDetailProject,
+  getListUserOfTeam,
+} from '../../services/request/team'
+import { ISSUES, STATUS_PROJECT } from './constants'
+import { ColumnsType } from 'antd/es/table'
+import { TagPriority, TagStatus } from './components'
+const columns: ColumnsType<any> = [
+  {
+    title: 'Issue Type',
+    dataIndex: 'parent_id',
+    key: 'parent_id',
+    render: (row) => {
+      if (!row) return <Tag color="green">Parent</Tag>
+      return <Tag color="red">Child</Tag>
+    },
+  },
+  {
+    title: 'Subject',
+    dataIndex: 'subject',
+    key: 'subject',
+  },
+  {
+    title: 'Assignee',
+    dataIndex: 'assignee',
+    key: 'assignee',
+    render: (row) => {
+      return (
+        <div>
+          <Avatar src={row.avatar} />
+          <span className="ml-2">{row.name}</span>
+        </div>
+      )
+    },
+  },
+  {
+    title: 'Status',
+    dataIndex: 'status',
+    key: 'status',
+    render: (row) => {
+      return TagStatus(row)
+    },
+  },
+  {
+    title: 'Priority',
+    dataIndex: 'priority',
+    key: 'priority',
+    render: (row) => {
+      return TagPriority(row)
+    },
+  },
+  {
+    title: 'Start Date',
+    dataIndex: 'start_date',
+    key: 'start_date',
+  },
+  {
+    title: 'End Date',
+    dataIndex: 'end_date',
+    key: 'end_date',
+  },
+  {
+    title: 'Created By',
+    dataIndex: 'created_by',
+    key: 'created_by',
+    render: (row) => {
+      return (
+        <div>
+          <Avatar src={row.avatar} />
+          <span className="ml-2">{row.name}</span>
+        </div>
+      )
+    },
+  },
+]
 const ListSub = () => {
   const navigate = useNavigate()
   const { id } = useParams()
-  const [listSubTeam, setListSubTeam] = useState<Team[]>([])
-  const [showMember, setShowMember] = useState<boolean>(false)
-  const [openModalDelete, setOpenModalDelete] = useState<boolean>(false)
-  const [teamId, setTeamId] = useState<number>(1)
-  const [openModalUpdateTeam, setOpenModalUpdateTeam] = useState<boolean>(false)
-  const [totalTeamSub, setTotalTeamSub] = useState<number>(1)
-  const [title, setTitle] = useState<string>('')
-  const [isLoading, setIsLoading] = useState<boolean>(true)
-
-  const [teamCheck, setTeamCheck] = useState({
-    parent_team_id: '',
-    name: '',
-    leader_id: '',
-    details: '',
-  })
   const [filter, setFilter] = useState({
-    details: '',
-    name: '',
-    sort: 'created_at',
-    sortType: '1',
-    page: '1',
-    limit: '10',
+    type_issue: 1,
+    status: 6,
+    assignee_id: 0,
+    subject: '',
   })
-
-  const getSubListTeam = async () => {
-    const url = new URLSearchParams(filter)
-    const res = await axiosInstance.get(`/team/get-list-sub/${id}?${url}`)
-    setListSubTeam(res.data.data.records)
-    setTotalTeamSub(res.data.data.total)
-    setIsLoading(false)
-  }
-
-  const getInfoParrentTeam = async () => {
-    const res = await axiosInstance.get(`/team/get-detail-team/${id}`)
-    setTitle(res.data.data.name)
-  }
-
-  useEffect(() => {
-    getInfoParrentTeam()
-    getSubListTeam()
-  }, [filter])
-
-  const updateTeam = async (id: number) => {
-    const res = await axiosInstance.get(`/team/get-detail-team/${id}`)
-    setTeamCheck({
-      parent_team_id: res.data.data.parent_team_id,
-      name: res.data.data.name,
-      leader_id: res.data.data.leader.id,
-      details: res.data.data.details,
-    })
-    setOpenModalUpdateTeam(true)
-    setTeamId(id)
-  }
-
-  const deleteTeam = (id: number) => {
-    setOpenModalDelete(true)
-    setTeamId(id)
-  }
-
-  const onRemove = async (id: number) => {
-    const res = await axiosInstance.delete(`/team/delete-team/${id}`)
-    if (res.data.status) {
-      setOpenModalDelete(false)
-      await getSubListTeam()
-      setTimeout(() => {
-        message.success('Delete Successful')
-      }, 500)
-    } else {
-      setTimeout(() => {
-        message.error('Delete Fail')
-      }, 1000)
-    }
-  }
-
-  async function onUpdate(
-    parent_team_id: string,
-    name: string,
-    leader_id: string,
-    details: string,
-  ) {
-    const data = {
-      parent_team_id: parent_team_id,
-      name: name,
-      leader_id: leader_id,
-      details: details,
-    }
-
-    try {
-      const res = await axiosInstance.put(`/team/update-team/${teamId}`, data)
-      if (res.data.status) {
-        setOpenModalUpdateTeam(false)
-        await getSubListTeam()
-        setTimeout(() => {
-          message.success('Update Team Successful')
-        }, 50)
-      }
-    } catch (error) {
-      setTimeout(() => {
-        message.error('The name has already been taken.')
-      }, 50)
-    }
-  }
-
-  const handleListSubOrListMem = async (id: number) => {
-    const res = await axiosInstance.get(`/team/get-list-sub/${id}`)
-    if (res.data.data.total === 0) {
-      setShowMember(true)
-      navigate(`/member-of-team/${id}`)
-    }
-  }
-
-  const resetTable = () => {
-    setFilter({
-      details: '',
-      name: '',
-      sort: 'created_at',
-      sortType: '',
-      page: '1',
-      limit: '10',
-    })
-  }
-
-  const onChange = (page: number, pageSize: number) => {
+  const handleChangeFilter = (value: string | number, name: string) => {
     setFilter({
       ...filter,
-      page: page.toString(),
-      limit: pageSize.toString(),
+      [name]: value,
     })
   }
+  const { data: dataListOfTeam } = useSWR(
+    id ? ['get-list-user-of-team', id] : null,
+    () => getListUserOfTeam(id ?? ''),
+    {
+      refreshInterval: 0,
+      refreshWhenOffline: false,
+      refreshWhenHidden: false,
+      revalidateOnFocus: false,
+    },
+  )
+  const assignList = useMemo(() => {
+    return (
+      dataListOfTeam?.data.data.records.map((item: any) => ({
+        value: item.id,
+        label: item.name,
+      })) ?? []
+    )
+  }, [dataListOfTeam])
+
+  const { data, isLoading } = useSWR(
+    id
+      ? [
+          'get-detail-team',
+          filter.status,
+          filter.subject,
+          filter.type_issue,
+          filter.assignee_id,
+        ]
+      : null,
+    () => getDetailProject(filter, id ?? ''),
+    {
+      refreshInterval: 0,
+      revalidateIfStale: false,
+      refreshWhenOffline: false,
+      refreshWhenHidden: false,
+      revalidateOnFocus: false,
+    },
+  )
+  const dataSource = useMemo(() => {
+    return data?.data.data ?? []
+  }, [data])
 
   return (
     <>
-      {!showMember ? (
-        <>
-          <Button
-            onClick={() => {
-              navigate(-1)
-            }}
-          >
-            Quay lại
-          </Button>
-          <ListOfTeam
-            listTeam={listSubTeam}
-            filter={filter}
-            setFilter={setFilter}
-            resetTable={resetTable}
-            deleteTeam={deleteTeam}
-            updateTeam={updateTeam}
-            permissionsUpdate={TEAM_UPDATE}
-            permissionsDelete={TEAM_DELETE}
-            handleListSubOrListMem={handleListSubOrListMem}
-            blog={title}
-            total={totalTeamSub}
-            onChange={onChange}
-            teamSubId={Number(id)}
-            isSubteam={true}
-            isLoading={isLoading}
-          />
-          {openModalDelete && (
-            <ModalRemove
-              openModalDelete={setOpenModalDelete}
-              blog={'Are you sure to delete this team ?'}
-              onDelete={() => onRemove(teamId)}
-            />
-          )}
-
-          {openModalUpdateTeam && (
-            <ModalCreateTeam
-              openModal={setOpenModalUpdateTeam}
-              onCreate={onUpdate}
-              blog={'UPDATE'}
-              team={teamCheck}
-              checkListMain={false}
-            />
-          )}
-        </>
-      ) : (
+      <Button
+        onClick={() => {
+          navigate(-1)
+        }}
+      >
+        Quay lại
+      </Button>
+      <div className="flex gap-5">
         <div>
-          <ListMemberOfTeam />
+          <p className="my-2">Issue</p>
+          <Select
+            value={filter.type_issue}
+            options={ISSUES}
+            style={{ width: 120 }}
+            onChange={(e) => {
+              handleChangeFilter(e, 'type_issue')
+            }}
+          />
         </div>
-      )}
+        <div>
+          <p className="my-2">Status</p>
+          <Select
+            value={filter.status}
+            options={STATUS_PROJECT}
+            style={{ width: 150 }}
+            onChange={(e) => {
+              handleChangeFilter(e, 'status')
+            }}
+          />
+        </div>
+        <div>
+          <p className="my-2">Assign</p>
+          <Select
+            defaultValue={0}
+            value={filter.assignee_id}
+            options={[
+              {
+                value: 0,
+                label: 'Tất cả',
+              },
+              ...assignList,
+            ]}
+            onChange={(e) => {
+              handleChangeFilter(e, 'assignee_id')
+            }}
+            style={{ width: 150 }}
+          />
+        </div>
+        <div>
+          <p className="my-2">Subject</p>
+          <Input
+            placeholder="Keyword"
+            value={filter.subject}
+            onChange={(e) => {
+              handleChangeFilter(e.target.value, 'subject')
+            }}
+          />
+          ;
+        </div>
+      </div>
+      <Table columns={columns} dataSource={dataSource} loading={isLoading} />
     </>
   )
 }

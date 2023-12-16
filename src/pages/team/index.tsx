@@ -66,7 +66,7 @@ const TeamPage = () => {
   }
 
   const handleListSubOrListMem = async (id: number) => {
-    navigate(`/projects/member-of-team/${id}`)
+    navigate(`/projects/${id}`)
   }
 
   const onRemove = async (id: number) => {
