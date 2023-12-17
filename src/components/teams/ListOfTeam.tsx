@@ -1,7 +1,7 @@
 import React from 'react'
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons'
 import Filter from './Filter'
-import { Button, Pagination, Space, Spin, Table } from 'antd'
+import { Button, Pagination, Progress, Space, Spin, Table } from 'antd'
 import { Team } from './interface'
 import type { ColumnsType } from 'antd/es/table'
 import { Link, useNavigate } from 'react-router-dom'
@@ -32,7 +32,7 @@ interface Props {
   resetTable: () => void
   deleteTeam: (id: number) => void
   updateTeam: (id: number) => Promise<void>
-  handleListSubOrListMem: (id: number) => Promise<void>
+  handleListSubOrListMem: (url: string) => Promise<void>
   blog: string
   total: number
   onChange: (page: number, pageSize: number) => void
@@ -93,7 +93,9 @@ const ListOfTeam: React.FC<Props> = ({
       key: 'name',
       render: (_, data) => (
         <Space size="middle">
-          <a onClick={() => handleListSubOrListMem(data.id)}>{data.name}</a>
+          <a onClick={() => handleListSubOrListMem(`/projects/${data.id}`)}>
+            {data.name}
+          </a>
         </Space>
       ),
     },
@@ -122,13 +124,34 @@ const ListOfTeam: React.FC<Props> = ({
       title: 'Thành viên',
       key: 'total_member',
       dataIndex: 'total_member',
+      render: (_, data) => (
+        <Space size="middle">
+          <a
+            onClick={() =>
+              handleListSubOrListMem(`/projects/member-of-team/${data.id}`)
+            }
+          >
+            {data.total_member}
+          </a>
+        </Space>
+      ),
     },
     {
       title: 'Khách hàng',
       key: 'customer',
       dataIndex: 'customer',
       align: 'center',
-      width: '12%',
+    },
+    {
+      title: 'Tiến độ',
+      key: 'percent',
+      dataIndex: 'percent',
+      width: '8%',
+      render: (_, data) => (
+        <Space size="small">
+          <Progress type="circle" percent={data?.percent} size={50} />
+        </Space>
+      ),
     },
     {
       title: 'Leader',

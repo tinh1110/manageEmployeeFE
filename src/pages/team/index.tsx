@@ -65,8 +65,8 @@ const TeamPage = () => {
     setTeamId(id)
   }
 
-  const handleListSubOrListMem = async (id: number) => {
-    navigate(`/projects/${id}`)
+  const handleListSubOrListMem = async (url: string) => {
+    navigate(`${url}`)
   }
 
   const onRemove = async (id: number) => {

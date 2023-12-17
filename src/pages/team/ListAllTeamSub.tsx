@@ -64,7 +64,7 @@ const ListAllTeamSub = () => {
     setTeamId(id)
   }
 
-  const handleListSubOrListMem = async (id: number) => {
+  const handleListSubOrListMem = async (id: string) => {
     const res = await axiosInstance.get(`/team/get-list-sub/${id}`)
     if (res.data.data.total === 0) {
       navigate(`/member-of-team/${id}`)

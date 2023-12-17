@@ -148,11 +148,29 @@ const ListUsers = () => {
       },
     },
     {
+      key: 'paid_day',
+      title: 'Số ngày nghỉ có phép',
+      dataIndex: 'paid_day',
+      align: 'center',
+    },
+    {
+      key: 'unpaid_day',
+      title: 'Số ngày nghỉ không phép',
+      dataIndex: 'unpaid_day',
+      align: 'center',
+    },
+    {
+      key: 'day_off',
+      title: 'Số ngày nghỉ còn lại',
+      dataIndex: 'day_off',
+      align: 'center',
+    },
+    {
       key: 'id',
       title: 'Hoạt động',
       dataIndex: 'id',
       align: 'center',
-      width: '15%',
+      width: '5%',
 
       render: (text, record) => (
         <Space size="middle">

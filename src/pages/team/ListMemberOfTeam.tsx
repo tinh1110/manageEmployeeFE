@@ -104,17 +104,43 @@ const ListMemberOfTeam = () => {
 
   const onRemove = async (data: any) => {
     if (teamId) {
-      const res = await removeMember(data, teamId)
-      if (res.data.status) {
-        setShowModalDeleteMem(false)
-        await getListMember()
-        setTimeout(() => {
-          message.success('Delete Successful')
-        }, 250)
-      } else {
-        setTimeout(() => {
-          message.error('Delete Fail')
-        }, 250)
+      try {
+        const res = await removeMember(data, teamId)
+        if (res.data.status) {
+          setShowModalDeleteMem(false)
+          await getListMember()
+          setTimeout(() => {
+            message.success('Delete Successful')
+          }, 250)
+        } else {
+          setTimeout(() => {
+            message.error('Delete Fail')
+          }, 250)
+        }
+      } catch (err: any) {
+        if (err.response.data.errors) {
+          const errorMessages = Object.values(err.response.data.errors)
+            .map((message) => `- ${message}<br>`)
+            .join('')
+          const key = 'updatable'
+          notification['error']({
+            key,
+            duration: 5,
+            message: 'Delete event failed',
+            description: (
+              <div
+                dangerouslySetInnerHTML={{ __html: errorMessages }}
+                className="text-red-500"
+              />
+            ),
+          })
+        } else {
+          notification['error']({
+            duration: 5,
+            message: 'Delete event failed',
+            description: err.response.data.message,
+          })
+        }
       }
     }
   }
