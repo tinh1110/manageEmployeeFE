@@ -9,6 +9,7 @@ import {
 import { ISSUES, STATUS_PROJECT } from './constants'
 import { ColumnsType } from 'antd/es/table'
 import { TagPriority, TagStatus } from './components'
+import axiosInstance from '../../services/request/base'
 const columns: ColumnsType<any> = [
   {
     title: 'Issue Type',
@@ -80,12 +81,20 @@ const columns: ColumnsType<any> = [
 const ListSub = () => {
   const navigate = useNavigate()
   const { id } = useParams()
+  const [title, setTitle] = useState<string>('')
   const [filter, setFilter] = useState({
     type_issue: 1,
     status: 6,
     assignee_id: 0,
     subject: '',
   })
+  useEffect(() => {
+    getInfoTeam()
+  }, [])
+  const getInfoTeam = async () => {
+    const res = await axiosInstance.get(`/team/get-detail-team/${id}`)
+    setTitle(`${res.data.data.name}`)
+  }
   const handleChangeFilter = (value: string | number, name: string) => {
     setFilter({
       ...filter,
@@ -136,6 +145,9 @@ const ListSub = () => {
 
   return (
     <>
+      <div className="... flex items-center justify-center">
+        <h1>{title}</h1>
+      </div>
       <Button
         onClick={() => {
           navigate(-1)

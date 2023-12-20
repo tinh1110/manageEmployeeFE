@@ -6,6 +6,25 @@ const HomePage = () => {
       <h4 className="m-1">Giới thiệu</h4>
       <hr />
       <h2 className="text-orange-500 text-center text-size-20 ">GIỚI THIỆU</h2>
+      <h4 className="text-orange-500 m-3 mt-5">Cách tính công trong tháng</h4>
+      <div className="m-3">
+        Thời gian đi muộn về sớm nghỉ giữa giờ sẽ tính theo đơn vị 15 phút và sẽ
+        trừ trực tiếp vào ngày phép. Nếu nhân viên đã dùng hết ngày phép thì sẽ
+        trừ trực tiếp vào ngày công. Đơn vị 15 phút được tính như sau:
+        <p className="ml-10">Dưới 15 phút: Chuyển đổi thành 15 phút.</p>
+        <p className="ml-10">
+          {' '}
+          Từ phút thứ 16 đến phút thứ 30: Chuyển đổi thành 30 phút.{' '}
+        </p>
+        <p className="ml-10">
+          Từ phút thứ 31 đến phút thứ 45: Chuyển đổi thành 45 phút.{' '}
+        </p>
+        <p className="ml-10">
+          Từ phút thứ 46 đến phút thứ 60: Chuyển đổi thành 60 phút.
+        </p>
+        1 năm nhân viên có 12 ngày phép cho 12 tháng.
+      </div>
+      <h4 className="text-orange-500 m-3 mt-5">Giới thiệu</h4>
       <div className="m-3">
         Học viện Công nghệ Bưu chính Viễn thông thành lập theo quyết định số
         516/TTg của Thủ tướng Chính phủ ngày 11 tháng 7 năm 1997 trên cơ sở sắp
