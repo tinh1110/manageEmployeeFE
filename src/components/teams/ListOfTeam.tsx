@@ -108,7 +108,7 @@ const ListOfTeam: React.FC<Props> = ({
       key: 'details',
       dataIndex: 'details',
       width: '22%',
-      // render: (_, data) => truncate(data?.details, 1000),
+      render: (text) => <p>{truncate(text, 100)}</p>,
     },
     {
       title: 'Trạng thái',

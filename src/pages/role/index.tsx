@@ -9,9 +9,21 @@ import { deleteRole, role } from '../../services/role'
 import { ROLES_ID } from '../../libs/constants/roles'
 import { getPermissions } from '../../libs/helpers/getLocalStorage'
 import { ROLE_DELETE, ROLE_UPDATE } from '../../libs/constants/Permissions'
+import DetailPermissions from './detailPermissions'
 const RolePage = () => {
   const [roles, setRoles] = useState<Role[]>()
   const [total, setTotal] = useState<number>()
+  const [permissionSelected, setPermissionSelected] = useState<string[]>([])
+  const [isOpenDetailPermissions, setIsOpenDetailPermissions] =
+    useState<boolean>(false)
+
+  const handleOpenDetailPermissions = () => {
+    setIsOpenDetailPermissions(true)
+  }
+  const handleCloseDetailPermissions = () => {
+    setIsOpenDetailPermissions(false)
+    setPermissionSelected([])
+  }
   const [isloading, setIsloading] = useState<boolean>(false)
   const navigate = useNavigate()
   const [params, setParams] = useState<ParamsRole>({
@@ -61,6 +73,7 @@ const RolePage = () => {
       key: 'name',
       align: 'center',
       className: 'w-[5%]',
+      width: '20%',
       render: (text) => <span className="font-bold">{text}</span>,
     },
     {
@@ -76,15 +89,17 @@ const RolePage = () => {
       dataIndex: 'permissions',
       align: 'center',
       width: '50%',
-      render: (_, { permissions }) => (
+      render: (row) => (
         <>
-          {permissions.map((permission) => {
-            return (
-              <Tag color="green" key={permission}>
-                {permission}
-              </Tag>
-            )
-          })}
+          <Button
+            onClick={() => {
+              setPermissionSelected(row)
+              handleOpenDetailPermissions()
+            }}
+            type="link"
+          >
+            Chi tiết
+          </Button>
         </>
       ),
     },
@@ -228,6 +243,12 @@ const RolePage = () => {
         >
           <p>"Are you sure to delete this role?"</p>
         </Modal>
+
+        <DetailPermissions
+          data={permissionSelected}
+          isOpen={isOpenDetailPermissions}
+          onClose={handleCloseDetailPermissions}
+        />
       </>
     </>
   )
