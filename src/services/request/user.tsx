@@ -106,7 +106,11 @@ export const userApiDelete = async (
         setIsLoading(false)
         setTimeout(() => {
           setIdUser(id)
-          message.success('Delete successfully')
+
+          notification['success']({
+            message: 'Delete success',
+            description: 'Xóa thành công!',
+          })
         }, 0)
         return true
       })
@@ -119,7 +123,7 @@ export const userApiDelete = async (
       notification['error']({
         key,
         duration: 5,
-        message: 'Delete role failed',
+        message: 'Delete user failed',
         description: (
           <div
             dangerouslySetInnerHTML={{ __html: errorMessages }}
@@ -130,7 +134,7 @@ export const userApiDelete = async (
     } else {
       notification['error']({
         duration: 5,
-        message: 'Delete role failed',
+        message: 'Delete user failed',
         description: err.response.data.message,
       })
     }
@@ -148,7 +152,11 @@ export const userApiRestore = async (
         setIsLoading(false)
         setTimeout(() => {
           setIdUser(id)
-          message.success('Restore successfully')
+
+          notification['success']({
+            message: 'Restore success',
+            description: 'Hoàn tác thành công!',
+          })
         }, 0)
         return true
       })
@@ -161,7 +169,7 @@ export const userApiRestore = async (
       notification['error']({
         key,
         duration: 5,
-        message: 'Delete role failed',
+        message: 'Restore failed',
         description: (
           <div
             dangerouslySetInnerHTML={{ __html: errorMessages }}
@@ -172,7 +180,7 @@ export const userApiRestore = async (
     } else {
       notification['error']({
         duration: 5,
-        message: 'Delete role failed',
+        message: 'Restore failed',
         description: err.response.data.message,
       })
     }
@@ -189,7 +197,10 @@ export const userApiForceDelete = async (
         setIsLoading(false)
         setTimeout(() => {
           setIdUser(id)
-          message.success('Delete successfully')
+          notification['success']({
+            message: 'Delete success',
+            description: 'Xóa thành công!',
+          })
         }, 0)
         return true
       })
@@ -202,7 +213,7 @@ export const userApiForceDelete = async (
       notification['error']({
         key,
         duration: 5,
-        message: 'Delete role failed',
+        message: 'Delete failed',
         description: (
           <div
             dangerouslySetInnerHTML={{ __html: errorMessages }}
@@ -213,7 +224,7 @@ export const userApiForceDelete = async (
     } else {
       notification['error']({
         duration: 5,
-        message: 'Delete role failed',
+        message: 'Delete failed',
         description: err.response.data.message,
       })
     }
@@ -275,7 +286,10 @@ export const userApiCreate = async (
       .post(`/user/store`, createValue)
       .then((response) => {
         setTimeout(() => {
-          message.success('Create successfully a new user')
+          notification['success']({
+            message: 'Create success',
+            description: 'Thêm thành công!',
+          })
         }, 0)
         return response
       })
@@ -298,7 +312,10 @@ export const userApiUpdate = async (
       .post(`/user/update/${id}`, createValue)
       .then((response) => {
         setTimeout(() => {
-          message.success('Update successfully a user')
+          notification['success']({
+            message: 'Update success',
+            description: 'Sửa thành công!',
+          })
         }, 0)
         return response
       })

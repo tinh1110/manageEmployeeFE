@@ -149,7 +149,6 @@ const UpdateTeam = () => {
 
   const handleSubmit = async () => {
     const values = antForm.getFieldsValue()
-    console.log(values)
     try {
       if (id) {
         const res = await updateTeam(values, id)
@@ -203,7 +202,7 @@ const UpdateTeam = () => {
                 <Form.Item
                   className="ml-10 mr-10"
                   name="name"
-                  label="Tên Dự án"
+                  label="Tên dự án"
                   initialValue={res?.name}
                 >
                   <Input />

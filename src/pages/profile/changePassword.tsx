@@ -63,7 +63,7 @@ const ChangePasswordPage = () => {
             <Form.Item
               name="password"
               className="ml-10 mr-10 font-bold"
-              label="Mật khẩu"
+              label="Mật khẩu mới"
             >
               <Input type="password" name="password" />
             </Form.Item>

@@ -8,6 +8,7 @@ import {
   AuditOutlined,
   CarryOutOutlined,
   CheckSquareOutlined,
+  FileTextOutlined,
 } from '@ant-design/icons'
 import { Layout, Menu } from 'antd'
 import SideBarLogo from './SideBarLogo'
@@ -143,6 +144,12 @@ const Sidebar = () => {
         key: '/timekeeping',
         icon: <CheckSquareOutlined />,
         label: 'Bảng công',
+        children: null,
+      }),
+      checkParentSidebar(PROFILE, {
+        key: '/report',
+        icon: <FileTextOutlined />,
+        label: 'Gửi phản hồi',
         children: null,
       }),
       checkParentSidebar(PROFILE, {

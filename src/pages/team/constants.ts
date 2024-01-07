@@ -5,11 +5,11 @@ export const ISSUES = [
   },
   {
     value: 2,
-    label: 'Lấy issue cha',
+    label: 'Task lớn',
   },
   {
     value: 3,
-    label: 'Lấy issue con',
+    label: 'Task nhỏ',
   },
 ]
 export const STATUS_PROJECT = [
@@ -35,6 +35,10 @@ export const STATUS_PROJECT = [
   },
   {
     value: 6,
+    label: 'Chưa đóng',
+  },
+  {
+    value: 7,
     label: 'Tất cả',
   },
 ]

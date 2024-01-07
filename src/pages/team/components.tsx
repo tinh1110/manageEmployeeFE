@@ -65,3 +65,70 @@ export const TagPriority = (priority: number) => {
     </>
   )
 }
+
+export const TagPriority2 = (priority: number) => {
+  let color = 'green'
+  let Icon = ArrowDownOutlined
+  let text = 'Low'
+  switch (priority) {
+    case 1:
+      color = 'green'
+      Icon = ArrowDownOutlined
+      text = 'Low'
+      break
+    case 2:
+      color = 'blue'
+      Icon = ArrowRightOutlined
+      text = 'Normal'
+      break
+    case 3:
+      color = 'red'
+      Icon = ArrowUpOutlined
+      text = 'High'
+      break
+  }
+  return (
+    <>
+      <Icon twoToneColor={color} className="mr-2" />
+      <Tag color={color}>{text}</Tag>
+    </>
+  )
+}
+
+export const LIST_PRIORITY = [
+  {
+    label: TagPriority2(1),
+    value: 1,
+  },
+  {
+    label: TagPriority2(2),
+    value: 2,
+  },
+  {
+    label: TagPriority2(3),
+    value: 3,
+  },
+]
+
+export const LIST_STATUS_ISSUE = [
+  {
+    label: TagStatus(1),
+    value: 1,
+  },
+  {
+    label: TagStatus(2),
+    value: 2,
+  },
+  {
+    label: TagStatus(3),
+    value: 3,
+  },
+  {
+    label: TagStatus(4),
+    value: 4,
+  },
+  {
+    label: TagStatus(5),
+    value: 5,
+  },
+]

@@ -49,7 +49,7 @@ const items: MenuProps['items'] = [
         </Button>
       </Link>
     ),
-    key: 'profile',
+    key: 'changpass',
   },
   {
     type: 'divider',

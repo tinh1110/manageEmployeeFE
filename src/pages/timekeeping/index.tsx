@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import MainLayout from '../../components/layouts/main'
-import { Button, Modal, Table, Upload, message } from 'antd'
+import { Button, Modal, Table, Upload, message, notification } from 'antd'
 import {
   exportTimeList,
   getTimeList,
@@ -18,9 +18,7 @@ const { Column, ColumnGroup } = Table
 const propsDragger: UploadProps = {
   name: 'file',
   multiple: false,
-  onChange(info) {
-    console.log(info.fileList)
-  },
+  onChange(info) {},
   beforeUpload: () => false,
 }
 const TimekeepingPage = () => {
@@ -62,7 +60,10 @@ const TimekeepingPage = () => {
       link.click()
       document.body.removeChild(link)
     } catch (error) {
-      message.error('Export failed')
+      notification['error']({
+        message: 'Export failed',
+        description: 'Export thất bại!',
+      })
     }
   }
   const handleChangeFile = (info: any) => {
@@ -74,11 +75,18 @@ const TimekeepingPage = () => {
       const formData = new FormData()
       formData.append('file', file[0].originFileObj)
       await importTimeList(formData)
-      message.success('Import success')
+
+      notification['success']({
+        message: 'Import success',
+        description: 'Import thành công!',
+      })
       handleCloseModalImport()
       fetchData()
     } catch (error) {
-      message.error('Import failed')
+      notification['error']({
+        message: 'Import failed',
+        description: 'Import thất bại!',
+      })
     }
   }
   useEffect(() => {

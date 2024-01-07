@@ -1,11 +1,16 @@
 import React from 'react'
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons'
 import Filter from './Filter'
-import { Button, Pagination, Progress, Space, Spin, Table } from 'antd'
+import { Button, Pagination, Progress, Space, Spin, Table, Tag } from 'antd'
 import { Team } from './interface'
 import type { ColumnsType } from 'antd/es/table'
 import { Link, useNavigate } from 'react-router-dom'
 import { getPermissions } from '../../libs/helpers/getLocalStorage'
+import { TEAM_ADD } from '../../libs/constants/Permissions'
+import { title } from 'process'
+import { FireOutlined } from '@ant-design/icons'
+import style from 'antd/es/alert/style'
+import { truncate } from '../../utils/string'
 
 interface Props {
   listTeam: Team[]
@@ -61,23 +66,20 @@ const ListOfTeam: React.FC<Props> = ({
   const navigate = useNavigate()
   const teamId = teamSubId
   // const [isLoading, setIsLoading] = useState<boolean>(false)
-  const statusLabel = (status: number): string => {
+  const statusLabel = (status: number): any => {
     switch (status) {
       case 1:
-        return 'Chưa bắt đầu'
+        return <Tag color="gray">Chưa bắt đầu</Tag>
       case 2:
-        return 'Đang làm'
-
+        return <Tag color="blue">Đang làm</Tag>
       case 3:
-        return 'Bị hủy'
+        return <Tag color="red">Bị hủy</Tag>
       case 4:
-        return 'Tạm dừng'
-
+        return <Tag color="orange">Tạm dừng</Tag>
       case 5:
-        return 'Hoàn thành'
-
+        return <Tag color="green">Hoàn thành</Tag>
       default:
-        return 'Khác'
+        return <Tag color="default">Khác</Tag>
     }
   }
 
@@ -86,11 +88,13 @@ const ListOfTeam: React.FC<Props> = ({
       title: 'ID',
       dataIndex: 'id',
       key: 'id',
+      width: '5%',
     },
     {
       title: 'Tên',
       dataIndex: 'name',
       key: 'name',
+      width: '8%',
       render: (_, data) => (
         <Space size="middle">
           <a onClick={() => handleListSubOrListMem(`/projects/${data.id}`)}>
@@ -103,27 +107,50 @@ const ListOfTeam: React.FC<Props> = ({
       title: 'Mô tả',
       key: 'details',
       dataIndex: 'details',
+      width: '22%',
+      // render: (_, data) => truncate(data?.details, 1000),
     },
     {
       title: 'Trạng thái',
       key: 'status',
       dataIndex: 'status',
+      width: '8%',
       render: (_, data) => statusLabel(data?.status),
     },
     {
-      title: 'Thời gian bắt đầu',
+      title: 'Ngày bắt đầu',
       key: 'start_time',
       dataIndex: 'start_time',
+      width: '8%',
     },
     {
-      title: 'Thời gian kết thúc',
+      title: 'Ngày kết thúc',
       key: 'end_time',
       dataIndex: 'end_time',
+      width: '10%',
+      render: (text) => {
+        const endTime = new Date(text) // Chuyển đổi giá trị `end_time` thành đối tượng Date
+        const now = new Date() // Declare `now` here
+        // So sánh `end_time` với `now`
+        const isExpired = endTime <= now
+
+        // Kiểm tra nếu `end_time` đã hết hạn
+        if (isExpired) {
+          return (
+            <span style={{ color: 'red' }}>
+              {text} <FireOutlined />
+            </span>
+          )
+        }
+
+        return text
+      },
     },
     {
       title: 'Thành viên',
       key: 'total_member',
       dataIndex: 'total_member',
+      width: '6%',
       render: (_, data) => (
         <Space size="middle">
           <a
@@ -141,12 +168,13 @@ const ListOfTeam: React.FC<Props> = ({
       key: 'customer',
       dataIndex: 'customer',
       align: 'center',
+      width: '10%',
     },
     {
       title: 'Tiến độ',
       key: 'percent',
       dataIndex: 'percent',
-      width: '8%',
+      width: '6%',
       render: (_, data) => (
         <Space size="small">
           <Progress type="circle" percent={data?.percent} size={50} />
@@ -157,6 +185,7 @@ const ListOfTeam: React.FC<Props> = ({
       title: 'Leader',
       dataIndex: 'leader',
       key: 'leader',
+      width: '10%',
       render: (_, data) => (
         <Space size="middle">
           <strong> {data.leader?.name}</strong>
@@ -167,11 +196,11 @@ const ListOfTeam: React.FC<Props> = ({
       title: 'Hoạt động',
       key: 'action',
       align: 'center',
-      width: '10%',
+      width: '12%',
       render: (_, data) => (
         <Space size="middle">
           {permissionsInfo &&
-            permissionsDelete.every((element: string) =>
+            permissionsUpdate.every((element: string) =>
               permissionsInfo.includes(element),
             ) && (
               // <Button type="primary" onClick={() => updateTeam(data.id)}>
@@ -188,7 +217,7 @@ const ListOfTeam: React.FC<Props> = ({
               </Link>
             )}
           {permissionsInfo &&
-            permissionsUpdate.every((element: string) =>
+            permissionsDelete.every((element: string) =>
               permissionsInfo.includes(element),
             ) && (
               <Button danger type="primary" onClick={() => deleteTeam(data.id)}>
@@ -208,17 +237,21 @@ const ListOfTeam: React.FC<Props> = ({
         blog={blog}
         handleReset={resetTable}
       />
-
-      <Button
-        type="primary"
-        className="mb-5 bg-green-500 float-right"
-        onClick={() => {
-          navigate('/projects/create', { state: { teamId } })
-        }}
-        style={{ marginBottom: 10 }}
-      >
-        Thêm dự án mới
-      </Button>
+      {permissionsInfo &&
+        TEAM_ADD.every((element: string) =>
+          permissionsInfo.includes(element),
+        ) && (
+          <Button
+            type="primary"
+            className="mb-5 bg-green-500 float-right"
+            onClick={() => {
+              navigate('/projects/create', { state: { teamId } })
+            }}
+            style={{ marginBottom: 10 }}
+          >
+            Thêm dự án mới
+          </Button>
+        )}
       {isLoading ? (
         <Spin className="flex justify-center" />
       ) : (
@@ -227,6 +260,7 @@ const ListOfTeam: React.FC<Props> = ({
           dataSource={listTeam}
           bordered={true}
           pagination={false}
+          scroll={{ x: 1500, y: 500 }}
           rowKey="id"
         />
       )}

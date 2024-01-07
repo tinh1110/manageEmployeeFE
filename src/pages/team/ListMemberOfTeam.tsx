@@ -19,7 +19,10 @@ import { User } from '../../components/teams/interface'
 import { useNavigate, useParams } from 'react-router-dom'
 import MainLayout from '../../components/layouts/main'
 import { getPermissions } from '../../libs/helpers/getLocalStorage'
-import { TEAM_DELETE_MEMBER } from '../../libs/constants/Permissions'
+import {
+  TEAM_ADD_MEMBER,
+  TEAM_DELETE_MEMBER,
+} from '../../libs/constants/Permissions'
 import { LIST_POSITION_PROJECT } from '../../libs/constants/Options'
 import { type } from '@testing-library/user-event/dist/type'
 import { addMember, removeMember } from '../../services/request/team'
@@ -110,11 +113,17 @@ const ListMemberOfTeam = () => {
           setShowModalDeleteMem(false)
           await getListMember()
           setTimeout(() => {
-            message.success('Delete Successful')
+            notification['success']({
+              message: 'Delete success',
+              description: 'Xóa thành công!',
+            })
           }, 250)
         } else {
           setTimeout(() => {
-            message.error('Delete Fail')
+            notification['success']({
+              message: 'Delete failed',
+              description: 'Xóa Thất bại!',
+            })
           }, 250)
         }
       } catch (err: any) {
@@ -126,7 +135,7 @@ const ListMemberOfTeam = () => {
           notification['error']({
             key,
             duration: 5,
-            message: 'Delete event failed',
+            message: 'Delete project failed',
             description: (
               <div
                 dangerouslySetInnerHTML={{ __html: errorMessages }}
@@ -137,7 +146,7 @@ const ListMemberOfTeam = () => {
         } else {
           notification['error']({
             duration: 5,
-            message: 'Delete event failed',
+            message: 'Delete project failed',
             description: err.response.data.message,
           })
         }
@@ -256,7 +265,10 @@ const ListMemberOfTeam = () => {
           setShowModalAddMem(false)
           await getListMember()
           setTimeout(() => {
-            message.success('Add member successful')
+            notification['success']({
+              message: 'Add success',
+              description: 'Thêm thành công!',
+            })
           }, 50)
         }
       }
@@ -295,21 +307,25 @@ const ListMemberOfTeam = () => {
         </div>
         <Button
           onClick={() => {
-            navigate(-1)
+            navigate('/projects')
           }}
         >
           Quay lại
         </Button>
-        <Button
-          type="primary"
-          className="bg-green-500 float-right"
-          onClick={() => {
-            setShowModalAddMem(true)
-          }}
-        >
-          Thêm thành viên
-        </Button>
-
+        {permissionsInfo &&
+          TEAM_ADD_MEMBER.every((element: string) =>
+            permissionsInfo.includes(element),
+          ) && (
+            <Button
+              type="primary"
+              className="bg-green-500 float-right"
+              onClick={() => {
+                setShowModalAddMem(true)
+              }}
+            >
+              Thêm thành viên
+            </Button>
+          )}
         {isLoading ? (
           <Spin className="flex justify-center" />
         ) : (

@@ -1,8 +1,10 @@
+import IssueUpdatePage from '../../../pages/issue/update'
 import TeamPage from '../../../pages/team'
 import CreateTeam from '../../../pages/team/CreateTeam'
 import ListAllTeamSub from '../../../pages/team/ListAllTeamSub'
 import ListMemberOfTeam from '../../../pages/team/ListMemberOfTeam'
 import ListSub from '../../../pages/team/ListSub'
+import AddIssuePage from '../../../pages/issue/addIssue'
 import UpdateTeam from '../../../pages/team/updateTeam'
 import {
   TEAM_ADD,
@@ -12,6 +14,7 @@ import {
   EVENT_UPDATE,
   TEAM_UPDATE,
 } from '../Permissions'
+import EditIssuePage from '../../../pages/issue/editIssue'
 
 export const teamRouter = [
   {
@@ -32,7 +35,7 @@ export const teamRouter = [
   {
     path: '/projects/:id',
     element: <ListSub />,
-    permissions: TEAM_LIST_MEMBER,
+    permissions: TEAM_LIST,
   },
   {
     path: '/projects/member-of-team/:id',
@@ -43,6 +46,21 @@ export const teamRouter = [
     path: '/projects/update/:id',
     element: <UpdateTeam />,
     permissions: TEAM_UPDATE,
+  },
+  {
+    path: '/projects/issues/:id',
+    element: <IssueUpdatePage />,
+    permissions: TEAM_LIST,
+  },
+  {
+    path: '/projects/:id/add/issues',
+    element: <AddIssuePage />,
+    permissions: TEAM_LIST,
+  },
+  {
+    path: '/projects/:project_id/issues/edit/:id',
+    element: <EditIssuePage />,
+    permissions: TEAM_LIST,
   },
 ]
 export default teamRouter

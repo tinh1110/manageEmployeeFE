@@ -6,6 +6,7 @@ import { TypeEvent, TypeParamsEvent } from '../../types/event'
 import { getPermissions } from '../../libs/helpers/getLocalStorage'
 import { useNavigate } from 'react-router-dom'
 import EventItem from './eventItem'
+import { EVENT_ADD } from '../../libs/constants/Permissions'
 const { Search } = Input
 
 const EventPage = () => {
@@ -188,15 +189,20 @@ const EventPage = () => {
           />
         </div>
       </div>
-      <Button
-        type="primary"
-        className="m-5 bg-green-500 float-right"
-        onClick={() => {
-          navigate('/events/add')
-        }}
-      >
-        Thêm event mới
-      </Button>
+      {permissionsInfo &&
+        EVENT_ADD.every((element: string) =>
+          permissionsInfo.includes(element),
+        ) && (
+          <Button
+            type="primary"
+            className="m-5 bg-green-500 float-right"
+            onClick={() => {
+              navigate('/events/add')
+            }}
+          >
+            Thêm sự kiện mới
+          </Button>
+        )}
       {isLoading ? (
         <Spin className="flex justify-center" />
       ) : (

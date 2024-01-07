@@ -17,3 +17,7 @@ export const importTimeList = (file: FormData) => {
     },
   })
 }
+
+export const report = (data: any) => {
+  return axiosInstance.post('/report', data)
+}

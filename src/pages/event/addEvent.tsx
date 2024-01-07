@@ -101,7 +101,7 @@ const AddEventPage = () => {
         })
       }
 
-      formData.append('name', data.name)
+      formData.append('name', data.name || '')
       formData.append('link', data.link || '')
       formData.append('location', data.location || '')
       formData.append('description', data.details || '')
