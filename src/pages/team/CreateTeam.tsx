@@ -110,7 +110,6 @@ const CreateTeam = () => {
 
   const handleSubmit = async () => {
     const values = antForm.getFieldsValue()
-    console.log(values)
     try {
       const res = await addTeam(values)
       notification['success']({
@@ -150,7 +149,7 @@ const CreateTeam = () => {
   return (
     <>
       <div className="... flex items-center justify-center">
-        <h1>Thêm Dự án mới</h1>
+        <h1>Thêm dự án mới</h1>
       </div>
       {isLoading ? (
         <Spin className="flex justify-center" />
@@ -162,7 +161,7 @@ const CreateTeam = () => {
                 <Form.Item
                   className="ml-10 mr-10"
                   name="name"
-                  label="Tên Dự án"
+                  label="Tên dự án"
                 >
                   <Input />
                 </Form.Item>
@@ -198,6 +197,7 @@ const CreateTeam = () => {
                         <Input type="date" />
                       </Form.Item>
                     </Col>
+                    <span className="mt-2">{`->`}</span>
                     <Col span={11}>
                       <Form.Item name="end_time" key="end_time">
                         <Input type="date" />

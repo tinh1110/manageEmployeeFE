@@ -1,5 +1,9 @@
 import { Link } from 'react-router-dom'
-import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons'
+import {
+  MenuFoldOutlined,
+  MenuUnfoldOutlined,
+  KeyOutlined,
+} from '@ant-design/icons'
 import { Layout, Button, Avatar, Dropdown, Space } from 'antd'
 import type { MenuProps } from 'antd'
 import { getUser } from '../../../libs/helpers/getLocalStorage'
@@ -35,6 +39,17 @@ const items: MenuProps['items'] = [
       </Link>
     ),
     key: 'profile',
+  },
+  {
+    label: (
+      <Link to="/changePassword">
+        <Button type="text" className=" bg-white-500">
+          <KeyOutlined />
+          Đổi mật khẩu
+        </Button>
+      </Link>
+    ),
+    key: 'changpass',
   },
   {
     type: 'divider',

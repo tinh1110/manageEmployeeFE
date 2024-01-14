@@ -1,7 +1,7 @@
 import MainLayout from '../../components/layouts/main'
 import axiosInstance from '../../services/request/base'
 import { useEffect, useState } from 'react'
-import { Alert, message } from 'antd'
+import { Alert, message, notification } from 'antd'
 import { useNavigate } from 'react-router-dom'
 import { Team } from '../../components/teams/interface'
 import ModalRemove from '../team/ModalRemove'
@@ -65,8 +65,8 @@ const TeamPage = () => {
     setTeamId(id)
   }
 
-  const handleListSubOrListMem = async (id: number) => {
-    navigate(`/projects/member-of-team/${id}`)
+  const handleListSubOrListMem = async (url: string) => {
+    navigate(`${url}`)
   }
 
   const onRemove = async (id: number) => {
@@ -76,7 +76,10 @@ const TeamPage = () => {
         setOpenModalDelete(false)
         await getListTeam()
         setTimeout(() => {
-          message.success('Delete Successful')
+          notification['success']({
+            message: 'Delete success',
+            description: 'Xóa thành công!',
+          })
         }, 50)
       }
     } catch (error) {

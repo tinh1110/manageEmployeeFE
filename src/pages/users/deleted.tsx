@@ -126,6 +126,22 @@ const DeletedUsers = () => {
       },
     },
     {
+      key: 'deleted_at',
+      title: 'Ngày xóa',
+      dataIndex: 'deleted_at',
+      align: 'center',
+      width: '10%',
+      render: (deleted_at: string) => {
+        const date = new Date(deleted_at)
+        const day = date.getDate()
+        const month = date.getMonth() + 1 // Lưu ý: Tháng bắt đầu từ 0 (0 - 11)
+        const year = date.getFullYear()
+
+        const formattedDate = `${day}/${month}/${year}`
+        return <p>{formattedDate}</p>
+      },
+    },
+    {
       key: 'gender',
       title: 'Giới tính',
       dataIndex: 'gender',

@@ -39,7 +39,7 @@ const Filter = ({
         notification['error']({
           key,
           duration: 5,
-          message: 'Delete role failed',
+          message: 'dowload failed',
           description: (
             <div
               dangerouslySetInnerHTML={{ __html: errorMessages }}
@@ -50,7 +50,7 @@ const Filter = ({
       } else {
         notification['error']({
           duration: 5,
-          message: 'Delete role failed',
+          message: 'Dowload failed',
           description: err.response.data.message,
         })
       }

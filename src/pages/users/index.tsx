@@ -65,21 +65,21 @@ const ListUsers = () => {
       title: 'Tên',
       dataIndex: 'name',
       align: 'center',
-      width: '15%',
+      width: '10%',
     },
     {
       key: 'email',
       title: 'Email',
       dataIndex: 'email',
       align: 'center',
-      width: '15%',
+      width: '10%',
     },
     {
       key: 'address',
       title: 'Địa chỉ',
       dataIndex: 'address',
       align: 'center',
-      width: '15%',
+      width: '10%',
     },
     {
       key: 'phone_number',
@@ -108,7 +108,7 @@ const ListUsers = () => {
       title: 'Giới tính',
       dataIndex: 'gender',
       align: 'center',
-      width: '5%',
+      width: '10%',
       render: (gender) => {
         if (gender == 1) {
           return <p>Nam</p>
@@ -122,7 +122,7 @@ const ListUsers = () => {
       title: 'Chức vụ',
       dataIndex: 'role_id',
       align: 'center',
-      width: '5%',
+      width: '10%',
       render: (role) => {
         const matchedRole: any = roles.find(
           (each_role: any) => each_role?.id === role,
@@ -138,7 +138,7 @@ const ListUsers = () => {
       title: 'Trạng thái',
       dataIndex: 'status',
       align: 'center',
-      width: '5%',
+      width: '10%',
       render: (status) => {
         if (status == 0) {
           return <p>Còn hoạt động</p>
@@ -146,6 +146,27 @@ const ListUsers = () => {
           return <p>Không hoạt động</p>
         }
       },
+    },
+    {
+      key: 'paid_day',
+      title: 'Số ngày nghỉ có phép',
+      dataIndex: 'paid_day',
+      align: 'center',
+      width: '10%',
+    },
+    {
+      key: 'unpaid_day',
+      title: 'Số ngày nghỉ không phép',
+      dataIndex: 'unpaid_day',
+      align: 'center',
+      width: '10%',
+    },
+    {
+      key: 'day_off',
+      title: 'Số ngày nghỉ còn lại',
+      dataIndex: 'day_off',
+      align: 'center',
+      width: '10%',
     },
     {
       key: 'id',
@@ -214,6 +235,7 @@ const ListUsers = () => {
         ) : (
           <Table
             columns={columns}
+            scroll={{ x: 1500, y: 500 }}
             dataSource={users}
             rowKey="id"
             bordered
@@ -223,7 +245,6 @@ const ListUsers = () => {
               current: parseInt(filter.page),
               total: totalUser,
               onChange: (page, pageSize) => {
-                console.log(page)
                 setFilter((filter: any) => ({
                   ...filter,
                   page: page.toString(),

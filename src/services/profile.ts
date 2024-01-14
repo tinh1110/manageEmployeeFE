@@ -23,3 +23,7 @@ export type UpdateProfileRequest = {
 export const updateProfile = (data: UpdateProfileRequest) => {
   return axiosInstance.post('/updateProfile', data)
 }
+
+export const changePassword = (data: any) => {
+  return axiosInstance.put('/changePassword', data)
+}

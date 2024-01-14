@@ -7,6 +7,7 @@ import {
   Form,
   Input,
   message,
+  notification,
   Pagination,
   Spin,
   Table,
@@ -179,7 +180,10 @@ const ImportAttendance = () => {
         file.type ===
         'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
       if (!isExcel) {
-        message.error(`${file.name} is not a excel file`)
+        notification['error']({
+          message: 'Upload failed',
+          description: `${file.name} không phải file excel`,
+        })
       }
       setFile(file)
       return isExcel || Upload.LIST_IGNORE

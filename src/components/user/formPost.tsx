@@ -179,7 +179,7 @@ const FormPost = (props: any) => {
           rules={[
             {
               required: true,
-              message: 'Please input your E-mail!',
+              message: 'Please input your name!',
               whitespace: true,
             },
           ]}
@@ -285,7 +285,7 @@ const FormPost = (props: any) => {
         <Form.Item
           name="role_id"
           label="Chức vụ"
-          rules={[{ required: true, message: 'Please select gender!' }]}
+          rules={[{ required: true, message: 'Please select role!' }]}
         >
           <Select placeholder="select your role">
             {roles.map((role: any) => {

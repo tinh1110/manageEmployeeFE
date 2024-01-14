@@ -15,6 +15,7 @@ const AddRolePage = () => {
         message: 'Add role successful',
         description: res.data.message,
       })
+      navigate('/roles/')
     } catch (err: any) {
       if (err.response.data.errors) {
         const errorMessages = Object.values(err.response.data.errors)
@@ -40,7 +41,6 @@ const AddRolePage = () => {
         })
       }
     }
-    navigate('/roles/')
   }
   const handleCancel = () => {
     navigate('/roles/')

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react'
-import { message, Button } from 'antd'
+import { message, Button, notification } from 'antd'
 import { FileType } from '../../types/user'
 import '../../styles/user/user.css'
 
@@ -42,9 +42,15 @@ export const UploadPicture = ({
     if (!isJpgOrPng) {
       setSelectedFile(undefined)
       setPreview((preview: any) => ({ ...preview, inputValue: '' }))
-      message.error('You can only upload JPG/PNG file!')
+      notification['error']({
+        message: 'Upload failed',
+        description: 'Chỉ có thể tải JPG/PNG file!',
+      })
     } else if (!isLt2M) {
-      message.error('Image must smaller than 2MB!')
+      notification['error']({
+        message: 'Upload failed',
+        description: 'file phải nhỏ hơn 2MB!',
+      })
       setSelectedFile(undefined)
     } else {
       setSelectedFile(file)
